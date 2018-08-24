@@ -58,7 +58,7 @@ export default {
 				_title: 'About Us',
 				currentVersion: 'Current version',
 				introduction:
-					'True is a mobile light wallet APP designed to provide ordinary users with a secure, easy-to-use, powerful digital asset wallet application.',
+					'GoglobleChain is a mobile light wallet APP designed to provide ordinary users with a secure, easy-to-use, powerful digital asset wallet application.',
 				useAgreement: 'Use Agreement',
 				privacyPolicy: 'Privacy Policy',
 				versionLog: 'Version Log',
