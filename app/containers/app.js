@@ -34,6 +34,8 @@ import Versions from '../components/my/versions'; //我的 -> 关于我们 -> �
 import BindingPhone from '../components/my/bindingPhone'; // 我的 -> 绑定手机
 import InvitationCode from '../components/my/invitationCode'; //我的 -> 邀请码
 
+import BindMachine from '../components/node/bindMachine'; //我到 -> 绑定矿机
+
 import QRscanner from '../components/public/QRscanner'; //转账 -> 扫描二维码
 
 //rely
@@ -323,6 +325,7 @@ const App = createStackNavigator(
 		// 		headerTitle: () => <Text>{I18n.t('my.webHost')} </Text>
 		// 	}
 		// },
+		BindMachine,
 		QRscanner: {
 			screen: QRscanner,
 			navigationOptions: {

@@ -357,6 +357,8 @@ class ImportWallet extends Component {
 			setTimeout(() => {
 				try {
 					let account = web3.eth.accounts.decrypt(this.state.keystoreFile, this.state.keystorePwd);
+					console.log('accoutn');
+					console.log(account)
 					storage.save({
 						key: 'walletInfo',
 						data: {

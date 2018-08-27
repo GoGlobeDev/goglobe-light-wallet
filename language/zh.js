@@ -51,6 +51,7 @@ export default {
 			},
 			bindPhone: {
 				_title: '绑定手机',
+				button: '去绑定'
 			},
 			helpCenter: {
 				_title: '帮助中心',

@@ -92,7 +92,7 @@ class Assets extends Component {
 		this.setState({
 			isRefreshing: true
 		});
-
+		console.log(this.state.walletAddress)
 		web3.eth.getBalance(this.state.walletAddress).then((res) => {
 			let eth_banlance = this.show(web3.utils.fromWei(res, 'ether'));
 			this.setState({ eth_banlance });
