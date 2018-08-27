@@ -1,4 +1,4 @@
-package com.truewallet;
+package com.gogwallet;
 
 import android.app.Application;
 
