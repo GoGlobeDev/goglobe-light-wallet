@@ -27,7 +27,7 @@ class InvitationCode extends React.Component {
 		}
 		console.log(this.state.code)
 	}
-	_setBindingPhone = () => {
+	_setBindInCode = () => {
 		console.log(this.state.code);
 		this.props.navigation.navigate('BindInCode');
 	}
@@ -52,7 +52,7 @@ class InvitationCode extends React.Component {
 						</View>
 						: <View style={styles.lineView}>
 							<Text style={[styles.content, { color: '#CFCFD0' }]}>还未绑定</Text>
-							<TouchableOpacity style={[styles.button, { width: scaleSize(160) }]} onPress={this._setBindingPhone}>
+							<TouchableOpacity style={[styles.button, { width: scaleSize(160) }]} onPress={this._setBindInCode}>
 								<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>去绑定</Text>
 							</TouchableOpacity>
 						</View>

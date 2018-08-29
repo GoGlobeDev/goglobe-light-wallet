@@ -28,15 +28,19 @@ class BindingPhone extends React.Component {
 		// 		console.log(e);
 		// 	});
 	}
+	_setBindingPhone = () => {
+		console.log(this.state.phone);
+		this.props.navigation.navigate('GoBindPhone');
+	}
 	render() {
 		const { params } = this.props.navigation.state;
 		return (
 			<View style={styles.container}>
 				<View style={styles.view}>
 					<Text style={styles.title}>绑定的手机号</Text>
-					{this.state.bindCode
+					{this.state.phone
 						? <View style={styles.lineView}>
-							<Text style={styles.content}>{this.state.bindCode}</Text>
+							<Text style={styles.content}>{this.state.phone}</Text>
 						</View>
 						: <View style={styles.lineView}>
 							<Text style={[styles.content, { color: '#CFCFD0' }]}>还未绑定</Text>
