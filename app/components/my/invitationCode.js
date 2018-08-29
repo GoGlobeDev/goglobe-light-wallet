@@ -46,18 +46,17 @@ class InvitationCode extends React.Component {
 				</View>
 				<View style={styles.view}>
 					<Text style={styles.title}>我绑定的邀请码</Text>
-					<View style={styles.lineView}>
-						{this.state.bindCode
-							? <Text style={styles.content}>{this.state.bindCode}</Text>
-							: <Text style={[styles.content, { color: '#CFCFD0' }]}>还未绑定</Text>
-						}
-						
-						<TouchableOpacity style={[styles.button, { width: scaleSize(160) }]} onPress={this._setBindingPhone}>
-							<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>去绑定</Text>
-						</TouchableOpacity>
-					</View>
-					
-					
+					{this.state.bindCode
+						? <View style={styles.lineView}>
+							<Text style={styles.content}>{this.state.bindCode}</Text>
+						</View>
+						: <View style={styles.lineView}>
+							<Text style={[styles.content, { color: '#CFCFD0' }]}>还未绑定</Text>
+							<TouchableOpacity style={[styles.button, { width: scaleSize(160) }]} onPress={this._setBindingPhone}>
+								<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>去绑定</Text>
+							</TouchableOpacity>
+						</View>
+					}
 				</View>
 				<Toast ref="toast" position="center" />
 
