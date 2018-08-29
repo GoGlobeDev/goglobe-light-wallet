@@ -11,7 +11,8 @@ class InvitationCode extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			code: '12324332'
+			code: '12324332',
+			bindCode: ''
 		};
 	}
 	_setClipboardContent = async () => {
@@ -27,7 +28,8 @@ class InvitationCode extends React.Component {
 		console.log(this.state.code)
 	}
 	_setBindingPhone = () => {
-		console.log(this.state.code)
+		console.log(this.state.code);
+		this.props.navigation.navigate('BindInCode');
 	}
 	render() {
 		const { params } = this.props.navigation.state;
@@ -35,7 +37,7 @@ class InvitationCode extends React.Component {
 			<View style={styles.container}>
 				<View style={styles.view}>
 					<Text style={styles.title}>我的邀请码</Text>
-					<View style={{ flexDirection: 'row', alignItems: 'center'}}>
+					<View style={styles.lineView}>
 						<Text style={styles.content}>{this.state.code}</Text>
 						<TouchableOpacity style={styles.button} onPress={this._setClipboardContent}>
 							<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>复制</Text>
@@ -44,9 +46,13 @@ class InvitationCode extends React.Component {
 				</View>
 				<View style={styles.view}>
 					<Text style={styles.title}>我绑定的邀请码</Text>
-					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-						<Text style={styles.content}>还未绑定</Text>
-						<TouchableOpacity style={styles.button} onPress={this._setBindingPhone}>
+					<View style={styles.lineView}>
+						{this.state.bindCode
+							? <Text style={styles.content}>{this.state.bindCode}</Text>
+							: <Text style={[styles.content, { color: '#CFCFD0' }]}>还未绑定</Text>
+						}
+						
+						<TouchableOpacity style={[styles.button, { width: scaleSize(160) }]} onPress={this._setBindingPhone}>
 							<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>去绑定</Text>
 						</TouchableOpacity>
 					</View>
@@ -71,15 +77,23 @@ const styles = StyleSheet.create({
 	view:{
 		backgroundColor: '#fff',
 		padding: scaleSize(48),
+		paddingBottom: 0,
 		marginBottom: scaleSize(16)
 	},
 	title: {
 		fontSize: 14,
 		color: '#0D0E15'
 	},
+	lineView: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		height: scaleSize(150),
+		justifyContent: 'space-between'
+	},
 	content: {
 		fontSize: 34,
 		color: '#0D0E15',
+		fontWeight: 'bold'
 	},
 	button: {
 		width: scaleSize(128),
@@ -87,7 +101,5 @@ const styles = StyleSheet.create({
 		borderRadius: scaleSize(52),
 		backgroundColor: '#EA6228',
 		justifyContent: 'center',
-		marginLeft: scaleSize(196),
-		marginTop: scaleSize(79)
 	},
 });
