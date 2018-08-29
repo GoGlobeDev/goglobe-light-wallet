@@ -51,6 +51,7 @@ export default {
 			},
 			bindPhone: {
 				_title: '绑定手机',
+				button: '去绑定'
 			},
 			helpCenter: {
 				_title: '帮助中心',
@@ -61,7 +62,7 @@ export default {
 			aboutUs: {
 				_title: '关于我们',
 				currentVersion: '当前版本',
-				introduction: 'True是一款移动端轻钱包APP,它旨在为普通用户提供一款安全放心，简单好用，功能强大的数字资产钱包应用。',
+				introduction: '自游链是一款移动端轻钱包APP,它旨在为普通用户提供一款安全放心，简单好用，功能强大的数字资产钱包应用。',
 				useAgreement: '用户协议',
 				privacyPolicy: '隐私条款',
 				versionLog: '版本日志',

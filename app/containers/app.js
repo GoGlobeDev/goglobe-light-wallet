@@ -32,7 +32,12 @@ import UserPolicy from '../components/my/userpolicy'; //我的 -> 关于我们 -
 import Versions from '../components/my/versions'; //我的 -> 关于我们 -> 版本日志
 
 import BindingPhone from '../components/my/bindingPhone'; // 我的 -> 绑定手机
+import GoBindPhone from '../components/my/goBindPhone'; //我的 -> 去绑定手机号
 import InvitationCode from '../components/my/invitationCode'; //我的 -> 邀请码
+import BindInCode from '../components/my/bindInCode'; //我的 -> 绑定邀请码
+
+import BindMachine from '../components/node/bindMachine'; //矿机 -> 绑定矿机
+import SetPwd from '../components/node/setPwd'; // 矿机 -> 设置交易密码
 
 import QRscanner from '../components/public/QRscanner'; //转账 -> 扫描二维码
 
@@ -117,12 +122,13 @@ const Node = createStackNavigator({
 		navigationOptions: () => ({
 			title: I18n.t('tab.node'),
 			headerBackTitle: null,
+			header: null,
 			headerStyle: {
-				backgroundColor: '#528bf7',
+				backgroundColor: '#ffffff',
 				borderBottomWidth: 0
 			},
 			headerTitleStyle: {
-				color: '#fff',
+				color: 'rgba(13,14,21,1)',
 				fontSize: 18
 			},
 			headerTintColor: '#000',
@@ -137,12 +143,13 @@ const My = createStackNavigator({
 		navigationOptions: () => ({
 			title: I18n.t('tab.my'),
 			headerBackTitle: null,
+			header: null,
 			headerStyle: {
-				backgroundColor: '#528bf7',
+				backgroundColor: '#ffffff',
 				borderBottomWidth: 0
 			},
 			headerTitleStyle: {
-				color: '#fff',
+				color: 'rgba(13,14,21,1)',
 				fontSize: 18
 			},
 			headerTintColor: '#000'
@@ -296,7 +303,9 @@ const App = createStackNavigator(
 			}
 		},
 		InvitationCode,
+		BindInCode,
 		BindingPhone,
+		GoBindPhone,
 		SysSet: {
 			screen: SysSet,
 			navigationOptions: {
@@ -323,6 +332,8 @@ const App = createStackNavigator(
 		// 		headerTitle: () => <Text>{I18n.t('my.webHost')} </Text>
 		// 	}
 		// },
+		BindMachine,
+		SetPwd,
 		QRscanner: {
 			screen: QRscanner,
 			navigationOptions: {
