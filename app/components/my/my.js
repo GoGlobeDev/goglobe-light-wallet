@@ -4,6 +4,7 @@ import { withNavigation } from 'react-navigation';
 import { I18n } from '../../../language/i18n';
 const screen = Dimensions.get('window');
 import Icon from '../../pages/iconSets';
+import { scaleSize, ifIphoneX } from '../../utils/ScreenUtil';
 
 class My extends Component {
 	constructor(props) {
@@ -14,6 +15,9 @@ class My extends Component {
 	render() {
 		return (
 			<View style={styles.myPage}>
+				<View style={{ backgroundColor: "#fff"}}>
+					<Text style={styles.title}>我的</Text>
+				</View>	
 				<View style={styles.myTopBan}>
 					<View style={styles.myTopBanCon}>
 						<TouchableHighlight
@@ -22,9 +26,10 @@ class My extends Component {
 							onPress={() => {
 								this.navigate('WalletInfo');
 							}}
-						>
+							>
 							<View style={styles.center}>
-								<Icon name="icon-qianbao-" size={40} color="#fff" />
+								{/* <Icon name="icon-qianbao-" size={40} color="#fff" /> */}
+								<Image style={styles.myTopBanConItemIcon} source={require('../../assets/images/my/icon-qianbao.png')} />
 								<Text style={styles.myTopBanConItemText}>{I18n.t('my.home.walletManagement')}</Text>
 							</View>
 						</TouchableHighlight>
@@ -34,9 +39,10 @@ class My extends Component {
 							onPress={() => {
 								this.navigate('TransactionRecord');
 							}}
-						>
+							>
 							<View style={styles.center}>
-								<Icon name="icon-jiaoyijilu" size={40} color="#fff" />
+								{/* <Icon name="icon-jiaoyijilu" size={40} color="#fff" /> */}
+								<Image style={styles.myTopBanConItemIcon} source={require('../../assets/images/my/icon-jiaoyijilu.png')} />
 								<Text style={styles.myTopBanConItemText}>{I18n.t('my.home.transactionRecord')}</Text>
 							</View>
 						</TouchableHighlight>
@@ -52,7 +58,7 @@ class My extends Component {
 						>
 							<View style={styles.myColsConPartRow}>
 								<View style={styles.myColsConPartRowLf}>
-									<Icon name="icon-bangzhuzhongxin" size={18} color="#528bf7" />
+								<Image style={styles.icon36} source={require('../../assets/images/my/icon_invitation_code.png')} />
 								</View>
 								<View style={[ styles.myColsConPartRowRi, styles.bottomLine ]}>
 									<Text>{I18n.t('my.home.invitationCode._title')}</Text>
@@ -69,7 +75,7 @@ class My extends Component {
 						>
 							<View style={styles.myColsConPartRow}>
 								<View style={styles.myColsConPartRowLf}>
-									<Icon name="icon-guanyuwomen" size={20} color="#528bf7" />
+								<Image style={styles.icon36} source={require('../../assets/images/my/icon_phone.png')} />
 								</View>
 								<View style={[ styles.myColsConPartRowRi, styles.noSplitLine ]}>
 									<Text>{I18n.t('my.home.bindPhone._title')}</Text>
@@ -91,7 +97,7 @@ class My extends Component {
 						>
 							<View style={styles.myColsConPartRow}>
 								<View style={styles.myColsConPartRowLf}>
-									<Icon name="icon-shezhi" size={20} color="#528bf7" />
+									<Image style={styles.icon36} source={require('../../assets/images/my/icon_setting.png')} />
 								</View>
 								<View style={[ styles.myColsConPartRowRi, styles.noSplitLine ]}>
 									<Text>{I18n.t('my.home.systemSetting')}</Text>
@@ -102,7 +108,6 @@ class My extends Component {
 							</View>
 						</TouchableHighlight>
 					</View>
-
 					<View style={styles.myColsConPart}>
 						<TouchableHighlight
 							onPress={() => this.props.navigation.navigate('HelperCenter')}
@@ -111,7 +116,7 @@ class My extends Component {
 						>
 							<View style={styles.myColsConPartRow}>
 								<View style={styles.myColsConPartRowLf}>
-									<Icon name="icon-bangzhuzhongxin" size={18} color="#528bf7" />
+									<Image style={styles.icon36} source={require('../../assets/images/my/icon_help.png')} />
 								</View>
 								<View style={[ styles.myColsConPartRowRi, styles.bottomLine ]}>
 									<Text>{I18n.t('my.home.helpCenter._title')}</Text>
@@ -128,7 +133,7 @@ class My extends Component {
 						>
 							<View style={styles.myColsConPartRow}>
 								<View style={styles.myColsConPartRowLf}>
-									<Icon name="icon-guanyuwomen" size={20} color="#528bf7" />
+								<Image style={styles.icon36} source={require('../../assets/images/my/icon_about_me.png')} />
 								</View>
 								<View style={[ styles.myColsConPartRowRi, styles.noSplitLine ]}>
 									<Text>{I18n.t('my.home.aboutUs._title')}</Text>
@@ -150,14 +155,21 @@ export default withNavigation(My);
 const styles = StyleSheet.create({
 	myPage: {
 		flex: 1,
-		backgroundColor: '#F6F6F6'
+		backgroundColor: '#f3f3f3'
+	},
+	title: {
+		color: '#0D0E15',
+		fontSize: 34,
+		marginTop: scaleSize(114),
+		marginLeft: scaleSize(32)
 	},
 	myTopBan: {
 		padding: 8,
 		height: screen.height * 0.2,
-		backgroundColor: '#528bf7',
+		backgroundColor: '#fff',
 		alignItems: 'center',
-		justifyContent: 'space-around'
+		justifyContent: 'space-around',
+		marginBottom: scaleSize(15)
 	},
 	myTopBanCon: {
 		flexDirection: 'row',
@@ -166,23 +178,27 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-around'
 	},
 	myTopBanConItem: {
-		width: screen.width * 0.35,
-		height: 80,
-		justifyContent: 'space-around',
-		alignItems: 'center'
-	},
-	myTopBanrecicon_1: {
-		width: 30,
-		height: 32
-	},
-	myTopBanrecicon: {
-		width: 38,
-		height: 30
+		width: scaleSize(312),
+		height: scaleSize(176),
+		// justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: '#fff',
+		borderRadius: scaleSize(20),
+		shadowOffset: { width: 0, height: 0 },
+		shadowColor: 'rgb(34, 34, 34)',
+		shadowOpacity: 0.18,
+		shadowRadius: scaleSize(27),
+		elevation: 5,
 	},
 	myTopBanConItemText: {
-		color: 'white',
-		marginTop: 5,
-		textAlign: 'center'
+		color: '#0D0E15',
+		// marginTop: 5,
+		// textAlign: 'center',
+		fontSize: 15
+	},
+	myTopBanConItemIcon: {
+		width: scaleSize(40),
+		height: scaleSize(40),
 	},
 	myColsCon: {},
 	myColsConPart: {
@@ -192,9 +208,10 @@ const styles = StyleSheet.create({
 	myColsConPartRow: {
 		flexDirection: 'row',
 		alignItems: 'stretch',
-		height: 60
+		height: scaleSize(110)
 	},
 	myColsConPartRowLf: {
+		marginLeft: scaleSize(30),
 		width: 40,
 		alignItems: 'center',
 		justifyContent: 'center'
@@ -260,10 +277,16 @@ const styles = StyleSheet.create({
 		borderWidth: 0
 	},
 	center: {
-		justifyContent: 'center',
+		// justifyContent: 'center',
 		alignItems: 'center',
-		width: screen.width * 0.35,
-		height: 80,
-		justifyContent: 'space-around'
+		// width: screen.width * 0.35,
+		height: scaleSize(176),
+		justifyContent: 'space-between',
+		paddingBottom: scaleSize(35),
+		paddingTop: scaleSize(42)
+	},
+	icon36: {
+		width: scaleSize(36),
+		height: scaleSize(36)
 	}
 });
