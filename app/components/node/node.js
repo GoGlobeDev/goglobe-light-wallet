@@ -81,7 +81,7 @@ class Node extends Component {
 										<Text style={styles.sm_content}>10000</Text>
 									</View>
 									<TouchableOpacity style={[styles.button, { width: scaleSize(128), height: scaleSize(72) }]} onPress={this._clickToWithdrawCash}>
-										<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.withdraw')}</Text>
+										<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.withdrawCash')}</Text>
 									</TouchableOpacity>
 								</View>
 

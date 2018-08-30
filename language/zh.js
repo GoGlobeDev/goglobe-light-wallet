@@ -154,7 +154,7 @@ export default {
         minerCount: '矿机数',
         totalPower: '总算力',
         dailyProducts: '每日产出',
-        withdraw: '提现',
+        withdrawCash: '提现',
         balance: '当前持有(GOG)',
         power: '算力',
         dailyProduct: '日产出',
