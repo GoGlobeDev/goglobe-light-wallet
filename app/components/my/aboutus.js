@@ -137,7 +137,7 @@ export class AboutUs extends Component {
 					<View>
 						<Text style={[ styles.txtCen, styles.descr ]}>
 							{I18n.t('my.home.aboutUs.introduction')}
-							{/* True是一款移动端轻钱包APP,它旨在为普通用户提供一款安全放心，简单好用，功能强大的数字资产钱包应用。 */}
+							{/* GoGlobe是一款移动端轻钱包APP,它旨在为普通用户提供一款安全放心，简单好用，功能强大的数字资产钱包应用。 */}
 						</Text>
 					</View>
 				</View>
