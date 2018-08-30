@@ -11,7 +11,7 @@ class BindMachine extends React.Component {
 		}
 	}
 	static navigationOptions = {
-		headerTitle: '绑定矿机'
+		headerTitle: I18n.t('node.registerMiner._title')
 	};
 	componentDidMount() {
 		// storage
@@ -40,15 +40,15 @@ class BindMachine extends React.Component {
 		return (
 			<View style={styles.container}>
 				<View style={styles.inputbox}>
-					<Text style={styles.inputTitle}>输入矿机编号</Text>
+					<Text style={styles.inputTitle}>{I18n.t('node.registerMiner.inputMinerNumber')}</Text>
 					<TextInput
 						style={styles.inputText}
-						placeholder="请输入矿机编号"
+						placeholder={I18n.t('node.registerMiner.inputMinerNumber')}
 						onChangeText={(text) => this._changeText(text)}
 					/>
 				</View>
 				<TouchableOpacity style={[styles.button, this.state.text === '' ? { backgroundColor: '#F7C9A9' } : {  backgroundColor: '#EA7828' }]} onPress={this._clickTocomfirm}>
-					<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>确定</Text>
+					<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('public.OK')}</Text>
 				</TouchableOpacity>
 			</View>
 		);

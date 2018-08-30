@@ -28,9 +28,9 @@ class MachineList extends Component {
 				</View>
 				<View>
 					<Text style={styles.listTitle}>{this.props.item.title}</Text>
-					<Text style={styles.listContent}>算力：1000</Text>
-					<Text style={styles.listContent}>日产出：1000</Text>
-					<Text style={styles.listContent}>地点：美国圣地亚哥金坷垃广场</Text>
+					<Text style={styles.listContent}>{I18n.t('node.power')}：1000</Text>
+					<Text style={styles.listContent}>{I18n.t('node.dailyProduct')}：1000</Text>
+					<Text style={styles.listContent}>{I18n.t('node.address')}：美国圣地亚哥金坷垃广场</Text>
 				</View>
 			</View>
 		)
@@ -65,37 +65,37 @@ class Node extends Component {
 			<View style={styles.container}>
 				{
 					this.state.machineNumber === 0 ? <View>
-						<Text style={[styles.title, {color: '#0D0E15', marginTop: scaleSize(114), marginLeft: scaleSize(32)}]}>矿机</Text>
+						<Text style={[styles.title, {color: '#0D0E15', marginTop: scaleSize(114), marginLeft: scaleSize(32)}]}>{I18n.t('node.miner')}</Text>
 						<Image style={styles.machineIcon} source={require('../../assets/images/node/machine.png')}/>
 						<TouchableOpacity style={styles.button} onPress={this._clickToBindMachine}>
-							<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>绑定矿机</Text>
+							<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.registerMiner._title')}</Text>
 						</TouchableOpacity>
 					</View>
 					: <View>
 						<ImageBackground style={{ width: scaleSize(750), height: scaleSize(568)}} source={require('../../assets/images/node/node-top.png')}>
 							<View style={styles.top}>
-								<Text style={styles.title}>矿机</Text>
+								<Text style={styles.title}>{I18n.t('node.miner')}</Text>
 								<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
 									<View>
-										<Text style={styles.sm_title}>当前持有(GOG)</Text>
+										<Text style={styles.sm_title}>{I18n.t('node.balance')}</Text>
 										<Text style={styles.sm_content}>10000</Text>
 									</View>
 									<TouchableOpacity style={[styles.button, { width: scaleSize(128), height: scaleSize(72) }]} onPress={this._clickToWithdrawCash}>
-										<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>提现</Text>
+										<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.withdraw')}</Text>
 									</TouchableOpacity>
 								</View>
-								
+
 								<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 									<View>
-										<Text style={styles.sm_title}>矿机数</Text>
+										<Text style={styles.sm_title}>{I18n.t('node.minerCount')}</Text>
 										<Text style={styles.sm_content}>1</Text>
 									</View>
 									<View>
-										<Text style={styles.sm_title}>总算力</Text>
+										<Text style={styles.sm_title}>{I18n.t('node.totalPower')}</Text>
 										<Text style={styles.sm_content}>10000</Text>
 									</View>
 									<View>
-										<Text style={styles.sm_title}>每日产出</Text>
+										<Text style={styles.sm_title}>{I18n.t('node.dailyProducts')}</Text>
 										<Text style={styles.sm_content}>121.56</Text>
 									</View>
 								</View>
@@ -107,12 +107,12 @@ class Node extends Component {
 							})}
 						</View>
 						{this.state.MachineList.length < 2 && <TouchableOpacity style={styles.button} onPress={this._clickToBindMachine}>
-							<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>绑定矿机</Text>
+							<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.registerMiner._title')}</Text>
 						</TouchableOpacity>}
-						
+
 					</View>
 				}
-				
+
 
 			</View>
 		);

@@ -147,7 +147,47 @@ export default {
 		}
 	},
 	node: {
-
+        miner: 'Miner',
+        minerCount: 'Miner #',
+        totalPower: 'Total Power',
+        dailyProducts: 'Daily Products',
+        withdraw: 'Withdraw',
+        balance: 'Balance(GOG)',
+        power: 'Power',
+        dailyProduct: 'Daily Product',
+        address: 'Address',
+        registerMiner: {
+            _title: 'Register Miner',
+            inputMinerNumber: 'Input Miner Number'
+        },
+        withdrawRule: {
+            _title: 'Rule',
+            rule1: '1、每次提现不可少于5000GOG。',
+            rule2: '2、每次提币的手续费为1%提现数额。',
+            rule3: '3、请不要直接提现到ICO的众筹地址，这会导致您无法收取众筹到的数字资产。',
+            rule4: '4、提币到合约地址可能会导致交易失败，将导致转账失败，资产将退回到GOG。GOG会人工处理将币转回到原账户。 ',
+            rule5: '5、网络转账费用及时间是不固定的，取决于转账时合约执行需要消耗的算力。当前支付的Gas limit为90000，用于执行转账或合约执行。如果此次转账消耗超过90000gas，将导致转账失败，资产将退回到GOG。',
+            rule6: '6、请务必确认电脑及手机安全，防止信息被泄露或篡改。'
+        },
+        setPassword: {
+            _title: 'Set Trading Password',
+            tip1: '1.交易密码必须有大写字母、小写字母、数字，禁止使 用符号',
+            tip2: '2.交易密码限定在12位之内',
+            setPassword: 'Set Password',
+            confirmPassword: 'Confirm Password',
+            placehoder1: '字母、数字组合 12位以内',
+            placehoder2: 'Please repeat trading password'
+        },
+        withdraw: {
+            _title: 'Withdraw',
+            withdrawRule: 'Withdraw Rules',
+            withdrawAmount: 'Amount',
+            withdrawFee: '(1% Fee)',
+            availableBalance: 'Available Balance',
+            withdrawAll: 'Withdraw All',
+            receivedAmount: 'Received Amount',
+            withdrawToken: 'Withdraw'
+        }
 	},
 	public: {
 		second: 'Second',

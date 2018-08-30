@@ -7,10 +7,10 @@ import { scaleSize } from '../../utils/ScreenUtil';
 class WithdrawCash extends React.Component {
 	static navigationOptions = ({navigation}) => ({
         headerTitle: <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center', width: scaleSize(523), paddingLeft: 0 }}>
-          <Text style={{ fontSize: scaleSize(34), color: 'rgba(50, 50, 50, 1)', marginLeft: 0 }}>提现</Text>
+          <Text style={{ fontSize: scaleSize(34), color: 'rgba(50, 50, 50, 1)', marginLeft: 0 }}>{I18n.t('node.withdraw._title')}</Text>
         </View>,
         headerRight: <TouchableOpacity onPress={() => navigation.state.params.currencyRule()}>
-          <Text style={{ paddingRight: scaleSize(33), fontSize: 16, color: '#486495' }}>提币规则</Text>
+          <Text style={{ paddingRight: scaleSize(33), fontSize: 16, color: '#486495' }}>{I18n.t('node.withdraw.withdrawRule')}</Text>
         </TouchableOpacity>,
       })
 	constructor(props) {
@@ -31,7 +31,7 @@ class WithdrawCash extends React.Component {
 		return (
 			<View style={styles.container}>
 				<View style={styles.shadowView}>
-                    <Text style={styles.text14}>提币数量（收取1%手续费）</Text>
+                    <Text style={styles.text14}>{I18n.t('node.withdraw.withdrawAmount')}{I18n.t('node.withdraw.withdrawFee')}</Text>
                     <View style={[styles.rows, { paddingBottom: scaleSize(32), borderBottomColor: '#E7E7E7', borderBottomWidth: scaleSize(1)}]}>
                         <Text style={styles.text17}>GOG</Text>
                         <Input
@@ -39,17 +39,17 @@ class WithdrawCash extends React.Component {
                         />
                     </View>
                     <View style={[styles.rows, { justifyContent: 'space-between', marginTop: scaleSize(25)}]}>
-                        <Text style={[styles.text14, { opacity: 0.5 }]}>可用余额：1000GOG</Text>
+                        <Text style={[styles.text14, { opacity: 0.5 }]}>{I18n.t('node.withdraw.availableBalance')}：1000GOG</Text>
                         <TouchableOpacity>
-                            <Text style={[styles.text14, { color: '#486495'} ]}>全部提现</Text>
+                            <Text style={[styles.text14, { color: '#486495'} ]}>{I18n.t('node.withdraw.withdrawAll')}</Text>
                         </TouchableOpacity>
                     </View>
-                    <Text style={styles.text17}>实际到账数量：</Text>
+                    <Text style={styles.text17}>{I18n.t('node.withdraw.receivedAmount')}：</Text>
                     <TouchableOpacity style={[styles.button, this.state.number === '' ? { backgroundColor: '#F7C9A9' } : {  backgroundColor: '#EA7828' }]} onPress={this._clickTocomfirm}>
-                        <Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>提币</Text>
+                        <Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.withdraw.withdrawToken')}</Text>
                     </TouchableOpacity>
                 </View>
-				
+
 			</View>
 		);
 	}

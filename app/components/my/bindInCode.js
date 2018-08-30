@@ -12,7 +12,7 @@ export default class BindInCode extends React.Component {
 		}
 	}
 	static navigationOptions = {
-		headerTitle: '绑定邀请码'
+		headerTitle: I18n.t('my.home.bindingCode._title')
 	};
 	componentDidMount() {
 		// storage
@@ -49,15 +49,15 @@ export default class BindInCode extends React.Component {
 		return (
 			<View style={styles.container}>
 				<View style={styles.inputbox}>
-					<Text style={styles.inputTitle}>输入邀请码</Text>
+					<Text style={styles.inputTitle}>{I18n.t('my.home.bindingCode.inputCode')}</Text>
 					<Input
 						style={styles.inputText}
-						placeholder="请输入邀请码"
+						placeholder={I18n.t('my.home.bindingCode.pleaseInputCode')}
 						onChangeText={(text) => this._changeText(text)}
 					/>
 				</View>
 				<TouchableOpacity style={[styles.button, this.state.text === '' ? { backgroundColor: '#F7C9A9' } : {  backgroundColor: '#EA7828' }]} onPress={this._clickTocomfirm}>
-					<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>确定</Text>
+					<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('public.OK')}</Text>
 				</TouchableOpacity>
 				{/* <Modal
                     animationType={'slide'}
@@ -105,9 +105,9 @@ export default class BindInCode extends React.Component {
                     >
 					<View style={{ flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
                         <View style={[styles.modalView, { height: scaleSize(250) }]}>
-                            <Text style={styles.modalText}>您当前输入的邀请码已被使用，请重新输入</Text>
+                            <Text style={styles.modalText}>{I18n.t('my.home.bindingCode.codeUsed')}</Text>
                             <TouchableOpacity style={[styles.modalBottom, { justifyContent: 'center', alignItems: 'center' }]}  onPress={this.clickToClose}>
-                                <Text style={styles.btn}>知道了</Text>
+                                <Text style={styles.btn}>{I18n.t('my.home.bindingCode.getIt')}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

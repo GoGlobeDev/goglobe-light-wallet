@@ -12,7 +12,7 @@ export default class SetPwd extends React.Component {
 		}
 	}
 	static navigationOptions = {
-		headerTitle: '设置交易密码'
+		headerTitle: I18n.t('node.setPassword._title')
 	};
 	componentDidMount() {
 		// storage
@@ -47,27 +47,27 @@ export default class SetPwd extends React.Component {
 		return (
 			<View style={styles.container}>
             	<View style={styles.tip}>
-					<Text style={styles.tipText}>1.交易密码必须有大写字母、小写字母、数字，禁止使 用符号</Text>
-					<Text style={styles.tipText}>2.交易密码限定在12位之内</Text>
+					<Text style={styles.tipText}>{I18n.t('node.setPassword.tip1')}</Text>
+					<Text style={styles.tipText}>{I18n.t('node.setPassword.tip2')}</Text>
 				</View>
 				<View style={styles.inputbox}>
-					<Text style={styles.inputTitle}>设置交易密码</Text>
+					<Text style={styles.inputTitle}>{I18n.t('node.setPassword.setPassword')}</Text>
 					<TextInput
 						style={styles.inputText}
-						placeholder="字母、数字组合 12位以内"
+						placeholder={I18n.t('node.setPassword.placehoder1')}
 						onChangeText={(pwd) => this._changePwd(pwd)}
 					/>
 				</View>
                 <View style={styles.inputbox}>
-					<Text style={styles.inputTitle}>确认交易密码</Text>
+					<Text style={styles.inputTitle}>{I18n.t('node.setPassword.confirmPassword')}</Text>
 					<TextInput
 						style={styles.inputText}
-						placeholder="请重复输入交易密码"
+						placeholder={I18n.t('node.setPassword.placehoder2')}
 						onChangeText={(pwd1) => this._changePwd1(pwd1)}
 					/>
 				</View>
 				<TouchableOpacity style={[styles.button, this.state.pwd === '' ? { backgroundColor: '#F7C9A9' } : {  backgroundColor: '#EA7828' }]} onPress={this._clickTocomfirm}>
-					<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>确定</Text>
+					<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('public.OK')}</Text>
 				</TouchableOpacity>
 			</View>
 		);

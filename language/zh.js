@@ -20,7 +20,7 @@ export default {
 		pwdIsWrong: '两次密码不一致',
 		agreeTerm: '请同意服务及隐私条款',
 		createWalletTipOfPwd: '密码用于加密私钥，强度非常重要！',
-		createWalletTipOfNoStore: 'True钱包不会储存密码，也无法帮您找回，请务必牢记！',
+		createWalletTipOfNoStore: '自游链钱包不会储存密码，也无法帮您找回，请务必牢记！',
 		iAgreeTerm: '我已仔细阅读并同意',
 		term: '服务及隐私条款',
 		mnemonicTip: '助记词首尾不能有空格,请重新输入',
@@ -53,6 +53,13 @@ export default {
 				_title: '绑定手机',
 				button: '去绑定'
 			},
+            bindingCode: {
+                _title: '绑定邀请码',
+                inputCode: '输入邀请码',
+                pleaseInputCode: '请输入邀请码',
+                codeUsed: '您当前输入的邀请码已被使用，请重新输入',
+                getIt: '知道了'
+            },
 			helpCenter: {
 				_title: '帮助中心',
 				mnemonic: '什么是助记词',
@@ -143,7 +150,47 @@ export default {
 		}
 	},
 	node: {
-
+        miner: '矿机',
+        minerCount: '矿机数',
+        totalPower: '总算力',
+        dailyProducts: '每日产出',
+        withdraw: '提现',
+        balance: '当前持有(GOG)',
+        power: '算力',
+        dailyProduct: '日产出',
+        address: '地点',
+        registerMiner: {
+            _title: '绑定矿机',
+            inputMinerNumber: '输入矿机编号'
+        },
+        withdrawRule: {
+            _title: '提币规则',
+            rule1: '1、每次提现不可少于5000GOG。',
+            rule2: '2、每次提币的手续费为1%提现数额。',
+            rule3: '3、请不要直接提现到ICO的众筹地址，这会导致您无法收取众筹到的数字资产。',
+            rule4: '4、提币到合约地址可能会导致交易失败，将导致转账失败，资产将退回到GOG。GOG会人工处理将币转回到原账户。 ',
+            rule5: '5、网络转账费用及时间是不固定的，取决于转账时合约执行需要消耗的算力。当前支付的Gas limit为90000，用于执行转账或合约执行。如果此次转账消耗超过90000gas，将导致转账失败，资产将退回到GOG。',
+            rule6: '6、请务必确认电脑及手机安全，防止信息被泄露或篡改。'
+        },
+        setPassword: {
+            _title: '设置交易密码',
+            tip1: '1.交易密码必须有大写字母、小写字母、数字，禁止使 用符号',
+            tip2: '2.交易密码限定在12位之内',
+            setPassword: '设置交易密码',
+            confirmPassword: '确认交易密码',
+            placehoder1: '字母、数字组合 12位以内',
+            placehoder2: '请重复输入交易密码'
+        },
+        withdraw: {
+            _title: '提现',
+            withdrawRule: '提币规则',
+            withdrawAmount: '提币数量',
+            withdrawFee: '收取1%手续费',
+            availableBalance: '可用余额',
+            withdrawAll: '全部提现',
+            receivedAmount: '实际到账数量',
+            withdrawToken: '提币'
+        }
 	},
 	public: {
 		second: '秒',
@@ -159,6 +206,7 @@ export default {
 		verifyPwd: '验证密码',
 		inputPwd: '输入您的密码',
 		PwdIsNull: '请输入密码',
+        OK: '确定',
 		define: '确定',
 		cancel: '取消',
 		copySuccess: '复制成功',
