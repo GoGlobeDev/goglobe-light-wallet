@@ -40,6 +40,7 @@ import BindInCode from '../components/my/bindInCode'; //我的 -> 绑定邀请�
 import BindMachine from '../components/node/bindMachine'; //矿机 -> 绑定矿机
 import SetPwd from '../components/node/setPwd'; // 矿机 -> 设置交易密码
 import WithdrawCash from '../components/node/withdrawCash'; //矿机 -> 提现
+import CurrencyRule from '../components/node/currencyRule'; //矿机 -> 提现规则
 
 import QRscanner from '../components/public/QRscanner'; //转账 -> 扫描二维码
 
@@ -338,6 +339,7 @@ const App = createStackNavigator(
 		BindMachine,
 		SetPwd,
 		WithdrawCash,
+		CurrencyRule,
 		QRscanner: {
 			screen: QRscanner,
 			navigationOptions: {

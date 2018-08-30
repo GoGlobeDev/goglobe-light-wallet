@@ -5,9 +5,14 @@ import { Input } from 'native-base';
 import { I18n } from '../../../language/i18n';
 import { scaleSize } from '../../utils/ScreenUtil';
 class WithdrawCash extends React.Component {
-	static navigationOptions = {
-		headerTitle: '提现'
-	};
+	static navigationOptions = ({navigation}) => ({
+        headerTitle: <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center', width: scaleSize(523), paddingLeft: 0 }}>
+          <Text style={{ fontSize: scaleSize(34), color: 'rgba(50, 50, 50, 1)', marginLeft: 0 }}>提现</Text>
+        </View>,
+        headerRight: <TouchableOpacity onPress={() => navigation.state.params.currencyRule()}>
+          <Text style={{ paddingRight: scaleSize(33), fontSize: 16, color: '#486495' }}>提币规则</Text>
+        </TouchableOpacity>,
+      })
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -15,7 +20,11 @@ class WithdrawCash extends React.Component {
 		}
 	}
 	componentDidMount() {
-
+        this.props.navigation.setParams({
+            currencyRule: () => {
+                this.props.navigation.navigate('CurrencyRule')
+            }
+        })
 	}
 	render() {
 		const { params } = this.props.navigation.state;

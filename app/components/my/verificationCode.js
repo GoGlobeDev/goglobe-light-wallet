@@ -3,6 +3,31 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-nati
 import { Input } from 'native-base';
 import { I18n } from '../../../language/i18n';
 import { scaleSize } from '../../utils/ScreenUtil';
+// import { Timer } from '../../utils/Timer.js';
+
+class Timer extends Component {
+    componentWillMount() {
+      const {interval} = this.props;
+      this.timer = setInterval(this.onEvent, interval);
+    }
+    componentWillReceiveProps(newProps) {
+      if (newProps.interval !== this.props.interval) {
+        clearInterval(this.timer);
+        this.timer = setInterval(this.onEvent, newProps.interval);
+      }
+    }
+    componentWillUnmount() {
+      clearInterval(this.timer);
+    }
+    onEvent = ev => {
+      const { onTimer } = this.props;
+      onTimer(ev);
+    };
+    render(){
+      return this.props.children || null;
+    }
+}
+
 class VCode extends React.Component {
 	static navigationOptions = {
 		headerTitle: '短信验证码'
@@ -11,7 +36,9 @@ class VCode extends React.Component {
 		super(props);
 		this.state = {
             phone: null,
-            focus: 'focus0'
+            focus: 'focus0',
+            count: 60,
+            state: false,
 		}
 	}
 	componentDidMount() {
@@ -33,14 +60,10 @@ class VCode extends React.Component {
 		console.log(this.state.phone);
 		this.props.navigation.navigate('GoBindPhone');
     }
-    _onBlur = () => {
-        this.setState({focus: focus1})
-    }
     _changeText0 = () => {
         this.setState({
             focus: 'focus1'
         })
-        this._onBlur()
         console.log(this.state.focus)
     }
     _changeText1 = () => {
@@ -72,8 +95,32 @@ class VCode extends React.Component {
         //     focus: 'focus1'
         // })
     }
+    onTimer =() => {
+        if (!this.state.state) {
+          if (this.state.count > 0) {
+            this.setState({
+              count: this.state.count - 1,
+            });
+            if(this.state.count === 0){
+              this.setState({ state: true });
+            }
+          }
+        }
+      }
+      _clickToSendCode = () => {
+          this.setState({
+              state: false,
+              count: 60,
+          })
+      }
 	render() {
-		const { params } = this.props.navigation.state;
+        // const { params } = this.props.navigation.state;
+        const vCodeStateText = !this.state.state ?
+            <Text style={styles.sendcode}>{this.state.count}s后重新获取</Text>
+            : <TouchableOpacity onPress={this._clickToSendCode}>
+                <Text style={[styles.sendcode, { color: '#486495'} ]}>重新获取</Text>
+            </TouchableOpacity>;
+        // const vcode = this.state.count
 		return (
 			<View style={styles.container}>
 				<View style={styles.view}>
@@ -85,7 +132,6 @@ class VCode extends React.Component {
                         maxLength={1}
                         keyboardType='numeric'
                         autoFocus={this.state.focus === 'focus0'}
-                        onBlur={()=> this._onBlur}
                         onChangeText={(txt) => this._changeText0(txt)}/>
                     <Input
                         style={styles.numberbox}
@@ -123,7 +169,16 @@ class VCode extends React.Component {
                         onChangeText={(txt) => this._changeText5(txt)}
                         />
                 </View>
-				
+                {/* <TouchableOpacity onPress={this.clickToSendCode}>
+                    <Text style={{paddingLeft: scaleSize(30), borderColor: 'rgba(154, 154, 154, 1)', borderLeftWidth: scaleSize(1), color: 'rgba(245, 166, 0, 1)', fontSize: scaleSize(30)}}>
+                        {vCodeStateText}
+                    </Text>
+                </TouchableOpacity> */}
+				<View>
+                    <Timer interval={1000} onTimer={this.onTimer}/>
+                    {/* <Text>重新获取</Text> */}
+                    {vCodeStateText}
+                </View>
 			</View>
 		);
 	}
@@ -151,7 +206,8 @@ const styles = StyleSheet.create({
         height: scaleSize(84),
         flexDirection: 'row',
         marginLeft: scaleSize(130),
-        marginRight: scaleSize(114)
+        marginRight: scaleSize(114),
+        marginTop: scaleSize(192)
     },
     numberbox: {
         width: scaleSize(62),
@@ -164,5 +220,11 @@ const styles = StyleSheet.create({
         textAlign: 'center'
         // paddingLeft: scaleSize(4)
         // marginLeft: scaleSize(14)
+    },
+    sendcode: {
+        fontSize: 15,
+        color: '#86868A',
+        textAlign: 'center',
+        marginTop: scaleSize(64)
     }
 });
