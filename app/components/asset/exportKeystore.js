@@ -5,8 +5,12 @@ import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-vi
 import Toast from 'react-native-easy-toast';
 import QRCode from 'react-native-qrcode';
 import { I18n } from '../../../language/i18n';
+import { scaleSize } from '../../utils/ScreenUtil';
 
 export default class ExportKeystore extends Component {
+	static navigationOptions = {
+		headerTitle: I18n.t('assets.walletInfo.exportKeystore')
+	};
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -34,31 +38,31 @@ export default class ExportKeystore extends Component {
 	render() {
 		return (
 			<ScrollableTabView
-				style={{ backgroundColor: '#fff' }}
-				tabBarUnderlineStyle={{ backgroundColor: '#007aff', height: 2 }}
-				tabBarActiveTextColor="#007aff"
-				tabBarInactiveTextColor="#000"
+				style={{ backgroundColor: '#fff', height: scaleSize(88) }}
+				tabBarUnderlineStyle={{ backgroundColor: '#FF6716', height: scaleSize(8), width: scaleSize(64), marginLeft: scaleSize(156) }}
+				tabBarActiveTextColor="#FF6716"
+				tabBarInactiveTextColor="#424559"
 				renderTabBar={() => <DefaultTabBar />}
 			>
 				<View tabLabel={I18n.t('assets.walletInfo.keystoreFile')} style={styles.container}>
 					<ScrollView>
 						<View style={styles.warningBox}>
 							<Text style={styles.color_cbf}>
-								{I18n.t('assets.walletInfo.keystore_save')}
+								·{I18n.t('assets.walletInfo.keystore_save')}
 								{/* 离线保存 */}
 							</Text>
 							<Text style={styles.color_999}>{I18n.t('assets.walletInfo.keystore_save_item')}</Text>
 						</View>
 						<View style={styles.warningBox}>
 							<Text style={styles.color_cbf}>
-								{I18n.t('assets.walletInfo.keystore_network')}
+								·{I18n.t('assets.walletInfo.keystore_network')}
 								{/* 请勿使用网络传输 */}
 							</Text>
 							<Text style={styles.color_999}>{I18n.t('assets.walletInfo.keystore_network_item')}</Text>
 						</View>
 						<View style={styles.warningBox}>
 							<Text style={styles.color_cbf}>
-								{I18n.t('assets.walletInfo.keystore_pwdsave')}
+								·{I18n.t('assets.walletInfo.keystore_pwdsave')}
 								{/* 密码保险箱保存 */}
 							</Text>
 							<Text style={styles.color_999}>{I18n.t('assets.walletInfo.keystore_pwdsave_item')}</Text>
@@ -77,14 +81,14 @@ export default class ExportKeystore extends Component {
 				<View tabLabel={I18n.t('assets.walletInfo.qrcode')} style={styles.container}>
 					<View style={styles.warningBox}>
 						<Text style={styles.color_cbf}>
-							{I18n.t('assets.walletInfo.keystore_scanning')}
+							·{I18n.t('assets.walletInfo.keystore_scanning')}
 							{/* 仅供直接扫描 */}
 						</Text>
 						<Text style={styles.color_999}>{I18n.t('assets.walletInfo.keystore_scanning_item')}</Text>
 					</View>
 					<View style={styles.warningBox}>
 						<Text style={styles.color_cbf}>
-							{I18n.t('assets.walletInfo.keystore_surround')}
+							·{I18n.t('assets.walletInfo.keystore_surround')}
 							{/* 在安全的环境下使用 */}
 						</Text>
 						<Text style={styles.color_999}>{I18n.t('assets.walletInfo.keystore_surround_item')}</Text>
@@ -101,31 +105,38 @@ export default class ExportKeystore extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		padding: 10
+		padding: scaleSize(32)
 	},
 	warningBox: {
 		justifyContent: 'space-around'
 	},
 	color_999: {
-		color: '#999'
+		color: '#959595',
+		fontSize: 13,
+		lineHeight: scaleSize(36),
+		marginBottom: scaleSize(32)
 	},
 	color_cbf: {
-		color: '#35ccbf'
+		color: '#F06D27',
+		fontSize: 15,
+		fontWeight: 'bold',
+		marginBottom: scaleSize(8)
 	},
 	keystore_area: {
-		borderWidth: 1,
-		borderColor: '#ccc',
-		padding: 10,
-		borderRadius: 10,
-		marginTop: 10
+		// borderWidth: 1,
+		// borderColor: '#ccc',
+		padding: scaleSize(32),
+		backgroundColor: '#F1F1F1',
+		borderRadius: scaleSize(8),
+		// marginTop: 10
 	},
 	buttonStyle: {
-		backgroundColor: '#007AFF',
-		height: 45,
+		backgroundColor: '#FF8725',
+		height: scaleSize(100),
 		borderColor: 'transparent',
 		borderWidth: 0,
-		borderRadius: 50,
-		marginTop: 30
+		borderRadius: scaleSize(52),
+		marginTop: scaleSize(48)
 	},
 	qrcode: {
 		alignItems: 'center',
