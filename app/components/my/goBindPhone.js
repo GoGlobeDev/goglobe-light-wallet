@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import { Button, Input } from 'react-native-elements';
+import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import { Input } from 'native-base';
 import { I18n } from '../../../language/i18n';
+import { scaleSize } from '../../utils/ScreenUtil';
 class GoBindPhone extends React.Component {
 	static navigationOptions = {
 		headerTitle: '绑定手机号'
@@ -9,7 +10,7 @@ class GoBindPhone extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			
+			phone: ''
 		}
 	}
 	componentDidMount() {
@@ -27,23 +28,35 @@ class GoBindPhone extends React.Component {
 		// 		console.log(e);
 		// 	});
 	}
+	_changeText = (phone) => {
+		this.setState({
+			phone: phone
+		})
+	}
+	_clickTocomfirm = () => {
+		this.props.navigation.navigate('VCode')
+		console.log('ddd')
+	}
 	render() {
 		const { params } = this.props.navigation.state;
+		console.log(params)
 		return (
 			<View style={styles.container}>
-				<View >
-					
-					<View>
-						<Text>输入手机号</Text>
-						<Input placeholder="输入手机号"/>
-						<Text>输入验证码</Text>
-						<Input placeholder="输入验证码"/>
-					</View>
-					<View>
-						<Text>在未绑定手机号到情况下，无法绑定矿机</Text>
-						<Text>完成绑定手机号后，即可绑定矿机，开始挖矿获取代币</Text>
-					</View>
+				<View style={styles.tipbox}>
+					<Text style={styles.tip}>1.在未绑定手机号情况下，无法绑定矿机</Text>
+					<Text style={styles.tip}>2.完成绑定手机号后，即可绑定矿机，开始挖矿获取 代币</Text>
 				</View>
+				<View style={styles.inputbox}>
+					<Text style={styles.inputTitle}>手机号</Text>
+					<TextInput
+						style={styles.inputText}
+						placeholder="请输入手机号"
+						onChangeText={(phone) => this._changeText(phone)}
+					/>
+				</View>
+				<TouchableOpacity style={[styles.button, this.state.phone === '' ? { backgroundColor: '#F7C9A9' } : {  backgroundColor: '#EA7828' }]} onPress={this._clickTocomfirm}>
+					<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>获取验证码</Text>
+				</TouchableOpacity>
 			</View>
 		);
 	}
@@ -54,7 +67,38 @@ export default GoBindPhone;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		padding: 20,
 		backgroundColor: '#fff'
-	}
+	},
+	tipbox: {
+		padding: scaleSize(48)
+	},
+	tip: {
+		color: '#EA7E25',
+		fontSize: 13,
+		lineHeight: scaleSize(42)
+	},
+	inputbox: {
+		padding: scaleSize(48)
+	},
+	inputTitle: {
+		fontSize: 13,
+		color: '#0D0E15'
+	},
+	inputText: {
+		padding: 0,
+		marginTop: scaleSize(20),
+		height: scaleSize(58),
+		borderBottomWidth: scaleSize(1),
+		borderBottomColor: '#E7E7E7',
+		fontSize: 17
+		// backgroundColor: '#faa'
+	},
+	button: {
+		width: scaleSize(654),
+		height: scaleSize(100),
+		borderRadius: scaleSize(52),
+		justifyContent: 'center',
+		marginLeft: scaleSize(48),
+		marginTop: scaleSize(97)
+	},
 });

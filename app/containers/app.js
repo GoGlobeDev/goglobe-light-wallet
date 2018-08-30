@@ -33,11 +33,13 @@ import Versions from '../components/my/versions'; //我的 -> 关于我们 -> �
 
 import BindingPhone from '../components/my/bindingPhone'; // 我的 -> 绑定手机
 import GoBindPhone from '../components/my/goBindPhone'; //我的 -> 去绑定手机号
+import VCode from '../components/my/verificationCode'; //我的 -> 验证码
 import InvitationCode from '../components/my/invitationCode'; //我的 -> 邀请码
 import BindInCode from '../components/my/bindInCode'; //我的 -> 绑定邀请码
 
 import BindMachine from '../components/node/bindMachine'; //矿机 -> 绑定矿机
 import SetPwd from '../components/node/setPwd'; // 矿机 -> 设置交易密码
+import WithdrawCash from '../components/node/withdrawCash'; //矿机 -> 提现
 
 import QRscanner from '../components/public/QRscanner'; //转账 -> 扫描二维码
 
@@ -305,6 +307,7 @@ const App = createStackNavigator(
 		InvitationCode,
 		BindInCode,
 		BindingPhone,
+		VCode,
 		GoBindPhone,
 		SysSet: {
 			screen: SysSet,
@@ -334,6 +337,7 @@ const App = createStackNavigator(
 		// },
 		BindMachine,
 		SetPwd,
+		WithdrawCash,
 		QRscanner: {
 			screen: QRscanner,
 			navigationOptions: {

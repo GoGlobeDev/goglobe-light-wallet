@@ -50,7 +50,7 @@ export default class BindInCode extends React.Component {
 			<View style={styles.container}>
 				<View style={styles.inputbox}>
 					<Text style={styles.inputTitle}>输入邀请码</Text>
-					<TextInput
+					<Input
 						style={styles.inputText}
 						placeholder="请输入邀请码"
 						onChangeText={(text) => this._changeText(text)}

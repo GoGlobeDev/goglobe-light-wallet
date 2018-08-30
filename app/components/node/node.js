@@ -57,6 +57,9 @@ class Node extends Component {
 	_clickToBindMachine = () => {
 		this.props.navigation.navigate('BindMachine')
 	}
+	_clickToWithdrawCash = () => {
+		this.props.navigation.navigate('WithdrawCash')
+	}
 	render() {
 		return (
 			<View style={styles.container}>
@@ -72,8 +75,16 @@ class Node extends Component {
 						<ImageBackground style={{ width: scaleSize(750), height: scaleSize(568)}} source={require('../../assets/images/node/node-top.png')}>
 							<View style={styles.top}>
 								<Text style={styles.title}>矿机</Text>
-								<Text style={styles.sm_title}>当前持有(GOG)</Text>
-								<Text style={styles.sm_content}>10000</Text>
+								<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+									<View>
+										<Text style={styles.sm_title}>当前持有(GOG)</Text>
+										<Text style={styles.sm_content}>10000</Text>
+									</View>
+									<TouchableOpacity style={[styles.button, { width: scaleSize(128), height: scaleSize(72) }]} onPress={this._clickToWithdrawCash}>
+										<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>提现</Text>
+									</TouchableOpacity>
+								</View>
+								
 								<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 									<View>
 										<Text style={styles.sm_title}>矿机数</Text>
