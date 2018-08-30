@@ -5,6 +5,7 @@ import lightwallet from 'eth-lightwallet';
 import { StackActions, NavigationActions, withNavigation } from 'react-navigation';
 import { Polygon } from 'react-native-svg';
 import { I18n } from '../../../language/i18n';
+import { scaleSize } from '../../utils/ScreenUtil';
 const screen = Dimensions.get('window');
 
 export class ExportMnemonic extends Component {
@@ -125,7 +126,7 @@ export class ExportMnemonic extends Component {
 				<View style={styles.container}>
 					<View style={styles.warning}>
 						<Text style={styles.warning_item}>
-							{I18n.t('assets.mnemonic.copyYourMnemonic')}
+							·{I18n.t('assets.mnemonic.copyYourMnemonic')}
 							{/* 抄写下你的助记词 */}
 						</Text>
 						<Text style={styles.color_999}>
@@ -154,7 +155,7 @@ export class ExportMnemonic extends Component {
 				<View style={styles.container}>
 					<View style={styles.warning}>
 						<Text style={styles.warning_item}>
-							{I18n.t('assets.mnemonic.confirmMnemonic')}
+							·{I18n.t('assets.mnemonic.confirmMnemonic')}
 							{/* 确认你的钱包助记词 */}
 						</Text>
 						<Text style={styles.color_999}>
@@ -185,39 +186,44 @@ export default withNavigation(ExportMnemonic);
 
 const styles = StyleSheet.create({
 	color_999: {
-		color: '#999'
+		color: '#959595',
+		fontSize: 13,
+		lineHeight: scaleSize(36),
+		marginBottom: scaleSize(32)
 	},
 	container: {
 		flex: 1,
-		padding: 10,
+		// padding: scaleSize(32),
 		backgroundColor: '#fff',
 		alignItems: 'center'
 	},
 	warning: {
-		marginTop: 30,
-		height: 60,
-		justifyContent: 'space-around'
+		width: scaleSize(686),
+		marginTop: scaleSize(32)
 	},
 	warning_item: {
-		color: '#35ccbf'
+		color: '#F06D27',
+		fontSize: 15,
+		fontWeight: 'bold',
+		marginBottom: scaleSize(8)
 	},
 	mnemonic_area: {
-		width: screen.width - 50,
-		borderWidth: 1,
-		borderColor: '#ccc',
-		padding: 10,
-		borderRadius: 10,
-		marginTop: 20
+		width: scaleSize(686),
+		padding: scaleSize(32),
+		backgroundColor: '#F1F1F1',
+		borderRadius: scaleSize(8),
 	},
 	mnemonic: {
 		lineHeight: 20
 	},
 	backupBtn: {
-		backgroundColor: '#528bf7',
-		width: 300,
-		height: 45,
-		borderRadius: 30,
-		marginTop: 30
+		backgroundColor: '#FF8725',
+		height: scaleSize(100),
+		width: scaleSize(654),
+		// borderColor: 'transparent',
+		// borderWidth: 0,
+		borderRadius: scaleSize(52),
+		marginTop: scaleSize(96)
 	},
 	disabledButtonStyle: {
 		borderRadius: 30
@@ -233,6 +239,7 @@ const styles = StyleSheet.create({
 	wordsCon: {
 		flexDirection: 'row',
 		flexWrap: 'wrap',
-		marginTop: 30
+		marginTop: 30,
+		width: scaleSize(696)
 	}
 });

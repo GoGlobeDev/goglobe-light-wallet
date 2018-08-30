@@ -575,23 +575,26 @@ const styles = StyleSheet.create({
 		paddingBottom: 15
 	},
 	privateKeyWarning: {
-		backgroundColor: '#ff00001a',
+		backgroundColor: '#FFEFE7',
 		alignItems: 'center'
 	},
 	warining_text: {
-		color: 'red'
+		color: '#F06D27',
+		fontSize: 14,
+		fontWeight: 'bold',
+		lineHeight: scaleSize(40)
 	},
 	privateKeyArea: {
-		backgroundColor: '#ebebeb'
+		// backgroundColor: '#ebebeb'
 	},
 	copy: {
 		alignItems: 'center'
 	},
 	copyButtonStyle: {
-		backgroundColor: '#528bf7',
-		width: screen.width * 0.72,
-		height: 40,
-		borderRadius: 30
+		backgroundColor: '#FF8725',
+		width: scaleSize(654),
+		height: scaleSize(100),
+		borderRadius: scaleSize(52)
 	},
 	walletNameStyle: {
 		// borderRadius: 5,

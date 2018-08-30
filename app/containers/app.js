@@ -282,12 +282,13 @@ const App = createStackNavigator(
 				headerTitle: () => <Text>{I18n.t('assets.walletInfo.exportMnemonic')}</Text>
 			}
 		},
-		ExportKeystore: {
-			screen: ExportKeystore,
-			navigationOptions: {
-				headerTitle: () => <Text>{I18n.t('assets.walletInfo.exportKeystore')}</Text>
-			}
-		},
+		ExportKeystore,
+		// ExportKeystore: {
+		// 	screen: ExportKeystore,
+		// 	navigationOptions: {
+		// 		headerTitle: () => <Text>{I18n.t('assets.walletInfo.exportKeystore')}</Text>
+		// 	}
+		// },
 		AboutUs: {
 			screen: AboutUs,
 			navigationOptions: {
