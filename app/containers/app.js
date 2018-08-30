@@ -1,8 +1,9 @@
 import React from 'react';
 import { I18n } from '../../language/i18n'; // 多国语言支持
-import { StyleSheet, Text, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, AsyncStorage, Image } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator, StackNavigator } from 'react-navigation'; // 页面切换 路由导航组件
 // import { host } from '../utils/config';
+import { scaleSize } from '../utils/ScreenUtil';
 
 //TabBar 底部栏位页面
 import Splash from '../pages/Splash'; // app开屏画面
@@ -166,20 +167,23 @@ const TabBarPage = createBottomTabNavigator(
 			screen: Assets,
 			navigationOptions: {
 				tabBarLabel: ({ tintColor, focused }) => (
-					<Text style={{ color: tintColor, fontSize: 12, textAlign: 'center' }}>{I18n.t('tab.assets')}</Text>
+					<Text style={{ color: tintColor, fontSize: 12, textAlign: 'center' }}></Text>
 				),
-				tabBarIcon: ({ focused, tintColor }) => <Icon name="icon-zichan" size={30} color={tintColor} />
+				tabBarIcon: ({ focused }) => (
+					<Image style={{ width: scaleSize(84), height: scaleSize(84), marginTop: scaleSize(38) }} source={focused ? require('../assets/images/common/asset_selected.png') : require('../assets/images/common/asset.png')} />
+				  ),
+				// tabBarIcon: ({ focused, tintColor }) => <Icon name="icon-zichan" size={30} color={tintColor} />
 			}
 		},
 		Node: {
 			screen: Node,
 			navigationOptions: {
 				tabBarLabel: ({ tintColor, focused }) => (
-					<Text style={{ color: tintColor, fontSize: 12, textAlign: 'center' }}>{I18n.t('tab.node')}</Text>
+					<Text style={{ color: tintColor, fontSize: 12, textAlign: 'center' }}></Text>
 				),
-				tabBarIcon: ({ focused, tintColor }) => (
-					<Icon name="icon-xiajiantouxialakuang-" size={20} color={tintColor} />
-				),
+				tabBarIcon: ({ focused }) => (
+					<Image style={{ width: scaleSize(84), height: scaleSize(84), marginTop: scaleSize(38) }} source={focused ? require('../assets/images/common/node_selected.png') : require('../assets/images/common/node.png')} />
+				  ),
 				// tabBarOnPress: ({ navigation, defaultHandler }) => {
 				// 	storage
 				// 		.load({
@@ -198,9 +202,11 @@ const TabBarPage = createBottomTabNavigator(
 			screen: My,
 			navigationOptions: {
 				tabBarLabel: ({ tintColor, focused }) => (
-					<Text style={{ color: tintColor, fontSize: 12, textAlign: 'center' }}>{I18n.t('tab.my')}</Text>
+					<Text style={{ color: tintColor, fontSize: 12, textAlign: 'center' }}></Text>
 				),
-				tabBarIcon: ({ focused, tintColor }) => <Icon name="icon-geren" size={30} color={tintColor} />
+				tabBarIcon: ({ focused }) => (
+					<Image style={{ width: scaleSize(84), height: scaleSize(84), marginTop: scaleSize(38) }} source={focused ? require('../assets/images/common/user_selected.png') : require('../assets/images/common/user.png')} />
+				  ),
 			}
 		}
 	},
@@ -263,12 +269,13 @@ const App = createStackNavigator(
 				headerTitle: () => <Text>{I18n.t('guide.importWallet')}</Text>
 			}
 		},
-		WalletInfo: {
-			screen: WalletInfo,
-			navigationOptions: {
-				headerTitle: () => <Text>{I18n.t('assets.walletInfo.title')}</Text>
-			}
-		},
+		WalletInfo,
+		// WalletInfo: {
+		// 	screen: WalletInfo,
+		// 	navigationOptions: {
+		// 		headerTitle: () => <Text>{I18n.t('assets.walletInfo.title')}</Text>
+		// 	}
+		// },
 		ExportMnemonic: {
 			screen: ExportMnemonic,
 			navigationOptions: {

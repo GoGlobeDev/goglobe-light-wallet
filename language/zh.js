@@ -92,7 +92,7 @@ export default {
 		walletInfo: {
 			title: '账户信息',
 			walletName: '钱包名称',
-			enterWalletName: '输入您的钱包名称',
+			enterWalletName: '请输入新的钱包名称',
 			exportPrivateKey: '导出私钥',
 			exportKeystore: '导出keystore',
 			exportMnemonic: '导出助记词',

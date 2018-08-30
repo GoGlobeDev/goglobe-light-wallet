@@ -36,7 +36,7 @@ export default class Receipt extends Component {
 			<View style={styles.container}>
 				<View style={styles.bg} />
 				<View style={styles.avatar}>
-					<Image style={styles.avatar_item} source={require('../../assets/images/asset/head_3x.png')} />
+					<Image style={styles.avatar_item} source={require('../../assets/images/asset/head_2x.png')} />
 				</View>
 				<View style={styles.walletAddress}>
 					<Text style={styles.walletAddress_item}>{this.state.walletAddress}</Text>

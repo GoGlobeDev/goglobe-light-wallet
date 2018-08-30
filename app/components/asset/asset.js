@@ -9,9 +9,11 @@ import {
 	RefreshControl,
 	TouchableHighlight,
 	Modal,
-	Linking
+	Linking,
+	ImageBackground
 } from 'react-native';
 import { connect } from 'react-redux';
+import { scaleSize } from '../../utils/ScreenUtil';
 import actions from '../../store/action/walletInfo';
 import getBalance from '../../utils/addTokens';
 import abi from '../../utils/abi';
@@ -40,13 +42,13 @@ class CurrencyList extends Component {
 								<Image style={styles.currency_logo_item} source={this.props.item.logo_url} />
 							</TouchableHighlight>
 						</View>
-						<View style={styles.marginLeft}>
-							<Text>{this.props.item.currency_name}</Text>
+						<View>
+							<Text style={{ fontSize: 17, color: '#424559', fontWeight: 'bold' }}>{this.props.item.currency_name}</Text>
 						</View>
 					</View>
 					<View>
 						<Text style={styles.alignRight}>{this.props.item.balance}</Text>
-						<Text style={[ styles.alignRight, styles.currency ]} />
+						{/* <Text style={[ styles.alignRight, styles.currency ]} /> */}
 					</View>
 				</View>
 			</TouchableHighlight>
@@ -196,44 +198,37 @@ class Assets extends Component {
 
 		return (
 			<View style={styles.container}>
-				<View style={styles.walletInfo}>
-					<View style={styles.walletInfo_item}>
-						<TouchableHighlight
-							underlayColor={'transparent'}
-							onPress={() => this.props.navigation.navigate('WalletInfo')}
-						>
-							<Image style={styles.avatar} source={require('../../assets/images/asset/head_2x.png')} />
-						</TouchableHighlight>
-						<Text style={styles.walletName}>{this.state.walletName}</Text>
-						<TouchableHighlight
-							underlayColor={'transparent'}
-							onPress={() => this.props.navigation.navigate('Receipt')}
-						>
-							<View style={styles.walletAddress}>
-								<Text style={styles.walletAddress_item}>
-									{this.state.walletAddress.replace(
-										this.state.walletAddress.slice('9', '35'),
-										'......'
-									)}
-								</Text>
-								<Image
-									style={styles.addressErcode}
-									source={require('../../assets/images/asset/ercode_2x.png')}
-								/>
+				<ImageBackground style={{ width: scaleSize(686), height: scaleSize(320), backgroundColor: '#fff', margin: scaleSize(32), marginTop: scaleSize(120), paddingLeft: scaleSize(32) }} source={require('../../assets/images/asset/asset-top.png')}>
+					{/* <View style={styles.walletInfo}> */}
+						<View style={styles.walletInfo_item}>
+							<View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginRight: scaleSize(32)}}>
+								<TouchableHighlight
+									underlayColor={'transparent'}
+									onPress={() => this.props.navigation.navigate('WalletInfo')}
+								>
+									<Image style={styles.avatar} source={require('../../assets/images/asset/head_2x.png')} />
+								</TouchableHighlight>
+								<TouchableHighlight
+									underlayColor={'transparent'}
+									onPress={() => this.props.navigation.navigate('Receipt')}
+								>
+									<Image
+										style={styles.addressErcode}
+										source={require('../../assets/images/asset/ercode_2x.png')}
+									/>
+								</TouchableHighlight>
 							</View>
-						</TouchableHighlight>
-					</View>
-				</View>
-				{/* <View style={styles.addCurrency}>
-					<View style={styles.addCurrency_item}>
-						<View>
-							<Text style={styles.currency_text}>{I18n.t('assets.totalAssets')}</Text>
-							<Text>{this.state.gog_banlance}</Text>
+							<Text numberOfLines={1} style={styles.walletName}>{this.state.walletName}</Text>
+							<Text style={styles.walletAddress_item}>
+								{this.state.walletAddress.replace(
+									this.state.walletAddress.slice('9', '35'),
+									'......'
+								)}
+							</Text>
 						</View>
-
-					</View>
-				</View> */}
-
+					{/* </View> */}
+				</ImageBackground>
+				<Text style={styles.title}>我的钱包</Text>
 				<ScrollView
 					style={styles.scrollview}
 					refreshControl={
@@ -248,6 +243,7 @@ class Assets extends Component {
 						/>
 					}
 				>
+					
 					{currencyData.map((item, index) => {
 						return <CurrencyList item={item} index={index} key={index} navigate={this.navigate} />;
 					})}
@@ -260,7 +256,7 @@ class Assets extends Component {
 					onRequestClose={() => {
 						this.setState({ modalVisible: false });
 					}}
-				>
+					>
 					<View style={styles.modalCon}>
 						<View style={styles.modal}>
 							<Text style={styles.modalTitle}>发现True {this.state.newVersion}版本</Text>
@@ -305,48 +301,46 @@ const styles = StyleSheet.create({
 		marginLeft: 20
 	},
 	alignRight: {
-		textAlign: 'right'
+		textAlign: 'right',
+		marginRight: scaleSize(32),
+		fontSize: 20,
+		color: '#FF8018',
+		fontWeight: 'bold'
 	},
 	container: {
 		width: Dimensions.get('window').width,
 		height: Dimensions.get('window').height - 50,
-		backgroundColor: '#fff'
+		backgroundColor: '#fff',
+		flex: 1
 	},
 	walletInfo: {
-		height: 230,
-		backgroundColor: '#528bf7'
-		// borderBottomLeftRadius: 10,
-		// borderBottomRightRadius: 10
 	},
 	walletInfo_item: {
-		flex: 1,
-		marginTop: 20,
-		height: 210,
-		alignItems: 'center',
-		justifyContent: 'center'
 	},
 	avatar: {
-		width: 70,
-		height: 70,
-		marginBottom: 10
+		width: scaleSize(128),
+		height: scaleSize(128),
+		margin: scaleSize(30)
 	},
 	walletName: {
 		color: '#fff',
-		fontSize: 18,
-		marginBottom: 10
-	},
-	walletAddress: {
-		flexDirection: 'row'
-	},
-	addressErcode: {
-		width: 15,
-		height: 15,
-		marginLeft: 5
+		fontSize: 20,
+		marginLeft: scaleSize(30),
+		marginBottom: scaleSize(8),
+		width: scaleSize(600)
 	},
 	walletAddress_item: {
 		color: '#fff',
-		fontSize: 12
+		marginLeft: scaleSize(30),
+		fontSize: 14
 	},
+	addressErcode: {
+		width: scaleSize(48),
+		height: scaleSize(48),
+		marginTop: scaleSize(40),
+		marginRight: scaleSize(38)
+	},
+
 	//新增币种
 	addCurrency: {
 		alignItems: 'center',
@@ -383,25 +377,42 @@ const styles = StyleSheet.create({
 	currency_item_text: {
 		color: '#fff'
 	},
+	title: {
+		fontSize: 17,
+		color: '#0D0E15',
+		fontWeight: 'bold',
+		marginLeft: scaleSize(32),
+		paddingBottom: scaleSize(24)
+	},
 	//币种列表
 	currency_list: {
-		height: 80,
-		marginTop: 5,
-		paddingLeft: 20,
-		paddingRight: 20,
+		width: scaleSize(686),
+		height: scaleSize(180),
 		flexDirection: 'row',
 		alignItems: 'center',
-		justifyContent: 'space-between'
+		justifyContent: 'space-between',
+		marginLeft: scaleSize(32),
+		marginTop: scaleSize(24),
+		borderRadius: scaleSize(20),
+		backgroundColor: '#fff',
+		shadowOffset: { width: 0, height: 0 },
+		shadowColor: 'rgb(34, 34, 34)',
+		shadowOpacity: 0.18,
+		shadowRadius: scaleSize(27),
+		elevation: 5,
+
 	},
 	currency_left: {
 		flexDirection: 'row',
-		alignItems: 'flex-start'
+		alignItems: 'center'
 	},
 	currency_logo: {
 		borderWidth: 1,
 		borderColor: '#ccc',
 		borderRadius: 50,
-		padding: 8
+		padding: 8,
+		marginLeft: scaleSize(32),
+		marginRight: scaleSize(24)
 	},
 	currency_logo_item: {
 		width: 40,
