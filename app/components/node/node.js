@@ -146,9 +146,9 @@ const styles = StyleSheet.create({
 		color: 'rgba(255,255,255,1)',
 	},
 	machineIcon: {
-		width: scaleSize(446),
-		height: scaleSize(400),
-		margin: scaleSize(152),
+		width: scaleSize(750),
+		height: scaleSize(442),
+		marginTop: scaleSize(152),
 		marginBottom: scaleSize(88),
 	},
 	button: {

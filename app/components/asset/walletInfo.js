@@ -7,6 +7,7 @@ import Loading from 'react-native-whc-loading';
 import Toast from 'react-native-easy-toast';
 import { I18n } from '../../../language/i18n';
 import Icon from '../../pages/iconSets';
+import { scaleSize } from '../../utils/ScreenUtil';
 
 const screen = Dimensions.get('window');
 
@@ -24,6 +25,9 @@ class ListFun extends Component {
 }
 
 class WalletInfo extends Component {
+	static navigationOptions = {
+		headerTitle: '账户详情'
+	};
 	constructor(props) {
 		super(props);
 		this.navigate = this.props.navigation.navigate;
@@ -126,8 +130,8 @@ class WalletInfo extends Component {
 				<View style={styles.walletInfo}>
 					<Image style={styles.walletAvatar} source={require('../../assets/images/asset/head_2x.png')} />
 					<View style={styles.walletInfo_item}>
-						<Text>{this.state.walletName}</Text>
-						<Text>
+						<Text numberOfLines={1} style={styles.walletName}>{this.state.walletName}</Text>
+						<Text style={styles.walletAddress}>
 							{this.state.walletAddress.replace(this.state.walletAddress.slice('9', '35'), '......')}
 						</Text>
 					</View>
@@ -291,6 +295,7 @@ class WalletInfo extends Component {
 				<Loading ref="loading" />
 				{/* <ActivityIndicator animating={this.state.huhu} /> */}
 				<Button
+					titleStyle={{ color: '#424559'}}
 					title={I18n.t('assets.walletInfo.deleteWallet')}
 					buttonStyle={styles.buttonStyle}
 					onPress={() => {
@@ -345,7 +350,7 @@ class WalletInfo extends Component {
 				<Toast ref="toast" position="center" />
 				<Modal
 					style={styles.modalCode}
-					position={'bottom'}
+					position={'center'}
 					ref={'codeInput'}
 					coverScreen={true}
 					swipeArea={20}
@@ -355,9 +360,9 @@ class WalletInfo extends Component {
 					onOpened={() => {
 						this.setState({ deleteBtnshow: false });
 					}}
-				>
+					>
 					<View style={styles.InputPwd_title}>
-						<Text>{this.state.modalTitle}</Text>
+						<Text style={styles.modalTitle}>{this.state.modalTitle}</Text>
 					</View>
 					<Input {...this.pwd} />
 					<View style={styles.confirm}>
@@ -371,13 +376,13 @@ class WalletInfo extends Component {
 
 				<Modal
 					style={styles.modalCode}
-					position={'bottom'}
+					position={'center'}
 					coverScreen={true}
 					ref={'changeWalletName'}
 					swipeArea={20}
-				>
+					>
 					<View style={styles.InputPwd_title}>
-						<Text>{this.state.modalTitle}</Text>
+						<Text style={styles.modalTitle}>{this.state.modalTitle}</Text>
 					</View>
 					<Input {...this.walletName} />
 
@@ -422,7 +427,7 @@ class WalletInfo extends Component {
 					swipeArea={20}
 				>
 					<View style={styles.privateKeyTitle}>
-						<Text>{I18n.t('assets.walletInfo.exportPrivateKey')}</Text>
+						<Text style={styles.modalTitle}>{I18n.t('assets.walletInfo.exportPrivateKey')}</Text>
 					</View>
 					<TouchableHighlight style={[ styles.spacing, styles.privateKeyWarning ]}>
 						<View>
@@ -451,59 +456,89 @@ class WalletInfo extends Component {
 export default withNavigation(WalletInfo);
 
 const styles = StyleSheet.create({
-	arr: {
-		width: 15,
-		height: 12
-	},
 	container: {
 		flex: 1,
-		padding: 10,
+		// padding: 10,
 		backgroundColor: '#fff'
 	},
 	walletInfo: {
-		height: 80,
+		height: scaleSize(176),
 		flexDirection: 'row',
-		alignItems: 'center'
+		alignItems: 'center',
+		padding: scaleSize(32)
 	},
 	walletAvatar: {
-		width: 60,
-		height: 60
+		width: scaleSize(104),
+		height: scaleSize(104),
+		// marginLeft: scaleSize(28)
+	},
+	walletName: {
+		fontSize: 15,
+		color: '#424559',
+		fontWeight: 'bold'
+	},
+	walletAddress: {
+		fontSize: 13,
+		color: '#424559',
+		opacity: 0.9
 	},
 	walletInfo_item: {
-		width: screen.width - 80,
-		marginLeft: 10,
-		height: 60,
+		width: screen.width - scaleSize(216),
+		marginLeft: scaleSize(22),
+		height: scaleSize(104),
 		justifyContent: 'space-around'
 	},
 	fun: {
-		height: 50,
+		height: scaleSize(128),
+		margin: scaleSize(32),
+		borderRadius: scaleSize(20),
+		marginBottom: 0,
+		paddingLeft: scaleSize(32),
+		paddingRight: scaleSize(32),
+		backgroundColor: '#fff',
+		shadowOffset: { width: 0, height: 0 },
+		shadowColor: 'rgb(34, 34, 34)',
+		shadowOpacity: 0.18,
+		shadowRadius: scaleSize(27),
+		elevation: 5,
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'space-between',
-		borderBottomWidth: 1,
-		borderBottomColor: '#e6e0df'
+		// borderBottomWidth: 1,
+		// borderBottomColor: '#e6e0df'
 	},
 	fun_text: {
-		color: '#000'
+		color: '#000',
+		fontSize: 15,
+		color: '#424559',
+		fontWeight: 'bold'
 	},
 	buttonStyle: {
-		backgroundColor: '#bbb',
-		height: 45,
-		borderRadius: 50,
-		marginTop: 30
+		backgroundColor: '#fff',
+		borderWidth: scaleSize(4),
+		borderColor: '#56586A',
+		height: scaleSize(100),
+		borderRadius: scaleSize(52),
+		marginTop: scaleSize(400),
+		width: scaleSize(654),
+		marginLeft: scaleSize(48)
 	},
 	modalCode: {
 		alignItems: 'center',
-		width: screen.width,
-		height: screen.height * 0.5
+		width: scaleSize(686),
+		height: scaleSize(384),
+		borderRadius: scaleSize(8)
 	},
 	InputPwd_title: {
-		width: screen.width,
-		height: 50,
+		width: scaleSize(686),
+		height: scaleSize(112),
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderBottomWidth: 1,
-		borderBottomColor: '#c8c7cc'
+	},
+	modalTitle: {
+		fontSize: 17,
+		color: '#0D0E15',
+		fontWeight: 'bold'
 	},
 	textInput: {
 		borderBottomWidth: 1,
@@ -513,20 +548,20 @@ const styles = StyleSheet.create({
 	},
 	confirm: {
 		alignItems: 'center',
-		position: 'relative',
-		top: 80
+		marginTop: scaleSize(50)
 	},
 	confirmButtonStyle: {
-		backgroundColor: '#528bf7',
-		width: 300,
-		height: 45,
-		borderRadius: 30
+		backgroundColor: '#FF8725',
+		width: scaleSize(654),
+		height: scaleSize(100),
+		borderRadius: scaleSize(52)
 	},
+	//导出私钥
 	privateKey: {
-		width: screen.width * 0.9,
-		height: screen.height * 0.5,
-		borderRadius: 10,
-		padding: 15,
+		width: scaleSize(686),
+		height: scaleSize(582),
+		borderRadius: scaleSize(8),
+		padding: scaleSize(32),
 		justifyContent: 'space-between'
 	},
 	privateKeyTitle: {
@@ -559,36 +594,38 @@ const styles = StyleSheet.create({
 		borderRadius: 30
 	},
 	walletNameStyle: {
-		borderRadius: 5,
-		borderWidth: 1,
-		borderColor: '#ccc',
-		height: 60,
-		marginTop: 20,
-		backgroundColor: '#fafafa'
+		// borderRadius: 5,
+		// borderWidth: 1,
+		// borderColor: '#ccc',
+		height: scaleSize(96),
+		borderBottomColor: '#E7E7E7',
+		borderBottomWidth: scaleSize(1),
+		marginBottom: scaleSize(50)
+		// backgroundColor: '#fafafa'
 	},
 	bottom_fun: {
-		position: 'absolute',
-		bottom: 50,
-		left: 0,
-		right: 0,
+		// position: 'absolute',
+		// bottom: 50,
+		// left: 0,
+		// right: 0,
 		flexDirection: 'row',
 		justifyContent: 'center'
 	},
 	bottom_fun_item: {
-		height: 50,
-		lineHeight: 50,
+		height: scaleSize(88),
+		lineHeight: scaleSize(88),
 		color: '#fff',
 		textAlign: 'center',
-		width: Dimensions.get('window').width / 2
 	},
 	bottom_fun_item_cancel: {
-		borderTopLeftRadius: 30,
-		borderBottomLeftRadius: 30,
-		backgroundColor: '#35ccbf'
+		width: scaleSize(296),
+		borderRadius: scaleSize(44),
+		backgroundColor: '#405696',
+		marginRight: scaleSize(30)
 	},
 	bottom_fun_item_done: {
-		borderTopRightRadius: 30,
-		borderBottomRightRadius: 30,
-		backgroundColor: '#528bf7'
+		width: scaleSize(296),
+		borderRadius: scaleSize(44),
+		backgroundColor: '#FF8725'
 	}
 });
