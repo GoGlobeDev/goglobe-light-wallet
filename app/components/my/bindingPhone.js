@@ -5,7 +5,7 @@ import { I18n } from '../../../language/i18n';
 import { scaleSize } from '../../utils/ScreenUtil';
 class BindingPhone extends React.Component {
 	static navigationOptions = {
-		headerTitle: '绑定手机'
+		headerTitle: I18n.t('my.home.bindPhone._title')
 	};
 	constructor(props) {
 		super(props);
@@ -14,7 +14,7 @@ class BindingPhone extends React.Component {
 		}
 	}
 	componentDidMount() {
-		
+
 		// storage
 		// 	.load({
 		// 		key: 'webHost'
@@ -37,13 +37,13 @@ class BindingPhone extends React.Component {
 		return (
 			<View style={styles.container}>
 				<View style={styles.view}>
-					<Text style={styles.title}>绑定的手机号</Text>
+					<Text style={styles.title}>{I18n.t('my.home.bindPhone.bindPhoneNumber')}</Text>
 					{this.state.phone
 						? <View style={styles.lineView}>
 							<Text style={styles.content}>{this.state.phone}</Text>
 						</View>
 						: <View style={styles.lineView}>
-							<Text style={[styles.content, { color: '#CFCFD0' }]}>还未绑定</Text>
+							<Text style={[styles.content, { color: '#CFCFD0' }]}>{I18n.t('my.home.bindPhone.notBind')}</Text>
 							<TouchableOpacity style={[styles.button, { width: scaleSize(160) }]} onPress={this._setBindingPhone}>
 								<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>去绑定</Text>
 							</TouchableOpacity>
@@ -64,7 +64,7 @@ class BindingPhone extends React.Component {
 					</View>
 				</View> */}
 
-				
+
 			</View>
 		);
 	}

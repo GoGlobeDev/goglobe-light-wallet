@@ -16,8 +16,8 @@ class My extends Component {
 		return (
 			<View style={styles.myPage}>
 				<View style={{ backgroundColor: "#fff"}}>
-					<Text style={styles.title}>我的</Text>
-				</View>	
+					<Text style={styles.title}>{I18n.t('my._title')}</Text>
+				</View>
 				<View style={styles.myTopBan}>
 					<View style={styles.myTopBanCon}>
 						<TouchableHighlight
@@ -49,7 +49,7 @@ class My extends Component {
 					</View>
 				</View>
 				<View style={styles.myColsCon}>
-					{/* 邀请码和绑定手机 */}	
+					{/* 邀请码和绑定手机 */}
 					<View style={styles.myColsConPart}>
 						<TouchableHighlight
 							onPress={() => this.props.navigation.navigate('InvitationCode')}
@@ -86,7 +86,7 @@ class My extends Component {
 							</View>
 						</TouchableHighlight>
 					</View>
-					{/* 系统中心 */}	
+					{/* 系统中心 */}
 					<View style={styles.myColsConPart}>
 						<TouchableHighlight
 							onPress={() => {

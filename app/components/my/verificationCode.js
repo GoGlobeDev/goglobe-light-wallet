@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+{I18n.t('assets.notUpdate')}{I18n.t('assets.notUpdate')}import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { Input } from 'native-base';
 import { I18n } from '../../../language/i18n';
@@ -30,19 +30,18 @@ class Timer extends Component {
 
 class VCode extends React.Component {
 	static navigationOptions = {
-		headerTitle: '短信验证码'
+		headerTitle: I18n.t('my.home.verificationCode._title')
 	};
 	constructor(props) {
 		super(props);
 		this.state = {
             phone: null,
-            focus: 'focus0',
             count: 60,
             state: false,
 		}
 	}
 	componentDidMount() {
-		
+
 		// storage
 		// 	.load({
 		// 		key: 'webHost'
@@ -61,34 +60,19 @@ class VCode extends React.Component {
 		this.props.navigation.navigate('GoBindPhone');
     }
     _changeText0 = () => {
-        this.setState({
-            focus: 'focus1'
-        })
-        console.log(this.state.focus)
+        this.refs.code1._root.focus();
     }
     _changeText1 = () => {
-        this.setState({
-            focus: 'focus2'
-        })
-        console.log(this.state.focus)
+        this.refs.code2._root.focus();
     }
     _changeText2 = () => {
-        this.setState({
-            focus: 'focus3'
-        })
-        console.log(this.state.focus)
+        this.refs.code3._root.focus();
     }
     _changeText3 = () => {
-        this.setState({
-            focus: 'focus4'
-        })
-        console.log(this.state.focus)
+        this.refs.code4._root.focus();
     }
     _changeText4 = () => {
-        this.setState({
-            focus: 'focus5'
-        })
-        console.log(this.state.focus)
+        this.refs.code5._root.focus();
     }
     _changeText5 = () => {
         // this.setState({
@@ -131,41 +115,41 @@ class VCode extends React.Component {
                         style={styles.numberbox}
                         maxLength={1}
                         keyboardType='numeric'
-                        autoFocus={this.state.focus === 'focus0'}
+                        ref='code0'
                         onChangeText={(txt) => this._changeText0(txt)}/>
                     <Input
                         style={styles.numberbox}
                         maxLength={1}
                         keyboardType='numeric'
-                        autoFocus={this.state.focus === 'focus1'}
+                        ref='code1'
                         onChangeText={(txt) => this._changeText1(txt)}
                         />
                     <Input
                         style={styles.numberbox}
                         maxLength={1}
                         keyboardType='numeric'
-                        autoFocus={this.state.focus === 'focus2'}
+                        ref='code2'
                         onChangeText={(txt) => this._changeText2(txt)}
                         />
                     <Input
                         style={styles.numberbox}
                         maxLength={1}
                         keyboardType='numeric'
-                        autoFocus={this.state.focus === 'focus3'}
+                        ref='code3'
                         onChangeText={(txt) => this._changeText3(txt)}
                         />
                     <Input
                         style={styles.numberbox}
                         maxLength={1}
                         keyboardType='numeric'
-                        autoFocus={this.state.focus === 'focus4'}
+                        ref='code4'
                         onChangeText={(txt) => this._changeText4(txt)}
                         />
                     <Input
                         style={styles.numberbox}
                         maxLength={1}
                         keyboardType='numeric'
-                        autoFocus={this.state.focus === 'focus5'}
+                        ref='code5'
                         onChangeText={(txt) => this._changeText5(txt)}
                         />
                 </View>

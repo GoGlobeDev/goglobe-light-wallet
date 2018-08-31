@@ -228,7 +228,7 @@ class Assets extends Component {
 						</View>
 					{/* </View> */}
 				</ImageBackground>
-				<Text style={styles.title}>我的钱包</Text>
+				<Text style={styles.title}>{I18n.t('assets._title')}</Text>
 				<ScrollView
 					style={styles.scrollview}
 					refreshControl={
@@ -243,7 +243,7 @@ class Assets extends Component {
 						/>
 					}
 				>
-					
+
 					{currencyData.map((item, index) => {
 						return <CurrencyList item={item} index={index} key={index} navigate={this.navigate} />;
 					})}
@@ -259,7 +259,7 @@ class Assets extends Component {
 					>
 					<View style={styles.modalCon}>
 						<View style={styles.modal}>
-							<Text style={styles.modalTitle}>发现True {this.state.newVersion}版本</Text>
+							<Text style={styles.modalTitle}>{I18n.t('assets.findnewVersion')}{this.state.newVersion}</Text>
 							<View style={styles.modalBottomBtn}>
 								<View>
 									<Text
@@ -270,7 +270,7 @@ class Assets extends Component {
 											});
 										}}
 									>
-										暂不升级
+									    {I18n.t('assets.notUpdate')}
 									</Text>
 								</View>
 								<View>
@@ -282,7 +282,7 @@ class Assets extends Component {
 											);
 										}}
 									>
-										立即升级
+										{I18n.t('assets.update')}
 									</Text>
 								</View>
 							</View>

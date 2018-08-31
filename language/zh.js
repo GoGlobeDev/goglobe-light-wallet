@@ -38,6 +38,7 @@ export default {
 		my: '我的'
 	},
 	my: {
+        _title: '我的',
 		home: {
 			walletManagement: '钱包管理',
 			transactionRecord: '交易记录',
@@ -49,8 +50,13 @@ export default {
 			invitationCode: {
 				_title: '邀请码',
 			},
+            verificationCode: {
+                _title: '短信验证码'
+            },
 			bindPhone: {
 				_title: '绑定手机',
+                bindPhoneNumber: '绑定的手机号',
+                notBind: '还未绑定',
 				button: '去绑定'
 			},
             bindingCode: {
@@ -95,7 +101,11 @@ export default {
 		webHost: 'Web3 设置'
 	},
 	assets: {
+        _title: '我的钱包',
+        findNewVersion: '发现新版本',
 		totalAssets: '账户总资产',
+        notUpdate: '暂不升级',
+        update: '立即升级',
 		walletInfo: {
 			title: '账户信息',
 			walletName: '钱包名称',
