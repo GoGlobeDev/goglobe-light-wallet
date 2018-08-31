@@ -4,6 +4,7 @@ import { I18n } from '../../../language/i18n';
 import { Input, Button } from 'react-native-elements';
 import QRCode from 'react-native-qrcode';
 import Toast from 'react-native-easy-toast';
+import { scaleSize } from '../../utils/ScreenUtil';
 const screen = Dimensions.get('window');
 
 export default class Receipt extends Component {
@@ -13,7 +14,9 @@ export default class Receipt extends Component {
 			walletAddress: ' '
 		};
 	}
-
+	static navigationOptions = ({ navigation }) => ({
+		headerTitle: I18n.t('assets.currency.receipt'),
+	});
 	componentDidMount() {
 		this.setState({
 			walletAddress: store.getState().walletInfo.wallet_address
@@ -83,9 +86,9 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	avatar_item: {
-		width: 60,
-		height: 60,
-		marginTop: -30
+		width: scaleSize(136),
+		height: scaleSize(136),
+		marginTop: scaleSize(30)
 	},
 	walletAddress: {
 		marginTop: 20,
@@ -117,9 +120,9 @@ const styles = StyleSheet.create({
 		marginTop: 30
 	},
 	buttonStyle: {
-		backgroundColor: '#528bf7',
-		width: 300,
-		height: 45,
-		borderRadius: 30
+		backgroundColor: '#405696',
+		width: scaleSize(526),
+		height: scaleSize(88),
+		borderRadius: scaleSize(44)
 	}
 });

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native';
 import { I18n } from '../../language/i18n';
 import { withNavigation } from 'react-navigation';
+import { scaleSize } from '../utils/ScreenUtil';
 
 class Guide extends Component {
 	render() {
@@ -13,9 +14,9 @@ class Guide extends Component {
 				</View>
 				<View style={styles.fun}>
 					<View style={[ styles.funItem, styles.import ]}>
-						<Text>{I18n.t('guide.importInstructions')}</Text>
+						<Text style={styles.tipText}>{I18n.t('guide.importInstructions')}</Text>
 						<TouchableHighlight
-							underlayColor={'#35ccbf'}
+							underlayColor={'#405696'}
 							style={[ styles.funRadius, styles.funImport ]}
 							onPress={() => this.props.navigation.navigate('ImportWallet')}
 						>
@@ -23,9 +24,9 @@ class Guide extends Component {
 						</TouchableHighlight>
 					</View>
 					<View style={[ styles.funItem, styles.create ]}>
-						<Text>{I18n.t('guide.createInstructions')}</Text>
+						<Text style={styles.tipText}>{I18n.t('guide.createInstructions')}</Text>
 						<TouchableHighlight
-							underlayColor={'#528bf7'}
+							underlayColor={'#FF8725'}
 							style={[ styles.funRadius, styles.funCreate ]}
 							onPress={() => this.props.navigation.navigate('CreateWallet')}
 						>
@@ -73,11 +74,16 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 		padding: 15
 	},
+	tipText: {
+		fontSize: 13,
+		color: '#959595',
+		lineHeight: scaleSize(36)
+	},
 	funImport: {
-		backgroundColor: '#35ccbf'
+		backgroundColor: '#405696'
 	},
 	funCreate: {
-		backgroundColor: '#528bf7'
+		backgroundColor: '#FF8725'
 	},
 	funText: {
 		color: '#fff',
