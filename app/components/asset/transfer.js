@@ -9,6 +9,7 @@ import sendTokens from '../../utils/sendTokens';
 import abi from '../../utils/trueabi';
 import { I18n } from '../../../language/i18n';
 import Loading from 'react-native-whc-loading';
+import { scaleSize } from '../../utils/ScreenUtil';
 
 const screen = Dimensions.get('window');
 
@@ -21,7 +22,7 @@ class Detail extends Component {
 		return (
 			<View style={styles.paymentDetails_item}>
 				<Text style={styles.paymentDetails_item_key}>{this.props.key_k}</Text>
-				<Text style={[ styles.paymentDetails_item_key, this.props.style ]}>{this.props.val}</Text>
+				<Text style={[ styles.paymentDetails_item_val, this.props.style ]}>{this.props.val}</Text>
 			</View>
 		);
 	}
@@ -180,7 +181,29 @@ class Transfer extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		this.setState({
-			toAddress: nextProps.navigation.state.params.res
+			toAddress: nextProps.navigation.state.params.res,
+		},() => {
+			if (!web3.utils.isAddress(nextProps.navigation.state.params.res)) {
+				this.setState({
+					toAddressFlag: false,
+					disabledNext: true
+				});
+				Alert.alert(null, I18n.t('assets.transfer.checkAddress'));
+				// Alert.alert(null, '地址无效，请仔细检查！');
+			} else {
+				this.setState(
+					{
+						toAddressFlag: true
+					},
+					() => {
+						if (this.state.toAddressFlag && this.state.amountFlag) {
+							this.setState({
+								disabledNext: false
+							});
+						}
+					}
+				);
+			}
 		});
 		console.log(nextProps.navigation.state.params.res);
 	}
@@ -188,78 +211,92 @@ class Transfer extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Input
-					placeholder={I18n.t('assets.currency.receiptAddr')}
-					//"收款人钱包地址"
-					//     <Icon
-					//         name='user'
-					//         size={25}
-					//         onPress={() => {
-					//             alert('联系人')
-					//         }}
-					//     />
-					// }
-					value={this.state.toAddress.length > 0 ? this.state.toAddress : null}
-					onChangeText={(toAddress) => this.setState({ toAddress })}
-					onEndEditing={(event) => {
-						if (!web3.utils.isAddress(event.nativeEvent.text)) {
-							this.setState({
-								toAddressFlag: false,
-								disabledNext: true
-							});
-							Alert.alert(null, I18n.t('assets.transfer.checkAddress'));
-							// Alert.alert(null, '地址无效，请仔细检查！');
-						} else {
-							this.setState(
-								{
-									toAddressFlag: true
-								},
-								() => {
-									if (this.state.toAddressFlag && this.state.amountFlag) {
-										this.setState({
-											disabledNext: false
-										});
+				<View style={styles.inputbox}>
+					<Text style={styles.title_sm}>{I18n.t('assets.currency.receiptAddr')}</Text>
+					<Input
+						placeholder={I18n.t('assets.currency.receiptAddr')}
+						//"收款人钱包地址"
+						//     <Icon
+						//         name='user'
+						//         size={25}
+						//         onPress={() => {
+						//             alert('联系人')
+						//         }}
+						//     />
+						// }
+						value={this.state.toAddress.length > 0 ? this.state.toAddress : null}
+						onChangeText={(toAddress) => {
+							this.setState({ toAddress })
+						}}
+						onEndEditing={(event) => {
+							if (!web3.utils.isAddress(event.nativeEvent.text)) {
+								this.setState({
+									toAddressFlag: false,
+									disabledNext: true
+								});
+								Alert.alert(null, I18n.t('assets.transfer.checkAddress'));
+								// Alert.alert(null, '地址无效，请仔细检查！');
+							} else {
+								this.setState(
+									{
+										toAddressFlag: true
+									},
+									() => {
+										if (this.state.toAddressFlag && this.state.amountFlag) {
+											this.setState({
+												disabledNext: false
+											});
+										}
 									}
-								}
-							);
-						}
-					}}
-					inputContainerStyle={styles.inputContainerStyle}
-				/>
-				<Input
-					placeholder={I18n.t('assets.currency.transferCount')}
-					// "转账金额"
-					onChangeText={(amount) => {
-						this.setState({ amount });
-						if (amount) {
-							this.setState(
-								{
-									amountFlag: true
-								},
-								() => {
-									if (this.state.toAddressFlag && this.state.amountFlag) {
-										this.setState({
-											disabledNext: false
-										});
+								);
+							}
+						}}
+						inputContainerStyle={styles.inputContainerStyle}
+					/>
+				</View>
+
+				<View style={styles.inputbox}>
+					<Text style={styles.title_sm}>{I18n.t('assets.currency.transferCount')}</Text>
+					<Input
+						placeholder={I18n.t('assets.currency.transferCount')}
+						// "转账金额"
+						onChangeText={(amount) => {
+							this.setState({ amount });
+							if (amount) {
+								this.setState(
+									{
+										amountFlag: true
+									},
+									() => {
+										if (this.state.toAddressFlag && this.state.amountFlag) {
+											this.setState({
+												disabledNext: false
+											});
+										}
 									}
-								}
-							);
-						} else {
-							this.setState({
-								amountFlag: false,
-								disabledNext: true
-							});
-						}
-					}}
-					inputContainerStyle={styles.inputContainerStyle}
-				/>
-				<Input
-					placeholder={I18n.t('assets.currency.transferRemarks')}
-					// "备注"
-					onChangeText={(remarks) => this.setState({ remarks })}
-					inputContainerStyle={styles.inputContainerStyle}
-				/>
-				<Text style={styles.minerCosts_text}>
+								);
+							} else {
+								this.setState({
+									amountFlag: false,
+									disabledNext: true
+								});
+							}
+						}}
+						inputContainerStyle={styles.inputContainerStyle}
+					/>
+				</View>
+				<View style={styles.inputbox}>
+					<Text style={styles.title_sm}>{I18n.t('assets.currency.transferRemarks')}</Text>
+					<Input
+						placeholder={I18n.t('assets.currency.transferRemarks')}
+						// "备注"
+						onChangeText={(remarks) => this.setState({ remarks })}
+						inputContainerStyle={styles.inputContainerStyle}
+					/>
+				</View>
+
+
+				<Text style={styles.title_sm}>
 					{I18n.t('assets.currency.transferFee')}
 					{/* 矿工费用 */}
 				</Text>
@@ -275,8 +312,8 @@ class Transfer extends Component {
 							});
 						});
 					}}
-					minimumTrackTintColor="#528bf7"
-					thumbTintColor="#528bf7"
+					minimumTrackTintColor="#FF8018"
+					thumbTintColor="#FF8018"
 					minimumValue={0.00022932}
 					step={0.0000001}
 					maximumValue={0.00251999}
@@ -297,7 +334,7 @@ class Transfer extends Component {
 						title={I18n.t('assets.currency.nextStep')}
 						// "下一步"
 						buttonStyle={styles.buttonStyle}
-						disabledStyle={styles.borderRadius}
+						disabledStyle={styles.disabledStyle}
 						disabled={this.state.disabledNext}
 						onPress={() => {
 							this.refs.transferDetail.open();
@@ -313,11 +350,11 @@ class Transfer extends Component {
 				</View>
 				<Modal
 					style={styles.modal}
-					position={'bottom'}
+					position={'center'}
 					coverScreen={true}
 					ref={'transferDetail'}
 					swipeArea={20}
-				>
+					>
 					<ScrollView>
 						<View style={styles.paymentDetails_title}>
 							{/* <Text>支付详情</Text> */}
@@ -358,18 +395,21 @@ class Transfer extends Component {
 								buttonStyle={styles.buttonStyle}
 								onPress={() => {
 									this.refs.transferPwd.open();
+									this.refs.transferDetail.close();
 								}}
 							/>
 						</View>
-						<Modal
-							style={styles.modal}
+					</ScrollView>
+				</Modal>
+				<Modal
+							style={[styles.modal, styles.modalPwd]}
 							coverScreen={true}
-							position={'bottom'}
+							position={'center'}
 							ref={'transferPwd'}
 							isOpen={this.state.huhu}
 							swipeArea={20}
-						>
-							<ScrollView>
+							>
+							<View>
 								<View style={styles.paymentDetails_title}>
 									<Text>{I18n.t('public.verifyPwd')}</Text>
 								</View>
@@ -425,10 +465,8 @@ class Transfer extends Component {
 										}}
 									/>
 								</View>
-							</ScrollView>
+							</View>
 						</Modal>
-					</ScrollView>
-				</Modal>
 			</View>
 		);
 	}
@@ -447,13 +485,23 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#fff',
-		paddingLeft: 10,
-		paddingRight: 10,
-		paddingTop: 30
+		// paddingLeft: 10,
+		// paddingRight: 10,
+		// paddingTop: 30
+		padding: scaleSize(32)
+	},
+	inputbox: {
+		height: scaleSize(160)
+	},
+	title_sm: {
+		fontSize: 13,
+		color: '#0D0E15',
+		fontWeight: 'bold',
+		marginBottom: scaleSize(16)
 	},
 	inputContainerStyle: {
-		width: screen.width - 20,
-		borderColor: '#e6e6e6'
+		width: screen.width - scaleSize(64),
+		borderColor: '#e6e6e6',
 	},
 	minerCosts_text: {
 		marginTop: 15,
@@ -469,45 +517,64 @@ const styles = StyleSheet.create({
 		marginTop: 30,
 		alignItems: 'center'
 	},
+	disabledStyle: {
+		width: scaleSize(654),
+		backgroundColor: '#F7C9A9',
+		height: scaleSize(100),
+		borderRadius: scaleSize(52)
+	},
 	buttonStyle: {
-		backgroundColor: '#528bf7',
-		width: 260,
-		height: 45,
-		borderRadius: 30
+		backgroundColor: '#EA7F28',
+		width: scaleSize(654),
+		height: scaleSize(100),
+		borderRadius: scaleSize(52)
 	},
 	modal: {
-		height: screen.height * 0.5
+		alignItems: 'center',
+		width: scaleSize(686),
+		height: scaleSize(782),
+		borderRadius: scaleSize(8)
+	},
+	modalPwd: {
+		height: scaleSize(406)
 	},
 	paymentDetails_title: {
-		width: screen.width,
-		height: 50,
+		width: scaleSize(686),
+		height: scaleSize(108),
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderBottomWidth: 1,
-		borderBottomColor: '#c8c7cc' //  支付详情分割线
+		// borderBottomWidth: 1,
+		// borderBottomColor: '#c8c7cc' //  支付详情分割线
 	},
 	marginLeft_20: {
 		marginLeft: 20
 	},
 	paymentDetails_item: {
-		marginLeft: 10,
-		marginRight: 10,
-		height: 50,
+		marginLeft: scaleSize(32),
+		marginRight: scaleSize(32),
+		height: scaleSize(94),
 		flexDirection: 'row',
 		alignItems: 'center',
 		borderBottomWidth: 1,
-		borderBottomColor: '#8f8f94'
+		borderBottomColor: '#E7E7E7'
 	},
 	borderRadius: {
 		borderRadius: 50
 	},
 	paymentDetails_item_key: {
-		color: '#8f8f94'
+		color: '#959595',
+		fontSize: 14
+	},
+	paymentDetails_item_val: {
+		color: '#424559',
+		fontSize: 14
 	},
 	paymentDetails_item_gasPOramount: {
 		flex: 1,
-		color: '#000',
-		textAlign: 'right'
+		color: '#FF8018',
+		textAlign: 'right',
+		fontSize: 15,
+		fontWeight: 'bold'
 	},
 	pwdStyle: {
 		marginTop: 30,

@@ -198,7 +198,7 @@ class Assets extends Component {
 
 		return (
 			<View style={styles.container}>
-				<ImageBackground style={{ width: scaleSize(686), height: scaleSize(320), backgroundColor: '#fff', margin: scaleSize(32), marginTop: scaleSize(120), paddingLeft: scaleSize(32) }} source={require('../../assets/images/asset/asset-top.png')}>
+				<ImageBackground style={{ width: scaleSize(750), height: scaleSize(382), backgroundColor: '#fff', marginTop: scaleSize(120), padding: scaleSize(32) }} source={require('../../assets/images/asset/asset-top.png')}>
 					{/* <View style={styles.walletInfo}> */}
 						<View style={styles.walletInfo_item}>
 							<View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginRight: scaleSize(32)}}>
@@ -326,7 +326,7 @@ const styles = StyleSheet.create({
 		color: '#fff',
 		fontSize: 20,
 		marginLeft: scaleSize(30),
-		marginBottom: scaleSize(8),
+		marginBottom: scaleSize(18),
 		width: scaleSize(600)
 	},
 	walletAddress_item: {
@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
 		width: scaleSize(48),
 		height: scaleSize(48),
 		marginTop: scaleSize(40),
-		marginRight: scaleSize(38)
+		// marginRight: scaleSize(38)
 	},
 
 	//新增币种
@@ -410,13 +410,14 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		borderColor: '#ccc',
 		borderRadius: 50,
-		padding: 8,
+		// padding: 3,
 		marginLeft: scaleSize(32),
 		marginRight: scaleSize(24)
 	},
 	currency_logo_item: {
-		width: 40,
-		height: 40
+		width: scaleSize(96),
+		height: scaleSize(96),
+		borderRadius: scaleSize(48)
 	},
 	currency: {
 		color: '#ccc'

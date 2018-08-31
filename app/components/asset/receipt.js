@@ -34,7 +34,7 @@ export default class Receipt extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<View style={styles.bg} />
+				{/* <View style={styles.bg} /> */}
 				<View style={styles.avatar}>
 					<Image style={styles.avatar_item} source={require('../../assets/images/asset/head_2x.png')} />
 				</View>
