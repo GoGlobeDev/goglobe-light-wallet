@@ -251,12 +251,13 @@ const App = createStackNavigator(
 		},
 		CurrencyDetail: CurrencyDetail,
 		Transfer: Transfer,
-		Receipt: {
-			screen: Receipt,
-			navigationOptions: {
-				headerTitle: () => <Text>{I18n.t('assets.currency.receipt')}</Text>
-			}
-		},
+		Receipt,
+		// Receipt: {
+		// 	screen: Receipt,
+		// 	navigationOptions: {
+		// 		headerTitle: () => <Text>{I18n.t('assets.currency.receipt')}</Text>
+		// 	}
+		// },
 		CreateWallet: {
 			screen: CreateWallet,
 			navigationOptions: {

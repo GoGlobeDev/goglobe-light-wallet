@@ -11,7 +11,7 @@ import '../../../../shim';
 const screen = Dimensions.get('window');
 var DeviceInfo = require('react-native-device-info');
 var Mnemonic = require('bitcore-mnemonic');
-
+import { scaleSize } from '../../../utils/ScreenUtil';
 class ImportWallet extends Component {
 	constructor() {
 		super();
@@ -19,7 +19,7 @@ class ImportWallet extends Component {
 			mnemonic: null,
 			privateFile: null,
 			mnemonicFlag: true,
-			hdPathString: "m/44'/60'/0'/0",
+			hdPathString: "",
 			mnemonicPwd: null,
 			privatePwd: null,
 			confirmMnemonicPwd: null,
@@ -392,39 +392,46 @@ class ImportWallet extends Component {
 	render() {
 		return (
 			<ScrollableTabView
-				style={{ backgroundColor: '#fff' }}
-				tabBarUnderlineStyle={{ backgroundColor: '#007aff', height: 2 }}
-				tabBarActiveTextColor="#007aff"
-				tabBarInactiveTextColor="#000"
+				style={{ backgroundColor: '#fff', height: scaleSize(88) }}
+				tabBarUnderlineStyle={{ backgroundColor: '#FF6716', height: scaleSize(8), width: scaleSize(64), marginLeft: scaleSize(94) }}
+				tabBarActiveTextColor="#FF6716"
+				tabBarInactiveTextColor="#424559"
 				renderTabBar={() => <DefaultTabBar />}
 			>
 				<View tabLabel={I18n.t('wallet.mnemonic')} style={styles.padding_10}>
 					<ScrollView>
 						<TextWidget {...this.mnemonicArea} />
-						<Input {...this.path} />
-						<Input
+						{/* <Input {...this.path} /> */}
+						<View style={[styles.inputbox, { marginTop: scaleSize(32) }]}>
+							<Text style={styles.title_sm}>{I18n.t('wallet.enterPwd')}</Text>
+							<Input
 							{...this.mnemonicPwd}
-							errorMessage={this.state.mnemonicPwd ? ' ' : I18n.t('wallet.pwdSuggest')}
+							// errorMessage={this.state.mnemonicPwd ? ' ' : I18n.t('wallet.pwdSuggest')}
 							// '不少于8位字符，建议混合大小写字母、数字、特殊字符'
-						/>
-						<Input
+							/>
+						</View>
+						<View style={styles.inputbox}>
+							<Text style={styles.title_sm}>{I18n.t('wallet.confirmPwd')}</Text>
+							<Input
 							{...this.confirmMnemonicPwd}
-							errorMessage={
-								this.state.mnemonicPwd === this.state.confirmMnemonicPwd ? (
-									' '
-								) : (
-									I18n.t('wallet.pwdIsWrong')
-								)
-							}
+							// errorMessage={
+							// 	this.state.mnemonicPwd === this.state.confirmMnemonicPwd ? (
+							// 		' '
+							// 	) : (
+							// 		I18n.t('wallet.pwdIsWrong')
+							// 	)
+							// }
 							// '两次密码输入不一致'
-						/>
+							/>
+						</View>
+						
 						<View style={styles.isAgree_flex}>
 							<CheckBox
 								title=" "
 								iconType="material"
 								checkedIcon="check-circle"
 								uncheckedIcon="check-circle"
-								checkedColor="#007AFF"
+								checkedColor="#EA7F28"
 								checked={this.state.mnemonisAgree}
 								containerStyle={styles.checkBox}
 								onPress={() => {
@@ -460,19 +467,22 @@ class ImportWallet extends Component {
 				</View>
 				<View tabLabel={I18n.t('wallet.officialWallet')} style={styles.padding_10}>
 					<ScrollView>
-						<Text style={styles.color_999}>
+						<Text style={styles.tipText}>
 							{I18n.t('wallet.copyKeystoreTip')}
 							{/* 直接复制粘贴以太坊官方钱包keystore文件内容至输入框。 */}
 						</Text>
 						<TextWidget {...this.keystoreArea} />
-						<Input {...this.keystorePwd} />
+						<View style={[styles.inputbox, { marginTop: scaleSize(32) }]}>
+							<Text style={styles.title_sm}>{I18n.t('wallet.enterPwd')}</Text>
+							<Input {...this.keystorePwd} />
+						</View>
 						<View style={styles.isAgree_flex}>
 							<CheckBox
 								title=" "
 								iconType="material"
 								checkedIcon="check-circle"
 								uncheckedIcon="check-circle"
-								checkedColor="#007AFF"
+								checkedColor="#EA7F28"
 								checked={this.state.keystoreisAgree}
 								containerStyle={styles.checkBox}
 								onPress={() => {
@@ -505,29 +515,36 @@ class ImportWallet extends Component {
 				<View tabLabel={I18n.t('wallet.privateKey')} style={styles.padding_10}>
 					<ScrollView>
 						<TextWidget {...this.privateKeyArea} />
-						<Input
+						<View style={[styles.inputbox, {marginTop: scaleSize(32) }]}>
+							<Text style={styles.title_sm}>{I18n.t('wallet.enterPwd')}</Text>
+							<Input
 							{...this.privatePwd}
-							errorMessage={this.state.privatePwd ? ' ' : I18n.t('wallet.pwdSuggest')}
+							// errorMessage={this.state.privatePwd ? ' ' : I18n.t('wallet.pwdSuggest')}
 							// '不少于8位字符，建议混合大小写字母、数字、特殊字符'
-						/>
-						<Input
-							{...this.confirmPrivatePwd}
-							errorMessage={
-								this.state.privatePwd === this.state.confirmPrivatePwd ? (
-									' '
-								) : (
-									I18n.t('wallet.pwdIsWrong')
-								)
-							}
-							// '两次密码输入不一致'
-						/>
+							/>
+						</View>
+						<View style={styles.inputbox}>
+							<Text style={styles.title_sm}>{I18n.t('wallet.confirmPwd')}</Text>
+							<Input
+								{...this.confirmPrivatePwd}
+								// errorMessage={
+								// 	this.state.privatePwd === this.state.confirmPrivatePwd ? (
+								// 		' '
+								// 	) : (
+								// 		I18n.t('wallet.pwdIsWrong')
+								// 	)
+								// }
+								// '两次密码输入不一致'
+							/>
+						</View>
+						
 						<View style={styles.isAgree_flex}>
 							<CheckBox
 								title=" "
 								iconType="material"
 								checkedIcon="check-circle"
 								uncheckedIcon="check-circle"
-								checkedColor="#007AFF"
+								checkedColor="#EA7F28"
 								checked={this.state.privateisAgree}
 								containerStyle={styles.checkBox}
 								onPress={() => {
@@ -566,23 +583,36 @@ export default withNavigation(ImportWallet);
 
 const styles = StyleSheet.create({
 	mnemonicArea: {
-		minHeight: 150,
-		maxHeight: 350,
-		padding: 8,
-		borderWidth: 1,
-		borderRadius: 7,
-		marginTop: 20,
-		borderColor: '#E6E6E6'
+		minHeight: scaleSize(300),
+		maxHeight: scaleSize(700),
+		padding: scaleSize(28),
+		borderWidth: scaleSize(2),
+		borderRadius: scaleSize(8),
+		// marginTop: scaleSize(32),
+		borderColor: '#EBEBEB',
+		backgroundColor: '#F6F6F6',
+	},
+	inputbox: {
+		height: scaleSize(160),
+		width: scaleSize(686)
+	},
+	title_sm: {
+		fontSize: 13,
+		color: '#0D0E15',
+		fontWeight: 'bold',
+		marginBottom: scaleSize(16)
 	},
 	textInput: {
+		width: scaleSize(686),
 		borderBottomWidth: 1,
 		borderColor: '#e6e6e6',
-		height: 45,
-		padding: 5
+		// height: 45,
+		padding: 0,
+		margin: 0
 	},
 	padding_10: {
-		padding: 10,
-		flex: 1
+		padding: scaleSize(32),
+		// flex: 1
 	},
 	isAgree_flex: {
 		flexDirection: 'row',
@@ -590,28 +620,38 @@ const styles = StyleSheet.create({
 		overflow: 'hidden'
 	},
 	color_999: {
-		color: '#999',
-		width: screen.width - 50
+		color: '#424559',
+		// width: screen.width - 50
 	},
 	color_aff: {
-		color: '#007AFF'
+		color: '#5077BC'
 	},
 	checkBox: {
 		padding: 0,
-		width: 26,
-		borderColor: 'transparent',
+		marginLeft: 0,
+		width: scaleSize(40),
+		borderWidth: 0,
 		backgroundColor: 'transparent'
 	},
 	buttonStyle: {
-		backgroundColor: '#007AFF',
-		height: 45,
+		backgroundColor: '#FF8725',
+		height: scaleSize(100),
 		borderColor: 'transparent',
 		borderWidth: 0,
-		borderRadius: 50,
-		marginTop: 30
+		borderRadius: scaleSize(52),
+		marginTop: scaleSize(50),
+		marginLeft: scaleSize(16),
+		width: scaleSize(654)
 	},
 	disabledStyle: {
 		borderWidth: 2,
 		backgroundColor: '#ced4da'
+	},
+	tipText: {
+		width: scaleSize(686),
+		color: '#999',
+		fontSize: 14,
+		lineHeight: scaleSize(40),
+		marginBottom: scaleSize(16)
 	}
 });

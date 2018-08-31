@@ -395,13 +395,11 @@ class Transfer extends Component {
 								buttonStyle={styles.buttonStyle}
 								onPress={() => {
 									this.refs.transferPwd.open();
-									this.refs.transferDetail.close();
+									// this.refs.transferDetail.close();
 								}}
 							/>
 						</View>
-					</ScrollView>
-				</Modal>
-				<Modal
+						<Modal
 							style={[styles.modal, styles.modalPwd]}
 							coverScreen={true}
 							position={'center'}
@@ -417,7 +415,7 @@ class Transfer extends Component {
 									placeholder={I18n.t('public.inputPwd')} //"请输入你的密码"
 									secureTextEntry={true}
 									onChangeText={(password) => this.setState({ password })}
-									inputContainerStyle={[ styles.inputContainerStyle, styles.pwdStyle ]}
+									inputContainerStyle={[styles.pwdStyle ]}
 								/>
 								<View style={styles.pwdNext}>
 									<Button
@@ -467,6 +465,8 @@ class Transfer extends Component {
 								</View>
 							</View>
 						</Modal>
+					</ScrollView>
+				</Modal>
 			</View>
 		);
 	}
@@ -577,13 +577,15 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold'
 	},
 	pwdStyle: {
-		marginTop: 30,
-		width: screen.width,
+		// marginTop: 30,
+		marginLeft: scaleSize(32),
+		width: scaleSize(622),
+		height: scaleSize(96),
 		borderBottomWidth: 1,
-		borderBottomColor: '#8f8f94'
+		borderBottomColor: '#E7E7E7'
 	},
 	pwdNext: {
 		alignItems: 'center',
-		marginTop: 100
+		marginTop: scaleSize(50)
 	}
 });
