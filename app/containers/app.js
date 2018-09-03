@@ -56,7 +56,6 @@ const storage = new Storage({
 	enableCache: true
 });
 global.storage = storage;
-
 storage
 	.load({
 		key: 'token'
