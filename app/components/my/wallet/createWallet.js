@@ -301,7 +301,7 @@ const styles = StyleSheet.create({
 	checkBox: {
 		padding: 0,
 		marginLeft: scaleSize(30),
-		width: scaleSize(40),
+		width: scaleSize(46),
 		borderWidth: 0,
 		backgroundColor: 'transparent'
 	},

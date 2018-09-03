@@ -9,6 +9,7 @@ class textWidget extends Component {
         return (
             <View>
                 <TextInput
+                    underlineColorAndroid="transparent"
                     {...this.props}                    
                 >
                 </TextInput>

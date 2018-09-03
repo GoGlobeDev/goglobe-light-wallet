@@ -591,6 +591,7 @@ const styles = StyleSheet.create({
 		// marginTop: scaleSize(32),
 		borderColor: '#EBEBEB',
 		backgroundColor: '#F6F6F6',
+		textAlignVertical: 'top'
 	},
 	inputbox: {
 		height: scaleSize(160),
@@ -629,7 +630,7 @@ const styles = StyleSheet.create({
 	checkBox: {
 		padding: 0,
 		marginLeft: 0,
-		width: scaleSize(40),
+		width: scaleSize(46),
 		borderWidth: 0,
 		backgroundColor: 'transparent'
 	},
