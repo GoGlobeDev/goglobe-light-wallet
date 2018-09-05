@@ -117,7 +117,7 @@ class WithdrawCash extends React.Component {
     _clickToWidthdraw = () => {
         withdraw(this.state.userId, this.state.password, this.state.number).then((res) => {
             if(res.data.status === 'success'){
-                this.props.navigation.navigate('Node')
+                this.props.navigation.navigate('Node', { userId: this.state.userId, passwordExists: true})
             } else {
                 Alert.alert(null, res.data.message)
             }

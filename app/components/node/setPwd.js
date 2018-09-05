@@ -13,7 +13,8 @@ export default class SetPwd extends React.Component {
 		}
 	}
 	static navigationOptions = {
-		headerTitle: I18n.t('node.setPassword._title')
+		header: null
+		// headerTitle: 
 	};
 	componentDidMount() {
 		storage
@@ -48,7 +49,7 @@ export default class SetPwd extends React.Component {
 			bindPwd(this.props.navigation.state.params.userId, this.state.pwd).then((res) => {
 				if(res.data.status === 'success'){
 					if(this.props.navigation.state.params.page === 'node') {
-						this.props.navigation.navigate('Node')
+						this.props.navigation.navigate('Node', { userId: this.props.navigation.state.params.userId, passwordExists: true})
 					} else {
 						this.props.navigation.navigate('BindingPhone', {phone: this.props.navigation.state.params.phone})
 					}
@@ -64,6 +65,9 @@ export default class SetPwd extends React.Component {
 		const { params } = this.props.navigation.state;
 		return (
 			<View style={styles.container}>
+				<View>
+					<Text style={[styles.title, {color: '#0D0E15', marginTop: scaleSize(114), marginLeft: scaleSize(32)}]} >{I18n.t('node.setPassword._title')}</Text>
+				</View>
             	<View style={styles.tip}>
 					<Text style={styles.tipText}>{I18n.t('node.setPassword.tip1')}</Text>
 					<Text style={styles.tipText}>{I18n.t('node.setPassword.tip2')}</Text>
@@ -100,7 +104,11 @@ const styles = StyleSheet.create({
 		flex: 1,
 		// padding: 20,
 		backgroundColor: '#fff'
-    },
+	},
+	title: {
+		fontSize: 34,
+		color: '#ffffff'
+	},
     tip: {
         padding: scaleSize(48)
     },

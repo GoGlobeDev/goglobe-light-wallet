@@ -45,9 +45,17 @@ class VCode extends React.Component {
 		}
 	}
 	componentDidMount() {
-        this.setState({
-            phone: this.props.navigation.state.params.phone
-        })
+        if(this.props.navigation.state.params.tip){
+            this.setState({
+                page: 'node',
+                phone: this.props.navigation.state.params.phone
+            })
+        } else {
+            this.setState({
+                page: 'phone',
+                phone: this.props.navigation.state.params.phone
+            }) 
+        }
 		storage
 			.load({
 				key: 'walletInfo'
@@ -99,7 +107,7 @@ class VCode extends React.Component {
             bindPhone(this.state.phone, this.state.code, this.state.walletAddress).then((res) => {
                 if(res.data.status === 'success') {
                     storage.save({ key: 'user', data: { phone: this.state.phone, userId: res.data.id }, expires: null })
-                    this.props.navigation.navigate('SetPwd', { page: 'phone', userId: res.data.id, phone: this.state.phone})
+                    this.props.navigation.navigate('SetPwd', { page: this.state.page, userId: res.data.id, phone: this.state.phone})
                 } else {
                     Alert.alert(null, res.data.message); // 提示 错误原因
                 }

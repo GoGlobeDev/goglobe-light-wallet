@@ -1,5 +1,5 @@
 const initState = {
-    GOGContractAddr: '0x41c11ee289fdaf498500314ab719a64673f72a40'
+    GOGContractAddr: '0x8c191f956a287096bb306c422536cd1151fc4a3c'
 }
 
 export default function (state = initState, action) {

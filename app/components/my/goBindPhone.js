@@ -38,7 +38,7 @@ class GoBindPhone extends React.Component {
 		} else {
 			sendCode(this.state.phone).then((res) => {
 				if(res.data.status === 'success'){
-					this.props.navigation.navigate('VCode', { phone: this.state.phone })
+					this.props.navigation.navigate('VCode', { phone: this.state.phone, tip: this.state.tip })
 				} else {
 					Alert.alert(null, '获取验证码失败');
 				}

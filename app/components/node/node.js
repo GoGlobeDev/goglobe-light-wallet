@@ -17,7 +17,7 @@ import { getNodeRank, getMemberStatus, getTeamAddress } from '../../api/loged';
 import { scaleSize } from '../../utils/ScreenUtil';
 import { I18n } from '../../../language/i18n';
 import Icon from '../../pages/iconSets';
-import { getDevice } from '../../api/bind';
+import { getDevice, getUser} from '../../api/bind';
 
 const screen = Dimensions.get('window');
 
@@ -56,16 +56,50 @@ class Node extends Component {
 		getDevice(newProps.navigation.state.params.userId).then((res) => {
 			this.setState({
 				device: res.data,
+				userId: newProps.navigation.state.params.userId,
+				passwordExists: newProps.navigation.state.params.passwordExists
 			})
 		}).catch((e) => {
 			console.log(e)
 		})
+	}
+	getuser = (userId) => {
+		storage
+		.load({
+			key: 'walletInfo'
+		})
+		.then((walletInfo) => {
+			let walletAddress = walletInfo.walletAddress;
+			getUser(walletAddress).then((res) => {
+				if(res.data && res.data.userId){
+					this.setState({
+						userId: res.data.userId,
+						phone: res.data.phone,
+						rcode: res.data.referralCode,
+						passwordExists: res.data.passwordExists
+					})
+				} else {
+					this.setState({
+						userId: '',
+						phone: '',
+						rcode: '',
+						passwordExists: false
+					})
+				}
+			}).catch((e) => {
+				console.log(e)
+			})
+		})
+		.catch((x) => {
+			console.log(x);
+		});
 	}
 	// 组件初始渲染挂载界面完成后 异步加载数据
 	componentDidMount() {
 		storage
 		.load({ key: 'user'})
 		.then((user) => {
+			console.log(user)
 			if(user.userId && user.passwordExists){
 				getDevice(user.userId).then((res) => {
 					this.setState({
@@ -86,13 +120,30 @@ class Node extends Component {
 		})
 	}
 	_clickToBindMachine = () => {
-		if(!this.state.userId) {
-			this.props.navigation.navigate('GoBindPhone', { page: 'node'});
-		} else if (!this.state.passwordExists) {
-			this.props.navigation.navigate('SetPwd', { page: 'node', userId: this.state.userId, phone: this.state.phone})
-		} else {
-			this.props.navigation.navigate('BindMachine', {userId: this.state.userId})
-		}
+		storage
+		.load({
+			key: 'walletInfo'
+		})
+		.then((walletInfo) => {
+			let walletAddress = walletInfo.walletAddress;
+			getUser(walletAddress).then((res) => {
+				if(res.data){
+					if(!res.data.userId) {
+						this.props.navigation.navigate('GoBindPhone', { page: 'node'});
+					} else if (!res.data.passwordExists) {
+						this.props.navigation.navigate('SetPwd', { page: 'node', userId: this.state.userId, phone: this.state.phone})
+					} else {
+						this.props.navigation.navigate('BindMachine', {userId: this.state.userId})
+					}
+				}
+			}).catch((e) => {
+				console.log(e)
+			})
+		})
+		.catch((x) => {
+			console.log(x);
+		});
+
 	}
 	_clickToWithdrawCash = () => {
 		this.props.navigation.navigate('WithdrawCash')
