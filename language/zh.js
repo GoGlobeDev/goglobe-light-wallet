@@ -171,7 +171,8 @@ export default {
         address: '地点',
         registerMiner: {
             _title: '绑定矿机',
-            inputMinerNumber: '输入矿机编号'
+			inputMinerNumber: '输入矿机编号',
+			inputMinerCode: '输入矿机code'
         },
         withdrawRule: {
             _title: '提币规则',

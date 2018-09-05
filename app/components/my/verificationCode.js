@@ -1,8 +1,10 @@
 {I18n.t('assets.notUpdate')}{I18n.t('assets.notUpdate')}import React, { Component } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Alert, TouchableOpacity } from 'react-native';
 import { Input } from 'native-base';
 import { I18n } from '../../../language/i18n';
 import { scaleSize } from '../../utils/ScreenUtil';
+import { sendCode, bindPhone, getUser } from '../../api/bind';
+import Touch from '../public/touch';
 // import { Timer } from '../../utils/Timer.js';
 
 class Timer extends Component {
@@ -38,46 +40,71 @@ class VCode extends React.Component {
             phone: null,
             count: 60,
             state: false,
+            code: '',
+            walletAddress: ''
 		}
 	}
 	componentDidMount() {
-
-		// storage
-		// 	.load({
-		// 		key: 'webHost'
-		// 	})
-		// 	.then(({ webHost }) => {
-		// 		this.setState({
-		// 			url: webHost
-		// 		});
-		// 	})
-		// 	.catch((e) => {
-		// 		console.log(e);
-		// 	});
+        this.setState({
+            phone: this.props.navigation.state.params.phone
+        })
+		storage
+			.load({
+				key: 'walletInfo'
+			})
+			.then(( walletInfo ) => {
+                let walletAddress = walletInfo.walletAddress;
+				this.setState({
+					walletAddress: walletAddress
+				});
+			})
+			.catch((e) => {
+				console.log(e);
+			});
 	}
-	_setBindingPhone = () => {
-		console.log(this.state.phone);
-		this.props.navigation.navigate('GoBindPhone');
-    }
-    _changeText0 = () => {
+    _changeText0 = (txt) => {
         this.refs.code1._root.focus();
+        this.setState({
+            code0: txt
+        })
     }
-    _changeText1 = () => {
+    _changeText1 = (txt) => {
         this.refs.code2._root.focus();
+        this.setState({
+            code1: txt
+        })
     }
-    _changeText2 = () => {
+    _changeText2 = (txt) => {
         this.refs.code3._root.focus();
+        this.setState({
+            code2: txt
+        })
     }
-    _changeText3 = () => {
+    _changeText3 = (txt) => {
         this.refs.code4._root.focus();
+        this.setState({
+            code3: txt
+        })
     }
-    _changeText4 = () => {
+    _changeText4 = (txt) => {
         this.refs.code5._root.focus();
+        this.setState({
+            code4: txt
+        })
     }
-    _changeText5 = () => {
-        // this.setState({
-        //     focus: 'focus1'
-        // })
+    _changeText5 = (txt) => {
+        this.setState({
+            code: this.state.code0 + this.state.code1 + this.state.code2 + this.state.code3 + this.state.code4 + txt
+        },() => {
+            bindPhone(this.state.phone, this.state.code, this.state.walletAddress).then((res) => {
+                if(res.data.status === 'success') {
+                    storage.save({ key: 'user', data: { phone: this.state.phone, userId: res.data.id }, expires: null })
+                    this.props.navigation.navigate('SetPwd', { page: 'phone', userId: res.data.id, phone: this.state.phone})
+                } else {
+                    Alert.alert(null, res.data.message); // 提示 错误原因
+                }
+            })
+        })
     }
     onTimer =() => {
         if (!this.state.state) {
@@ -92,27 +119,35 @@ class VCode extends React.Component {
         }
       }
       _clickToSendCode = () => {
-          this.setState({
-              state: false,
-              count: 60,
-          })
+        sendCode(this.state.phone).then((res) => {
+            console.log(res)
+            if(res.data.status === 'success'){
+                this.setState({
+                    state: false,
+                    count: 60,
+                })
+            } else {
+                Alert.alert(null, '获取验证码失败');
+            }
+        })
       }
 	render() {
         // const { params } = this.props.navigation.state;
         const vCodeStateText = !this.state.state ?
             <Text style={styles.sendcode}>{this.state.count}s后重新获取</Text>
-            : <TouchableOpacity onPress={this._clickToSendCode}>
+            : <Touch onPress={this._clickToSendCode}>
                 <Text style={[styles.sendcode, { color: '#486495'} ]}>重新获取</Text>
-            </TouchableOpacity>;
+            </Touch>;
         // const vcode = this.state.count
 		return (
 			<View style={styles.container}>
 				<View style={styles.view}>
-					<Text style={styles.title}>短信验证码已发送至18901569182</Text>
+					<Text style={styles.title}>短信验证码已发送至{this.state.phone}</Text>
                 </View>
                 <View style={styles.inputbox}>
                     <Input
                         style={styles.numberbox}
+                        autoFocus={true}
                         maxLength={1}
                         keyboardType='numeric'
                         ref='code0'

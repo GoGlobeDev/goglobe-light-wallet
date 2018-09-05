@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-nati
 import { Button, Input } from 'react-native-elements';
 import { I18n } from '../../../language/i18n';
 import { scaleSize } from '../../utils/ScreenUtil';
+import { getUser } from '../../api/bind';
 class BindingPhone extends React.Component {
 	static navigationOptions = {
 		headerTitle: I18n.t('my.home.bindPhone._title')
@@ -10,27 +11,23 @@ class BindingPhone extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			phone: null
+			phone: ''
 		}
 	}
+	componentWillReceiveProps(newProps) {
+		this.setState({
+			phone: newProps.navigation.state.params.phone
+		})
+	}
 	componentDidMount() {
-
-		// storage
-		// 	.load({
-		// 		key: 'webHost'
-		// 	})
-		// 	.then(({ webHost }) => {
-		// 		this.setState({
-		// 			url: webHost
-		// 		});
-		// 	})
-		// 	.catch((e) => {
-		// 		console.log(e);
-		// 	});
+		storage.load({ key: 'user' }).then((user) => {
+			this.setState({
+				phone: user.phone
+			})
+		})
 	}
 	_setBindingPhone = () => {
-		console.log(this.state.phone);
-		this.props.navigation.navigate('GoBindPhone');
+		this.props.navigation.navigate('GoBindPhone', {page: 'my'});
 	}
 	render() {
 		const { params } = this.props.navigation.state;
@@ -50,21 +47,6 @@ class BindingPhone extends React.Component {
 						</View>
 					}
 				</View>
-				{/* <View >
-					<Text>当前未绑定手机号</Text><Button title={I18n.t('my.home.bindPhone.button')}/>
-					<View>
-						<Text>输入手机号</Text>
-						<Input placeholder="输入手机号"/>
-						<Text>输入验证码</Text>
-						<Input placeholder="输入验证码"/>
-					</View>
-					<View>
-						<Text>在未绑定手机号到情况下，无法绑定矿机</Text>
-						<Text>完成绑定手机号后，即可绑定矿机，开始挖矿获取代币</Text>
-					</View>
-				</View> */}
-
-
 			</View>
 		);
 	}

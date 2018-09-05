@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
 	View,
+	ScrollView,
 	Text,
 	Image,
 	Button,
@@ -16,6 +17,7 @@ import { getNodeRank, getMemberStatus, getTeamAddress } from '../../api/loged';
 import { scaleSize } from '../../utils/ScreenUtil';
 import { I18n } from '../../../language/i18n';
 import Icon from '../../pages/iconSets';
+import { getDevice } from '../../api/bind';
 
 const screen = Dimensions.get('window');
 
@@ -28,9 +30,9 @@ class MachineList extends Component {
 				</View>
 				<View>
 					<Text style={styles.listTitle}>{this.props.item.title}</Text>
-					<Text style={styles.listContent}>{I18n.t('node.power')}：1000</Text>
+					<Text style={styles.listContent}>{I18n.t('node.power')}：{this.props.item.deposit}</Text>
 					<Text style={styles.listContent}>{I18n.t('node.dailyProduct')}：1000</Text>
-					<Text style={styles.listContent}>{I18n.t('node.address')}：美国圣地亚哥金坷垃广场</Text>
+					<Text style={styles.listContent}>{I18n.t('node.address')}：{this.props.item.description}</Text>
 				</View>
 			</View>
 		)
@@ -42,6 +44,7 @@ class Node extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			device: {},
 			machineNumber: 1,
 			MachineList: [
 				{title: '矿机1 代码：ASCII1'}
@@ -49,36 +52,71 @@ class Node extends Component {
 		};
 		// this.navigate = this.props.navigation.navigate;
 	}
-
+	componentWillReceiveProps(newProps) {
+		getDevice(newProps.navigation.state.params.userId).then((res) => {
+			this.setState({
+				device: res.data,
+			})
+		}).catch((e) => {
+			console.log(e)
+		})
+	}
 	// 组件初始渲染挂载界面完成后 异步加载数据
 	componentDidMount() {
-
+		storage
+		.load({ key: 'user'})
+		.then((user) => {
+			if(user.userId && user.passwordExists){
+				getDevice(user.userId).then((res) => {
+					this.setState({
+						device: res.data,
+						userId: user.userId,
+						phone: user.phone,
+						passwordExists: user.passwordExists
+					})
+				}).catch((e) => {
+					this.setState({
+						userId: user.userId,
+						passwordExists: user.passwordExists
+					})
+				})
+			}
+		}).catch((e) => {
+			console.log(e)
+		})
 	}
 	_clickToBindMachine = () => {
-		this.props.navigation.navigate('BindMachine')
+		if(!this.state.userId) {
+			this.props.navigation.navigate('GoBindPhone', { page: 'node'});
+		} else if (!this.state.passwordExists) {
+			this.props.navigation.navigate('SetPwd', { page: 'node', userId: this.state.userId, phone: this.state.phone})
+		} else {
+			this.props.navigation.navigate('BindMachine', {userId: this.state.userId})
+		}
 	}
 	_clickToWithdrawCash = () => {
 		this.props.navigation.navigate('WithdrawCash')
 	}
 	render() {
+		const { device } = this.state
 		return (
 			<View style={styles.container}>
 				{
-					this.state.machineNumber === 0 ? <View>
+					!device.deviceSum || device.deviceSum === 0 ? <View>
 						<Text style={[styles.title, {color: '#0D0E15', marginTop: scaleSize(114), marginLeft: scaleSize(32)}]}>{I18n.t('node.miner')}</Text>
 						<Image style={styles.machineIcon} source={require('../../assets/images/node/machine.png')}/>
 						<TouchableOpacity style={styles.button} onPress={this._clickToBindMachine}>
 							<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.registerMiner._title')}</Text>
 						</TouchableOpacity>
 					</View>
-					: <View>
+					: <ScrollView style={{ marginBottom: scaleSize(98)}}>
 						<ImageBackground style={{ width: scaleSize(750), height: scaleSize(568)}} source={require('../../assets/images/node/node-top.png')}>
 							<View style={styles.top}>
 								<Text style={styles.title}>{I18n.t('node.miner')}</Text>
 								<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
 									<View>
 										<Text style={styles.sm_title}>{I18n.t('node.balance')}</Text>
-										<Text style={styles.sm_content}>10000</Text>
+										<Text style={styles.sm_content}>{device.balance}</Text>
 									</View>
 									<TouchableOpacity style={[styles.button, { width: scaleSize(128), height: scaleSize(72) }]} onPress={this._clickToWithdrawCash}>
 										<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.withdrawCash')}</Text>
@@ -88,29 +126,29 @@ class Node extends Component {
 								<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 									<View>
 										<Text style={styles.sm_title}>{I18n.t('node.minerCount')}</Text>
-										<Text style={styles.sm_content}>1</Text>
+										<Text style={styles.sm_content}>{device.deviceSum}</Text>
 									</View>
 									<View>
 										<Text style={styles.sm_title}>{I18n.t('node.totalPower')}</Text>
-										<Text style={styles.sm_content}>10000</Text>
+										<Text style={styles.sm_content}>{device.power}</Text>
 									</View>
 									<View>
 										<Text style={styles.sm_title}>{I18n.t('node.dailyProducts')}</Text>
-										<Text style={styles.sm_content}>121.56</Text>
+										<Text style={styles.sm_content}>{device.dailyProduce}</Text>
 									</View>
 								</View>
 							</View>
 						</ImageBackground>
 						<View>
-							{this.state.MachineList.map((item, index) => {
+							{device.deviceSum > 0 && device.deviceList.map((item, index) => {
 								return <MachineList item={item} key={index}/>
 							})}
 						</View>
-						{this.state.MachineList.length < 2 && <TouchableOpacity style={styles.button} onPress={this._clickToBindMachine}>
+						{device.deviceSum < 2 && <TouchableOpacity style={styles.button} onPress={this._clickToBindMachine}>
 							<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.registerMiner._title')}</Text>
 						</TouchableOpacity>}
 
-					</View>
+					</ScrollView>
 				}
 
 

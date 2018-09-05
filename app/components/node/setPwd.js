@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { I18n } from '../../../language/i18n';
 import { scaleSize } from '../../utils/ScreenUtil';
+import { bindPwd } from '../../api/bind';
 export default class SetPwd extends React.Component {
 	constructor(){
 		super();
@@ -15,18 +16,18 @@ export default class SetPwd extends React.Component {
 		headerTitle: I18n.t('node.setPassword._title')
 	};
 	componentDidMount() {
-		// storage
-		// 	.load({
-		// 		key: 'webHost'
-		// 	})
-		// 	.then(({ webHost }) => {
-		// 		this.setState({
-		// 			url: webHost
-		// 		});
-		// 	})
-		// 	.catch((e) => {
-		// 		console.log(e);
-		// 	});
+		storage
+			.load({
+				key: 'user'
+			})
+			.then((user) => {
+				this.setState({
+					userId: user.userId
+				});
+			})
+			.catch((e) => {
+				console.log(e);
+			});
 	}
 	_changePwd = (pwd) => {
 		this.setState({
@@ -39,8 +40,25 @@ export default class SetPwd extends React.Component {
 		})
 	}
 	_clickTocomfirm = () => {
-		this.props.navigation.navigate('Node')
-
+		if(!this.state.pwd){
+			Alert.alert(null, I18n.t('wallet.enterPwd'));
+		} else if(this.state.pwd !== this.state.pwd1 ) {
+			Alert.alert(null, I18n.t('wallet.pwdIsWrong')); 
+		} else {
+			bindPwd(this.props.navigation.state.params.userId, this.state.pwd).then((res) => {
+				if(res.data.status === 'success'){
+					if(this.props.navigation.state.params.page === 'node') {
+						this.props.navigation.navigate('Node')
+					} else {
+						this.props.navigation.navigate('BindingPhone', {phone: this.props.navigation.state.params.phone})
+					}
+				} else {
+					Alert.alert(null, res.data.status)
+				}
+			}).catch((e) => {
+				console.log(e)
+			})
+		}
 	}
 	render() {
 		const { params } = this.props.navigation.state;
@@ -53,6 +71,7 @@ export default class SetPwd extends React.Component {
 				<View style={styles.inputbox}>
 					<Text style={styles.inputTitle}>{I18n.t('node.setPassword.setPassword')}</Text>
 					<TextInput
+						secureTextEntry={true}
 						style={styles.inputText}
 						placeholder={I18n.t('node.setPassword.placehoder1')}
 						onChangeText={(pwd) => this._changePwd(pwd)}
@@ -61,6 +80,7 @@ export default class SetPwd extends React.Component {
                 <View style={styles.inputbox}>
 					<Text style={styles.inputTitle}>{I18n.t('node.setPassword.confirmPassword')}</Text>
 					<TextInput
+						secureTextEntry={true}
 						style={styles.inputText}
 						placeholder={I18n.t('node.setPassword.placehoder2')}
 						onChangeText={(pwd1) => this._changePwd1(pwd1)}

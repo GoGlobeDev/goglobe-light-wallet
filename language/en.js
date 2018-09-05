@@ -158,7 +158,8 @@ export default {
         address: 'Address',
         registerMiner: {
             _title: 'Register Miner',
-            inputMinerNumber: 'Input Miner Number'
+			inputMinerNumber: 'Input Miner Number',
+			inputMinerCode: 'Input Miner Code'
         },
         withdrawRule: {
             _title: 'Rule',

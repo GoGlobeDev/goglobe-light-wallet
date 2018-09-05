@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, TouchableHighlight, Alert } from 'react-native';
 import { Button, Input } from 'react-native-elements';
+import Modal from 'react-native-modalbox';
 import { I18n } from '../../../language/i18n';
 import { scaleSize } from '../../utils/ScreenUtil';
+import { bindDevice } from '../../api/bind';
+import Loading from 'react-native-whc-loading';
 class BindMachine extends React.Component {
 	constructor(){
 		super();
 		this.state = {
-			text: ''
+			deviceNo: '',
+			code: ''
 		}
 	}
 	static navigationOptions = {
@@ -27,14 +31,36 @@ class BindMachine extends React.Component {
 		// 		console.log(e);
 		// 	});
 	}
-	_changeText = (text) => {
+	_changeMinerNumber = (text) => {
 		this.setState({
-			text: text
+			deviceNo: text
+		})
+	}
+	_changeMinerCode = (code) => {
+		this.setState({
+			code: code
 		})
 	}
 	_clickTocomfirm = () => {
-		this.props.navigation.navigate('SetPwd')
+		if(!this.state.deviceNo){
+			Alert.alert(null, '矿机编号不能为空，请重新输入')
+		} else if (!this.state.code) {
+			Alert.alert(null, '矿机code不能为空，请重新输入')
+		} else {
+			this.refs.devicePwd.open()
+		}
 	}
+	_clickToBindDevice = () => {
+        bindDevice(this.props.navigation.state.params.userId, Number(this.state.deviceNo), this.state.code, this.state.password).then((res) => {
+			if(res.data.status === 'success') {
+				this.props.navigation.navigate('Node', {userId: this.props.navigation.state.params.userId})
+			} else {
+				Alert.alert(null, '矿机编号或矿机code错误，请重新输入')
+			}
+		}).catch((e) => {
+			Alert.alert(null, '绑定失败，请重新输入')
+		})
+    }
 	render() {
 		const { params } = this.props.navigation.state;
 		return (
@@ -44,12 +70,68 @@ class BindMachine extends React.Component {
 					<TextInput
 						style={styles.inputText}
 						placeholder={I18n.t('node.registerMiner.inputMinerNumber')}
-						onChangeText={(text) => this._changeText(text)}
+						onChangeText={(text) => this._changeMinerNumber(text)}
+					/>
+				</View>
+				<View style={styles.inputbox}>
+					<Text style={styles.inputTitle}>{I18n.t('node.registerMiner.inputMinerCode')}</Text>
+					<TextInput
+						style={styles.inputText}
+						placeholder={I18n.t('node.registerMiner.inputMinerCode')}
+						onChangeText={(text) => this._changeMinerCode(text)}
 					/>
 				</View>
 				<TouchableOpacity style={[styles.button, this.state.text === '' ? { backgroundColor: '#F7C9A9' } : {  backgroundColor: '#EA7828' }]} onPress={this._clickTocomfirm}>
 					<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('public.OK')}</Text>
 				</TouchableOpacity>
+				<Loading ref="loading" />
+				<Modal
+                    style={[styles.modal, styles.modalPwd]}
+                    coverScreen={true}
+                    position={'center'}
+                    ref={'devicePwd'}
+                    isOpen={this.state.huhu}
+                    swipeArea={20}
+                    >
+                    <View>
+                        <View style={styles.paymentDetails_title}>
+                            <Text>输入交易密码</Text>
+                        </View>
+                        <Input
+                            placeholder={I18n.t('public.inputPwd')} //"请输入你的密码"
+                            secureTextEntry={true}
+                            onChangeText={(password) => this.setState({ password })}
+                            inputContainerStyle={[styles.pwdStyle ]}
+                        />
+                        <View style={styles.bottom_fun}>
+                            <TouchableHighlight style={styles.bottom_fun_item_done}>
+                                <Text
+                                    style={styles.bottom_fun_item}
+                                    onPress={() => {
+                                        this.refs.devicePwd.close();
+                                        setTimeout(() => {
+                                            // this.refs.loading.show();
+                                            if (!this.state.password) {
+                                                this.refs.loading.close();
+                                                setTimeout(() => {
+                                                    // Alert.alert(null, '请输入密码');
+                                                    Alert.alert(null, I18n.t('public.inputPwd'));
+                                                }, 100);
+                                            } else {
+                                                setTimeout(() => {
+                                                    this._clickToBindDevice()
+                                                }, 100);
+                                            }
+                                        }, 1000);
+                                    }}
+                                >
+                                    {I18n.t('public.define')}
+                                    {/* 确定 */}
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                    </View>
+                </Modal>
 			</View>
 		);
 	}
@@ -64,7 +146,8 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff'
 	},
 	inputbox: {
-		padding: scaleSize(48)
+		padding: scaleSize(48),
+		paddingBottom: 0
 	},
 	inputTitle: {
 		fontSize: 13,
@@ -87,4 +170,42 @@ const styles = StyleSheet.create({
 		marginLeft: scaleSize(48),
 		marginTop: scaleSize(97)
 	},
+	modal: {
+		alignItems: 'center',
+		width: scaleSize(686),
+		height: scaleSize(782),
+		borderRadius: scaleSize(8)
+	},
+	modalPwd: {
+		height: scaleSize(406)
+    },
+    paymentDetails_title: {
+		width: scaleSize(686),
+		height: scaleSize(108),
+		justifyContent: 'center',
+		alignItems: 'center',
+    },
+    pwdStyle: {
+        marginLeft: scaleSize(32),
+        marginBottom: scaleSize(50),
+		width: scaleSize(622),
+		height: scaleSize(96),
+		borderBottomWidth: 1,
+		borderBottomColor: '#E7E7E7'
+    },
+    bottom_fun: {
+		flexDirection: 'row',
+		justifyContent: 'center'
+	},
+	bottom_fun_item: {
+		height: scaleSize(100),
+		lineHeight: scaleSize(100),
+		color: '#fff',
+		textAlign: 'center',
+	},
+	bottom_fun_item_done: {
+		width: scaleSize(654),
+		borderRadius: scaleSize(44),
+		backgroundColor: '#FF8725'
+	}
 });
