@@ -88,7 +88,6 @@ class CreateWallet extends Component {
 
 	confirmPwd = {
 		placeholder: I18n.t('wallet.enterPwd'), //'确认您的密码',
-		placeholderStyle: styles.placeholder,
 		inputContainerStyle: styles.textInput,
 		errorStyle: styles.errorStyle,
 		secureTextEntry: true,
@@ -286,10 +285,7 @@ const styles = StyleSheet.create({
 	textInput: {
 		width: screen.width - scaleSize(64),
 		borderBottomWidth: 1,
-		borderColor: '#e6e6e6',
-		// height: 45,
-		padding: 0,
-		margin: 0
+		borderColor: '#e6e6e6'
 	},
 	errorStyle: {
 		// paddingLeft: 10

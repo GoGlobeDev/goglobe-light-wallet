@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, TouchableHighlight, Alert } from 'react-native';
-// import { Button, Input } from 'react-native-elements';
-// import { } from 'native-base';
-import { Input, Button } from 'react-native-elements';
+import { Input } from 'react-native-elements';
 import Modal from 'react-native-modalbox';
 import { I18n } from '../../../language/i18n';
 import { scaleSize } from '../../utils/ScreenUtil';
 import getBalance from '../../utils/addTokens';
 import abi from '../../utils/abi';
 import { withdraw } from '../../api/bind';
-import { TextInput } from 'react-native-vector-icons/lib/react-native';
 import Loading from 'react-native-whc-loading';
 
 class WithdrawCash extends React.Component {
@@ -137,7 +134,7 @@ class WithdrawCash extends React.Component {
                             inputContainerStyle={styles.input}
                             keyboardType='numeric'
                             value={this.state.number}
-                            onChangeText={(number) => this._changeBalance(number)}/>
+                            onChangeText={(number) => this._changeBalance(number)}
                         />
                     </View>
                     <View style={[styles.rows, { justifyContent: 'space-between', marginTop: scaleSize(25)}]}>

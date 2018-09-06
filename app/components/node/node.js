@@ -8,17 +8,19 @@ import {
 	Dimensions,
 	StyleSheet,
 	TouchableOpacity,
-	ImageBackground
+	ImageBackground,
+	StatusBar
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 // import { Button } from 'react-native-elements';
-import { scaleSize } from '../../utils/ScreenUtil';
+import { scaleSize, ifIphoneX } from '../../utils/ScreenUtil';
 import { I18n } from '../../../language/i18n';
 import Icon from '../../pages/iconSets';
 import { getDevice, getUser} from '../../api/bind';
 
 const screen = Dimensions.get('window');
+const minHeight = ifIphoneX(0, 20, StatusBar.currentHeight);
 
 class MachineList extends Component {
 	render() {
@@ -44,10 +46,6 @@ class Node extends Component {
 		super(props);
 		this.state = {
 			device: {},
-			machineNumber: 1,
-			MachineList: [
-				{title: '矿机1 代码：ASCII1'}
-			]
 		};
 		// this.navigate = this.props.navigation.navigate;
 	}
@@ -153,7 +151,7 @@ class Node extends Component {
 			<View style={styles.container}>
 				{
 					!device.deviceSum || device.deviceSum === 0 ? <View>
-						<Text style={[styles.title, {color: '#0D0E15', marginTop: scaleSize(114), marginLeft: scaleSize(32)}]}>{I18n.t('node.miner')}</Text>
+						<Text style={[styles.title, {color: '#0D0E15', marginTop: scaleSize(114) - minHeight, marginLeft: scaleSize(32)}]}>{I18n.t('node.miner')}</Text>
 						<Image style={styles.machineIcon} source={require('../../assets/images/node/machine.png')}/>
 						<TouchableOpacity style={styles.button} onPress={this._clickToBindMachine}>
 							<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.registerMiner._title')}</Text>
@@ -215,7 +213,7 @@ const styles = StyleSheet.create({
 	},
 	top: {
 		padding: scaleSize(30),
-		marginTop: scaleSize(114),
+		marginTop: scaleSize(114) - minHeight,
 	},
 	title: {
 		fontSize: 34,

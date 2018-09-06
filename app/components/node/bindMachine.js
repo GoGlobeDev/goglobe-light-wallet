@@ -68,6 +68,7 @@ class BindMachine extends React.Component {
 				<View style={styles.inputbox}>
 					<Text style={styles.inputTitle}>{I18n.t('node.registerMiner.inputMinerNumber')}</Text>
 					<TextInput
+						underlineColorAndroid="transparent"
 						style={styles.inputText}
 						placeholder={I18n.t('node.registerMiner.inputMinerNumber')}
 						onChangeText={(text) => this._changeMinerNumber(text)}
@@ -76,6 +77,7 @@ class BindMachine extends React.Component {
 				<View style={styles.inputbox}>
 					<Text style={styles.inputTitle}>{I18n.t('node.registerMiner.inputMinerCode')}</Text>
 					<TextInput
+						underlineColorAndroid="transparent"
 						style={styles.inputText}
 						placeholder={I18n.t('node.registerMiner.inputMinerCode')}
 						onChangeText={(text) => this._changeMinerCode(text)}

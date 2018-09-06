@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions, TouchableHighlight } from 'react-native';
+import { View, Text, Image, StyleSheet, StatusBar, Dimensions, TouchableHighlight } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { I18n } from '../../../language/i18n';
 const screen = Dimensions.get('window');
 import Icon from '../../pages/iconSets';
 import { scaleSize, ifIphoneX } from '../../utils/ScreenUtil';
+
+const minHeight = ifIphoneX(0, 20, StatusBar.currentHeight);
 
 class My extends Component {
 	constructor(props) {
@@ -160,7 +162,7 @@ const styles = StyleSheet.create({
 	title: {
 		color: '#0D0E15',
 		fontSize: 34,
-		marginTop: scaleSize(114),
+		marginTop: scaleSize(114) - minHeight,
 		marginLeft: scaleSize(32)
 	},
 	myTopBan: {
