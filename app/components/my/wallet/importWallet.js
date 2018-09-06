@@ -257,7 +257,7 @@ class ImportWallet extends Component {
 
 							setTimeout(() => {
 								option._this.refs.loading.close();
-								option._this.props.navigation.navigate('Home');
+								option._this.props.navigation.navigate('Assets');
 							}, 100);
 						});
 					}
@@ -357,8 +357,6 @@ class ImportWallet extends Component {
 			setTimeout(() => {
 				try {
 					let account = web3.eth.accounts.decrypt(this.state.keystoreFile, this.state.keystorePwd);
-					console.log('accoutn');
-					console.log(account)
 					storage.save({
 						key: 'walletInfo',
 						data: {

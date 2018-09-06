@@ -61,8 +61,6 @@ storage
 		key: 'token'
 	})
 	.then((res) => {
-		console.log('storage')
-		console.log(res)
 		store.dispatch({
 			type: 'TOKEN',
 			token: res.token
@@ -86,10 +84,10 @@ storage
 const Web3 = require('web3');
 
 function check(host) {
-	console.log(host)
+	// console.log(host)
 	store.dispatch({
 		type: 'CONTRACTADDR',
-		GOGContractAddr: '0x41c11ee289fdaf498500314ab719a64673f72a40'
+		GOGContractAddr: '0x8c191f956a287096bb306c422536cd1151fc4a3c'
 	});
 	// if (host.includes('ropsten')) {
 	// 	store.dispatch({
@@ -112,7 +110,6 @@ storage
 		key: 'webHost'
 	})
 	.then(({ webHost }) => {
-		console.log(webHost)
 		check(webHost);
 	})
 	.catch((e) => {
@@ -169,7 +166,7 @@ const TabBarPage = createBottomTabNavigator(
 					<Text style={{ color: tintColor, fontSize: 12, textAlign: 'center' }}></Text>
 				),
 				tabBarIcon: ({ focused }) => (
-					<Image style={{ width: scaleSize(84), height: scaleSize(84), marginTop: scaleSize(38) }} source={focused ? require('../assets/images/common/asset_selected.png') : require('../assets/images/common/asset.png')} />
+					<Image style={{ width: scaleSize(70), height: scaleSize(70), marginTop: scaleSize(20) }} source={focused ? require('../assets/images/common/asset_selected.png') : require('../assets/images/common/asset.png')} />
 				  ),
 				// tabBarIcon: ({ focused, tintColor }) => <Icon name="icon-zichan" size={30} color={tintColor} />
 			}
@@ -181,7 +178,7 @@ const TabBarPage = createBottomTabNavigator(
 					<Text style={{ color: tintColor, fontSize: 12, textAlign: 'center' }}></Text>
 				),
 				tabBarIcon: ({ focused }) => (
-					<Image style={{ width: scaleSize(84), height: scaleSize(84), marginTop: scaleSize(38) }} source={focused ? require('../assets/images/common/node_selected.png') : require('../assets/images/common/node.png')} />
+					<Image style={{ width: scaleSize(70), height: scaleSize(70), marginTop: scaleSize(20) }} source={focused ? require('../assets/images/common/node_selected.png') : require('../assets/images/common/node.png')} />
 				  ),
 				// tabBarOnPress: ({ navigation, defaultHandler }) => {
 				// 	storage
@@ -204,7 +201,7 @@ const TabBarPage = createBottomTabNavigator(
 					<Text style={{ color: tintColor, fontSize: 12, textAlign: 'center' }}></Text>
 				),
 				tabBarIcon: ({ focused }) => (
-					<Image style={{ width: scaleSize(84), height: scaleSize(84), marginTop: scaleSize(38) }} source={focused ? require('../assets/images/common/user_selected.png') : require('../assets/images/common/user.png')} />
+					<Image style={{ width: scaleSize(70), height: scaleSize(70), marginTop: scaleSize(20) }} source={focused ? require('../assets/images/common/user_selected.png') : require('../assets/images/common/user.png')} />
 				  ),
 			}
 		}
@@ -219,7 +216,8 @@ const TabBarPage = createBottomTabNavigator(
 			inactiveTintColor: '#999999',
 			showIcon: true,
 			style: {
-				backgroundColor: '#fff'
+				backgroundColor: '#fff',
+				height: scaleSize(98)
 			},
 			indicatorStyle: {
 				opacity: 0

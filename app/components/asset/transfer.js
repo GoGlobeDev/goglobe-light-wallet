@@ -93,7 +93,6 @@ class Transfer extends Component {
 			});
 		});
 		const { params } = this.props.navigation.state;
-		console.log(params);
 		if (params.currencyName == 'ETH') {
 			this._sendTokens = () =>
 				sendEth(
@@ -205,7 +204,6 @@ class Transfer extends Component {
 				);
 			}
 		});
-		console.log(nextProps.navigation.state.params.res);
 	}
 
 	render() {

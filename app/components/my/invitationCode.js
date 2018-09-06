@@ -4,6 +4,7 @@ import { Button, Input } from 'react-native-elements';
 import { I18n } from '../../../language/i18n';
 import Toast from 'react-native-easy-toast';
 import { scaleSize } from '../../utils/ScreenUtil';
+import { getRCode, bindRCode } from '../../api/bind';
 class InvitationCode extends React.Component {
 	static navigationOptions = {
 		headerTitle: '我的邀请码'
@@ -11,24 +12,45 @@ class InvitationCode extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			code: '12324332',
+			code: '',
 			bindCode: ''
 		};
+	}
+	componentWillReceiveProps(newProps) {
+		this.setState({
+			bindCode: newProps.navigation.state.params.bindCode
+		})
+	}
+	componentDidMount() {
+		storage.load({ key: 'user' }).then((user) => {
+			this.setState({
+				code: user.rcode,
+				userId: user.userId
+			})
+		}).then((res) => {
+			if(this.state.userId) {
+				getRCode(this.state.userId).then((res) => {
+					const rcode = res.data.referralCode;
+					const bindCode = res.data.bindedCode[0];
+					this.setState({
+						code: rcode,
+						bindCode: bindCode
+					})
+				})
+			}
+		})
 	}
 	_setClipboardContent = async () => {
 		Clipboard.setString(this.state.code);
 		try {
 			var content = await Clipboard.getString();
-			console.log(content)
 			this.refs.toast.show(I18n.t('public.copySuccess'));
 		} catch (e) {
 			console.log(e)
 			this.refs.toast.show(I18n.t('public.copyFailed'));
 		}
-		console.log(this.state.code)
 	}
 	_setBindInCode = () => {
-		console.log(this.state.code);
 		this.props.navigation.navigate('BindInCode');
 	}
 	render() {
@@ -39,9 +61,9 @@ class InvitationCode extends React.Component {
 					<Text style={styles.title}>我的邀请码</Text>
 					<View style={styles.lineView}>
 						<Text style={styles.content}>{this.state.code}</Text>
-						<TouchableOpacity style={styles.button} onPress={this._setClipboardContent}>
+						{this.state.code && <TouchableOpacity style={styles.button} onPress={this._setClipboardContent}>
 							<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>复制</Text>
-						</TouchableOpacity>
+						</TouchableOpacity>}
 					</View>
 				</View>
 				<View style={styles.view}>
@@ -52,9 +74,9 @@ class InvitationCode extends React.Component {
 						</View>
 						: <View style={styles.lineView}>
 							<Text style={[styles.content, { color: '#CFCFD0' }]}>还未绑定</Text>
-							<TouchableOpacity style={[styles.button, { width: scaleSize(160) }]} onPress={this._setBindInCode}>
+							{this.state.code && <TouchableOpacity style={[styles.button, { width: scaleSize(160) }]} onPress={this._setBindInCode}>
 								<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>去绑定</Text>
-							</TouchableOpacity>
+							</TouchableOpacity>}
 						</View>
 					}
 				</View>

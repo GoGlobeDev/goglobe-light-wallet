@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { I18n } from '../../../language/i18n';
 import { scaleSize } from '../../utils/ScreenUtil';
+import { bindPwd } from '../../api/bind';
 export default class SetPwd extends React.Component {
 	constructor(){
 		super();
@@ -12,21 +13,22 @@ export default class SetPwd extends React.Component {
 		}
 	}
 	static navigationOptions = {
-		headerTitle: I18n.t('node.setPassword._title')
+		header: null
+		// headerTitle: 
 	};
 	componentDidMount() {
-		// storage
-		// 	.load({
-		// 		key: 'webHost'
-		// 	})
-		// 	.then(({ webHost }) => {
-		// 		this.setState({
-		// 			url: webHost
-		// 		});
-		// 	})
-		// 	.catch((e) => {
-		// 		console.log(e);
-		// 	});
+		storage
+			.load({
+				key: 'user'
+			})
+			.then((user) => {
+				this.setState({
+					userId: user.userId
+				});
+			})
+			.catch((e) => {
+				console.log(e);
+			});
 	}
 	_changePwd = (pwd) => {
 		this.setState({
@@ -39,13 +41,33 @@ export default class SetPwd extends React.Component {
 		})
 	}
 	_clickTocomfirm = () => {
-		this.props.navigation.navigate('Node')
-
+		if(!this.state.pwd){
+			Alert.alert(null, I18n.t('wallet.enterPwd'));
+		} else if(this.state.pwd !== this.state.pwd1 ) {
+			Alert.alert(null, I18n.t('wallet.pwdIsWrong')); 
+		} else {
+			bindPwd(this.props.navigation.state.params.userId, this.state.pwd).then((res) => {
+				if(res.data.status === 'success'){
+					if(this.props.navigation.state.params.page === 'node') {
+						this.props.navigation.navigate('Node', { userId: this.props.navigation.state.params.userId, passwordExists: true})
+					} else {
+						this.props.navigation.navigate('BindingPhone', {phone: this.props.navigation.state.params.phone})
+					}
+				} else {
+					Alert.alert(null, res.data.status)
+				}
+			}).catch((e) => {
+				console.log(e)
+			})
+		}
 	}
 	render() {
 		const { params } = this.props.navigation.state;
 		return (
 			<View style={styles.container}>
+				<View>
+					<Text style={[styles.title, {color: '#0D0E15', marginTop: scaleSize(114), marginLeft: scaleSize(32)}]} >{I18n.t('node.setPassword._title')}</Text>
+				</View>
             	<View style={styles.tip}>
 					<Text style={styles.tipText}>{I18n.t('node.setPassword.tip1')}</Text>
 					<Text style={styles.tipText}>{I18n.t('node.setPassword.tip2')}</Text>
@@ -53,6 +75,7 @@ export default class SetPwd extends React.Component {
 				<View style={styles.inputbox}>
 					<Text style={styles.inputTitle}>{I18n.t('node.setPassword.setPassword')}</Text>
 					<TextInput
+						secureTextEntry={true}
 						style={styles.inputText}
 						placeholder={I18n.t('node.setPassword.placehoder1')}
 						onChangeText={(pwd) => this._changePwd(pwd)}
@@ -61,6 +84,7 @@ export default class SetPwd extends React.Component {
                 <View style={styles.inputbox}>
 					<Text style={styles.inputTitle}>{I18n.t('node.setPassword.confirmPassword')}</Text>
 					<TextInput
+						secureTextEntry={true}
 						style={styles.inputText}
 						placeholder={I18n.t('node.setPassword.placehoder2')}
 						onChangeText={(pwd1) => this._changePwd1(pwd1)}
@@ -80,7 +104,11 @@ const styles = StyleSheet.create({
 		flex: 1,
 		// padding: 20,
 		backgroundColor: '#fff'
-    },
+	},
+	title: {
+		fontSize: 34,
+		color: '#ffffff'
+	},
     tip: {
         padding: scaleSize(48)
     },

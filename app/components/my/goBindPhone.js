@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Alert, ScrollView, TouchableOpacity } from 'react-native';
 import { Input } from 'native-base';
 import { I18n } from '../../../language/i18n';
 import { scaleSize } from '../../utils/ScreenUtil';
+import { sendCode } from '../../api/bind';
+import Touch from '../public/touch';
 class GoBindPhone extends React.Component {
 	static navigationOptions = {
 		headerTitle: '绑定手机号'
@@ -10,23 +12,16 @@ class GoBindPhone extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			phone: ''
+			phone: '',
+			tip: false,
 		}
 	}
 	componentDidMount() {
-		
-		// storage
-		// 	.load({
-		// 		key: 'webHost'
-		// 	})
-		// 	.then(({ webHost }) => {
-		// 		this.setState({
-		// 			url: webHost
-		// 		});
-		// 	})
-		// 	.catch((e) => {
-		// 		console.log(e);
-		// 	});
+		if(this.props.navigation.state.params.page === 'node'){
+			this.setState({
+				tip: true
+			})
+		}
 	}
 	_changeText = (phone) => {
 		this.setState({
@@ -34,18 +29,31 @@ class GoBindPhone extends React.Component {
 		})
 	}
 	_clickTocomfirm = () => {
-		this.props.navigation.navigate('VCode')
-		console.log('ddd')
+		const phone = /^1\d{10}$/;
+		// this.props.navigation.navigate('VCode')
+		if(!this.state.phone){
+			Alert.alert(null, '请输入手机号'); // 提示 请输入手机号
+		} else if(!phone.test(this.state.phone)){
+			Alert.alert(null, '请输入正确的手机号'); // 提示 请输入正确的手机号
+		} else {
+			sendCode(this.state.phone).then((res) => {
+				if(res.data.status === 'success'){
+					this.props.navigation.navigate('VCode', { phone: this.state.phone, tip: this.state.tip })
+				} else {
+					Alert.alert(null, '获取验证码失败');
+				}
+			})
+		}
+
 	}
 	render() {
 		const { params } = this.props.navigation.state;
-		console.log(params)
 		return (
 			<View style={styles.container}>
-				<View style={styles.tipbox}>
+				{this.state.tip && <View style={styles.tipbox}>
 					<Text style={styles.tip}>1.在未绑定手机号情况下，无法绑定矿机</Text>
 					<Text style={styles.tip}>2.完成绑定手机号后，即可绑定矿机，开始挖矿获取 代币</Text>
-				</View>
+				</View>}
 				<View style={styles.inputbox}>
 					<Text style={styles.inputTitle}>手机号</Text>
 					<TextInput
@@ -54,9 +62,9 @@ class GoBindPhone extends React.Component {
 						onChangeText={(phone) => this._changeText(phone)}
 					/>
 				</View>
-				<TouchableOpacity style={[styles.button, this.state.phone === '' ? { backgroundColor: '#F7C9A9' } : {  backgroundColor: '#EA7828' }]} onPress={this._clickTocomfirm}>
+				<Touch style={[styles.button, this.state.phone === '' ? { backgroundColor: '#F7C9A9' } : {  backgroundColor: '#EA7828' }]} onPress={this._clickTocomfirm}>
 					<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>获取验证码</Text>
-				</TouchableOpacity>
+				</Touch>
 			</View>
 		);
 	}

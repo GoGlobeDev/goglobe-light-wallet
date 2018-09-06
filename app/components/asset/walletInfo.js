@@ -322,7 +322,9 @@ class WalletInfo extends Component {
 														storage.remove({
 															key: 'walletInfo'
 														});
-
+														storage.remove({
+															key: 'user'
+														});
 														storage.remove({
 															key: 'token'
 														});
@@ -519,7 +521,7 @@ const styles = StyleSheet.create({
 		borderColor: '#56586A',
 		height: scaleSize(100),
 		borderRadius: scaleSize(52),
-		marginTop: scaleSize(400),
+		marginTop: scaleSize(100),
 		width: scaleSize(654),
 		marginLeft: scaleSize(48)
 	},

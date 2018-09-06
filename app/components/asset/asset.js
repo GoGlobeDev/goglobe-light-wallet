@@ -19,6 +19,7 @@ import getBalance from '../../utils/addTokens';
 import abi from '../../utils/abi';
 import { I18n } from '../../../language/i18n';
 import { checkVersion } from '../../api/index';
+import { getUser } from '../../api/bind';
 var DeviceInfo = require('react-native-device-info');
 
 class CurrencyList extends Component {
@@ -94,7 +95,6 @@ class Assets extends Component {
 		this.setState({
 			isRefreshing: true
 		});
-		console.log(this.state.walletAddress)
 		web3.eth.getBalance(this.state.walletAddress).then((res) => {
 			let eth_banlance = this.show(web3.utils.fromWei(res, 'ether'));
 			this.setState({ eth_banlance });
@@ -118,18 +118,47 @@ class Assets extends Component {
 	}
 
 	componentDidMount() {
+		
 		storage
 			.load({
 				key: 'walletInfo'
 			})
 			.then((walletInfo) => {
 				let walletAddress = walletInfo.walletAddress;
+				getUser(walletAddress).then((res) => {
+					console.log(res)
+					if(res.data && res.data.userId){
+						storage.save({
+							key: 'user',
+							data: {
+								userId: res.data.userId,
+								phone: res.data.phone,
+								rcode: res.data.referralCode,
+								passwordExists: res.data.passwordExists
+							},
+							expires: null
+						});
+					} else {
+						storage.save({
+							key: 'user',
+							data: {
+								userId: '',
+								phone: '',
+								rcode: '',
+							},
+							expires: null
+						});
+					}
+				}).catch((e) => {
+					console.log(e)
+				})
 				this.setState(
 					{
 						walletAddress: walletAddress
 					},
 					() => {
 						this.getAllBalance();
+
 					}
 				);
 			})
@@ -198,7 +227,7 @@ class Assets extends Component {
 
 		return (
 			<View style={styles.container}>
-				<ImageBackground style={{ width: scaleSize(750), height: scaleSize(382), backgroundColor: '#fff', marginTop: scaleSize(120), padding: scaleSize(32) }} source={require('../../assets/images/asset/asset-top.png')}>
+				<ImageBackground style={{ width: scaleSize(750), height: scaleSize(382), backgroundColor: '#fff', marginTop: scaleSize(120) - 24, padding: scaleSize(32) }} source={require('../../assets/images/asset/asset-top.png')}>
 					{/* <View style={styles.walletInfo}> */}
 						<View style={styles.walletInfo_item}>
 							<View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginRight: scaleSize(32)}}>
