@@ -117,6 +117,7 @@ class WithdrawCash extends React.Component {
     _clickToWidthdraw = () => {
         withdraw(this.state.userId, this.state.password, this.state.number).then((res) => {
             if(res.data.status === 'success'){
+                Alert.alert(null, '提币请求已经成功提交，等待审批')
                 this.props.navigation.navigate('Node', { userId: this.state.userId, passwordExists: true})
             } else {
                 Alert.alert(null, res.data.message)
