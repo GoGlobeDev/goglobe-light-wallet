@@ -111,10 +111,11 @@ class currencyDetail extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<ImageBackground style={{ width: scaleSize(750), height: scaleSize(315), backgroundColor: '#fff', marginTop: scaleSize(32) }} source={require('../../assets/images/asset/currency_detail.png')}>
+					{this.state.currencyName === 'GOG' && <Image style={styles.logo} source={require(`../../assets/images/currency_logo/gog_logo.png`)} />}
+					{this.state.currencyName === 'ETH' && <Image style={styles.logo} source={require(`../../assets/images/currency_logo/eth_logo.png`)} />}
+				<ImageBackground style={{ width: scaleSize(750), height: scaleSize(315), backgroundColor: '#fff' }} source={require('../../assets/images/asset/currency_detail.png')}>
 					<View style={styles.balance}>
-						{this.state.currencyName === 'GOG' && <Image style={styles.logo} source={require(`../../assets/images/currency_logo/gog_logo.png`)} />}
-						{this.state.currencyName === 'ETH' && <Image style={styles.logo} source={require(`../../assets/images/currency_logo/eth_logo.png`)} />}
+
 						<Text style={[ styles.color_white, styles.balance_text_title ]}>{this.state.currencyName}</Text>
 						<Text style={[ styles.color_white, styles.balance_text_big ]}>{this.state.banlance}</Text>
 						{/* <Text style={[ styles.color_white, styles.marginTop_20 ]}>市值：*****</Text> */}
@@ -182,7 +183,7 @@ const styles = StyleSheet.create({
 		backgroundColor: 'white'
 	},
 	balance: {
-		height: scaleSize(315),
+		// height: scaleSize(315),
 		alignItems: 'center',
 		// justifyContent: 'center',
 		// backgroundColor: '#528bf7'
@@ -193,13 +194,18 @@ const styles = StyleSheet.create({
 		borderRadius: scaleSize(36),
 		borderWidth: 1,
 		borderColor: '#ccc',
-		marginTop: scaleSize(-12),
-		marginLeft: scaleSize(2),
-		marginBottom: scaleSize(16)
+		position: 'relative',
+		zIndex: 100,
+		top: scaleSize(62),
+		left: scaleSize(340)
+		// marginTop: scaleSize(-12),
+		// marginLeft: scaleSize(2),
+		// marginBottom: scaleSize(16)
 	},
 	balance_text_title: {
 		fontSize: 17,
 		opacity: 0.8,
+		marginTop: scaleSize(82),
 		marginBottom: scaleSize(32),
 		fontWeight: 'bold'
 	},

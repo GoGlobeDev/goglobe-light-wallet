@@ -10,10 +10,11 @@ import {
 	TouchableHighlight,
 	Modal,
 	Linking,
-	ImageBackground
+	ImageBackground,
+	StatusBar
 } from 'react-native';
 import { connect } from 'react-redux';
-import { scaleSize } from '../../utils/ScreenUtil';
+import { scaleSize, ifIphoneX } from '../../utils/ScreenUtil';
 import actions from '../../store/action/walletInfo';
 import getBalance from '../../utils/addTokens';
 import abi from '../../utils/abi';
@@ -118,7 +119,10 @@ class Assets extends Component {
 	}
 
 	componentDidMount() {
-		
+		const minHeight = ifIphoneX(0, 20, StatusBar.currentHeight);
+		this.setState({
+			minHeight: minHeight
+		})
 		storage
 			.load({
 				key: 'walletInfo'
@@ -227,7 +231,7 @@ class Assets extends Component {
 
 		return (
 			<View style={styles.container}>
-				<ImageBackground style={{ width: scaleSize(750), height: scaleSize(382), backgroundColor: '#fff', marginTop: scaleSize(120) - 24, padding: scaleSize(32) }} source={require('../../assets/images/asset/asset-top.png')}>
+				<ImageBackground style={{ width: scaleSize(750), height: scaleSize(382), backgroundColor: '#fff', marginTop: scaleSize(120) - this.state.minHeight, padding: scaleSize(32) }} source={require('../../assets/images/asset/asset-top.png')}>
 					{/* <View style={styles.walletInfo}> */}
 						<View style={styles.walletInfo_item}>
 							<View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginRight: scaleSize(32)}}>
@@ -421,14 +425,15 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'space-between',
 		marginLeft: scaleSize(32),
-		marginTop: scaleSize(24),
+		marginTop: scaleSize(12),
+		marginBottom: scaleSize(12),
 		borderRadius: scaleSize(20),
 		backgroundColor: '#fff',
 		shadowOffset: { width: 0, height: 0 },
 		shadowColor: 'rgb(34, 34, 34)',
 		shadowOpacity: 0.18,
 		shadowRadius: scaleSize(27),
-		elevation: 5,
+		elevation: 4,
 
 	},
 	currency_left: {

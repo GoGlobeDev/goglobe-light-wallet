@@ -75,6 +75,7 @@ export default class SetPwd extends React.Component {
 				<View style={styles.inputbox}>
 					<Text style={styles.inputTitle}>{I18n.t('node.setPassword.setPassword')}</Text>
 					<TextInput
+						underlineColorAndroid="transparent"
 						secureTextEntry={true}
 						style={styles.inputText}
 						placeholder={I18n.t('node.setPassword.placehoder1')}
@@ -84,6 +85,7 @@ export default class SetPwd extends React.Component {
                 <View style={styles.inputbox}>
 					<Text style={styles.inputTitle}>{I18n.t('node.setPassword.confirmPassword')}</Text>
 					<TextInput
+						underlineColorAndroid="transparent"
 						secureTextEntry={true}
 						style={styles.inputText}
 						placeholder={I18n.t('node.setPassword.placehoder2')}

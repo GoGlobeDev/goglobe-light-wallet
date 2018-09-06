@@ -494,7 +494,8 @@ const styles = StyleSheet.create({
 		height: scaleSize(128),
 		margin: scaleSize(32),
 		borderRadius: scaleSize(20),
-		marginBottom: 0,
+		marginTop: scaleSize(12),
+		marginBottom: scaleSize(12),
 		paddingLeft: scaleSize(32),
 		paddingRight: scaleSize(32),
 		backgroundColor: '#fff',
@@ -502,7 +503,7 @@ const styles = StyleSheet.create({
 		shadowColor: 'rgb(34, 34, 34)',
 		shadowOpacity: 0.18,
 		shadowRadius: scaleSize(27),
-		elevation: 5,
+		elevation: 4,
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'space-between',
@@ -545,8 +546,9 @@ const styles = StyleSheet.create({
 	textInput: {
 		borderBottomWidth: 1,
 		borderColor: '#e6e6e6',
-		height: 45,
-		padding: 5
+		// height: 45,
+		padding: 0,
+		margin: 0
 	},
 	confirm: {
 		alignItems: 'center',
@@ -605,7 +607,8 @@ const styles = StyleSheet.create({
 		height: scaleSize(96),
 		borderBottomColor: '#E7E7E7',
 		borderBottomWidth: scaleSize(1),
-		marginBottom: scaleSize(50)
+		marginBottom: scaleSize(50),
+		paddingTop: scaleSize(10)
 		// backgroundColor: '#fafafa'
 	},
 	bottom_fun: {

@@ -57,6 +57,7 @@ class GoBindPhone extends React.Component {
 				<View style={styles.inputbox}>
 					<Text style={styles.inputTitle}>手机号</Text>
 					<TextInput
+						underlineColorAndroid="transparent"
 						style={styles.inputText}
 						placeholder="请输入手机号"
 						onChangeText={(phone) => this._changeText(phone)}

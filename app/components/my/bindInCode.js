@@ -66,6 +66,7 @@ export default class BindInCode extends React.Component {
 				<View style={styles.inputbox}>
 					<Text style={styles.inputTitle}>{I18n.t('my.home.bindingCode.inputCode')}</Text>
 					<TextInput
+						underlineColorAndroid="transparent"
 						style={styles.inputText}
 						placeholder={I18n.t('my.home.bindingCode.pleaseInputCode')}
 						onChangeText={(text) => this._changeText(text)}
