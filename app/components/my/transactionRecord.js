@@ -19,42 +19,44 @@ class Recording extends Component {
 			num = '0' + num;
 		}
 		num += '00000';
-		num = num.match(/\d+\.\d{3}/)[0];
+		num = num.match(/\d+\.\d{4}/)[0];
 		return num;
 	}
 
 	render() {
 		return (
 			<View style={styles.recordDetail_item}>
-				<Text>{this.props.to.replace(this.props.to.slice('10', '30'), '......')}</Text>
-				<Text>{this.show(this.props.value / 1e18)} ether</Text>
+				<Text>{this.props.to.replace(this.props.to.slice('8', '32'), '......')}</Text>
+				<Text>{this.show(this.props.value / this.props.dime)}</Text>
 			</View>
 		);
 	}
 }
-class TransactionRecordOO extends Component {
+
+class TransactionRecordCard extends Component {
 	render() {
 		return (
-			<View style={styles.line}>
-				{this.props.data.item.from === store.getState().walletInfo.wallet_address.toLowerCase() ? (
-					<View style={styles.recordDetail}>
-						<View>
-							<Icon name="icon-shourusel" size={50} color="#528bf7" />
-						</View>
-						<Recording to={this.props.data.item.to} value={this.props.data.item.value} />
-					</View>
-				) : (
+			<View>
+				{this.props.data.item.from === store.getState().walletInfo.wallet_address ? (
 					<View style={styles.recordDetail}>
 						<View>
 							<Icon name="icon-zhichusel" size={50} color="#34ccbf" />
 						</View>
-						<Recording to={this.props.data.item.to} value={this.props.data.item.value} />
+						<Recording to={this.props.data.item.to} value={this.props.data.item.value} dime={this.props.dime}/>
+					</View>
+				) : (
+					<View style={styles.recordDetail}>
+						<View>
+							<Icon name="icon-shourusel" size={50} color="#528bf7" />
+						</View>
+						<Recording to={this.props.data.item.to} value={this.props.data.item.value} dime={this.props.dime}/>
 					</View>
 				)}
 			</View>
 		);
 	}
 }
+
 class TransactionRecord extends Component {
 	constructor(props) {
 		super(props);
@@ -64,18 +66,26 @@ class TransactionRecord extends Component {
 	}
 
 	componentDidMount() {
-		getTransactionRecord(store.getState().walletInfo.wallet_address).then((res) => {
-			this.setState({
-				recordData: res.data.result
-			});
-		});
+        ContractAddr = 'GOGContractAddr';
+        getERC20TransactionRecord(
+            store.getState().walletInfo.wallet_address,
+            store.getState().contractAddr[ContractAddr]
+        ).then((res) => {
+            this.setState(
+                {
+                    ContractAddr: store.getState().contractAddr[ContractAddr],
+                    recordData: res.data.result,
+                    dime: 1000000
+                }
+            );
+        });
 	}
 
 	render() {
 		return (
 			<View style={styles.container}>
 				{this.state.recordData ? this.state.recordData.length >= 1 ? (
-					<FlatList data={this.state.recordData} renderItem={(item) => <TransactionRecordOO data={item} />} />
+					<FlatList data={this.state.recordData} renderItem={(item) => <TransactionRecordCard data={item} dime={this.state.dime}/>} />
 				) : (
 					<Text style={styles.textAlign}>~</Text>
 				) : (

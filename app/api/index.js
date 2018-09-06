@@ -28,7 +28,6 @@ const getTransactionRecord = (walletAddress, contractaddress) => {
 //获取ERC20交易记录
 const getERC20TransactionRecord = (walletAddress, contractaddress) => {
 	if (hostMode === 'ropsten') {
-        alert(walletAddress + etherscanApiKey + contractaddress);
 		return axios.get(
 			'https://api-ropsten.etherscan.io/api?module=account&action=tokentx&contractaddress=' +
 				contractaddress +
