@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import '../../../../shim';
-import { StyleSheet, Text, View, Alert, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Alert, Dimensions, ScrollView } from 'react-native';
 import { CheckBox, Button, Input } from 'react-native-elements';
 import lightwallet from 'eth-lightwallet';
 import Loading from 'react-native-whc-loading';
 import { StackActions, NavigationActions, withNavigation } from 'react-navigation';
 import { I18n } from '../../../../language/i18n';
 import { scaleSize } from '../../../utils/ScreenUtil';
+import { checkWalletName, checkPwd, checkTwoPwd, checkisAgress } from '../../../utils/valiServices';
 const screen = Dimensions.get('window');
 var DeviceInfo = require('react-native-device-info');
 
@@ -17,9 +18,9 @@ class CreateWallet extends Component {
 	constructor() {
 		super();
 		this.state = {
-			walletName: null,
-			pwd: null,
-			confirmPwd: null,
+			walletName: '',
+			pwd: '',
+			confirmPwd: '',
 			isAgree: false,
 			disabledImport: false,
 			service_source: null
@@ -99,76 +100,86 @@ class CreateWallet extends Component {
 	};
 
 	_CreateWallet() {
-		if (!this.state.walletName) {
-			Alert.alert(null, I18n.t('wallet.createWalletTip')); // 提示 请输入钱包名称
-		} else if (!this.state.pwd) {
-			Alert.alert(null, I18n.t('wallet.enterPwd')); // '提示', '请输入密码'
-		} else if (this.state.pwd.length < 8) {
-			Alert.alert(null, I18n.t('wallet.pwdSuggest')); // '提示', '建议密码不少于8位字符'
-		} else if (!this.state.confirmPwd) {
-			Alert.alert(null, I18n.t('wallet.confirmPwd')); // '提示', '请确认您的密码
-		} else if (this.state.pwd !== this.state.confirmPwd) {
-			Alert.alert(null, I18n.t('wallet.pwdIsWrong')); // '提示', '两次密码不一致请重新输入'
-		} else if (!this.state.isAgree) {
-			Alert.alert(null, I18n.t('wallet.agreeTerm')); // '提示', '请同意服务及隐私条款'
-		} else {
-			this.refs.loading.show();
-			setTimeout(() => {
-				let randomSeed = lightwallet.keystore.generateRandomSeed();
-				lightwallet.keystore.createVault(
-					{
-						password: this.state.pwd,
-						seedPhrase: randomSeed,
-						hdPathString: "m/44'/60'/0'/0"
-					},
-					(err, ks) => {
-						ks.keyFromPassword(this.state.pwd, (err, pwDerivedKey) => {
-							ks.generateNewAddress(pwDerivedKey, 1);
-							var address = ks.getAddresses();
-							let keystoreV3 = web3.eth.accounts
-								.privateKeyToAccount('0x' + ks.exportPrivateKey(address[0], pwDerivedKey))
-								.encrypt(this.state.pwd);
-							storage.save({
-								key: 'walletInfo',
-								data: {
-									walletAddress: address[0],
-									keystoreV3: keystoreV3,
-									ks: ks
+		checkWalletName(this.state.walletName).then(() => {
+			return checkPwd(this.state.pwd).then(() => {
+				return checkTwoPwd(this.state.pwd, this.state.confirmPwd).then(() => {
+					return checkisAgress(this.state.isAgree).then(() => {
+						this.refs.loading.show();
+						setTimeout(() => {
+							let randomSeed = lightwallet.keystore.generateRandomSeed();
+							lightwallet.keystore.createVault(
+								{
+									password: this.state.pwd,
+									seedPhrase: randomSeed,
+									hdPathString: "m/44'/60'/0'/0"
 								},
-								expires: null
-							});
-							storage.save({
-								key: 'walletName',
-								data: {
-									walletName: this.state.walletName
-								},
-								expires: null
-							});
-							setTimeout(() => {
-								this.refs.loading.close();
-								let resetAction = StackActions.reset({
-									index: 0,
-									actions: [
-										NavigationActions.navigate({
-											routeName: 'ExportMnemonic',
-											params: {
-												walletPassword: this.state.pwd
-											}
-										})
-									]
-								});
-								this.props.navigation.dispatch(resetAction);
-							}, 100);
-						});
-					}
-				);
-			}, 50);
-		}
+								(err, ks) => {
+									ks.keyFromPassword(this.state.pwd, (err, pwDerivedKey) => {
+										ks.generateNewAddress(pwDerivedKey, 1);
+										var address = ks.getAddresses();
+										let keystoreV3 = web3.eth.accounts
+											.privateKeyToAccount('0x' + ks.exportPrivateKey(address[0], pwDerivedKey))
+											.encrypt(this.state.pwd);
+										storage.save({
+											key: 'walletInfo',
+											data: {
+												walletAddress: address[0],
+												keystoreV3: keystoreV3,
+												ks: ks
+											},
+											expires: null
+										});
+										storage.save({
+											key: 'walletName',
+											data: {
+												walletName: this.state.walletName
+											},
+											expires: null
+										});
+										setTimeout(() => {
+											this.refs.loading.close();
+											let resetAction = StackActions.reset({
+												index: 0,
+												actions: [
+													NavigationActions.navigate({
+														routeName: 'ExportMnemonic',
+														params: {
+															walletPassword: this.state.pwd
+														}
+													})
+												]
+											});
+											this.props.navigation.dispatch(resetAction);
+										}, 100);
+									});
+								}
+							);
+						}, 50);
+							})
+						})
+					})
+		}).catch((e) => {
+			Alert.alert(null, e)
+		})
+		// if (!this.state.walletName) {
+		// 	Alert.alert(null, I18n.t('wallet.createWalletTip')); // 提示 请输入钱包名称
+		// } else if (!this.state.pwd) {
+		// 	Alert.alert(null, I18n.t('wallet.enterPwd')); // '提示', '请输入密码'
+		// } else if (this.state.pwd.length < 8) {
+		// 	Alert.alert(null, I18n.t('wallet.pwdSuggest')); // '提示', '建议密码不少于8位字符'
+		// } else if (!this.state.confirmPwd) {
+		// 	Alert.alert(null, I18n.t('wallet.confirmPwd')); // '提示', '请确认您的密码
+		// } else if (this.state.pwd !== this.state.confirmPwd) {
+		// 	Alert.alert(null, I18n.t('wallet.pwdIsWrong')); // '提示', '两次密码不一致请重新输入'
+		// } else if (!this.state.isAgree) {
+		// 	Alert.alert(null, I18n.t('wallet.agreeTerm')); // '提示', '请同意服务及隐私条款'
+		// } else {
+			
+		// }
 	}
-
 	render() {
 		return (
-			<View style={styles.container}>
+			<ScrollView style={styles.container}>
 				<Loading ref="loading" />
 				<View style={styles.warning}>
 					<Text style={styles.color_white}>
@@ -244,7 +255,7 @@ class CreateWallet extends Component {
 					disabled={this.state.disabledImport}
 					disabledStyle={styles.disabledStyle}
 				/>
-			</View>
+			</ScrollView>
 		);
 	}
 }

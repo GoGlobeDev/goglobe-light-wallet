@@ -93,6 +93,22 @@ class Node extends Component {
 			console.log(x);
 		});
 	}
+	show(num) {
+		num += '';
+		num = num.replace(/[^0-9|\.]/g, '');
+		if (/^0+/) {
+			num = num.replace(/^0+/, '');
+		}
+		if (!/\./.test(num)) {
+			num += '.00000';
+		}
+		if (/^\./.test(num)) {
+			num = '0' + num;
+		}
+		num += '00000';
+		num = num.match(/\d+\.\d{4}/)[0];
+		return num;
+	}
 	// 组件初始渲染挂载界面完成后 异步加载数据
 	componentDidMount() {
 		storage
@@ -102,9 +118,13 @@ class Node extends Component {
 			if(user.userId && user.passwordExists){
 				getDevice(user.userId).then((res) => {
 					console.log(res.data)
+					const balance = this.show(String(res.data.balance));
+					// balance = String(balance).replace(/^(.*\..{4}).*$/,"$1");
+					console.log(balance);
 					this.setState({
 						device: res.data,
-						userId: user.userId,
+						userId: res.data.userId,
+						balance: balance,
 						phone: user.phone,
 						passwordExists: user.passwordExists
 					})
@@ -167,7 +187,7 @@ class Node extends Component {
 								<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
 									<View>
 										<Text style={styles.sm_title}>{I18n.t('node.balance')}</Text>
-										<Text style={styles.sm_content}>{device.balance}</Text>
+										<Text style={styles.sm_content}>{this.state.balance}</Text>
 									</View>
 									<TouchableOpacity style={[styles.button, { width: scaleSize(128), height: scaleSize(72) }]} onPress={this._clickToWithdrawCash}>
 										<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.withdrawCash')}</Text>
