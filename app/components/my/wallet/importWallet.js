@@ -19,7 +19,7 @@ class ImportWallet extends Component {
 			mnemonic: null,
 			privateFile: null,
 			mnemonicFlag: true,
-			hdPathString: "",
+			hdPathString: "m/44'/60'/0'/0",
 			mnemonicPwd: null,
 			privatePwd: null,
 			confirmMnemonicPwd: null,
