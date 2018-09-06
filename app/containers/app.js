@@ -113,7 +113,7 @@ storage
 		check(webHost);
 	})
 	.catch((e) => {
-		check('http://52.82.4.208:8545/');
+		check('https://ropsten.infura.io:443/v3/e5a89d7eb503409c85747dfb4c863e69');
 	});
 
 const Node = createStackNavigator({

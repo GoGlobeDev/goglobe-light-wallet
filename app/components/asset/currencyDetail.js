@@ -29,7 +29,7 @@ class Recording extends Component {
 		return (
 			<View style={styles.recordDetail_item}>
 				<Text>{this.props.to.replace(this.props.to.slice('8', '32'), '......')}</Text>
-				<Text>{this.show(this.props.value / 1e18)}</Text>
+				<Text>{this.show(this.props.value / this.props.dime)}</Text>
 			</View>
 		);
 	}
@@ -44,14 +44,14 @@ class TransactionRecord extends Component {
 						<View>
 							<Icon name="icon-zhichusel" size={50} color="#34ccbf" />
 						</View>
-						<Recording to={this.props.data.item.to} value={this.props.data.item.value} />
+						<Recording to={this.props.data.item.to} value={this.props.data.item.value} dime={this.props.dime}/>
 					</View>
 				) : (
 					<View style={styles.recordDetail}>
 						<View>
 							<Icon name="icon-shourusel" size={50} color="#528bf7" />
 						</View>
-						<Recording to={this.props.data.item.to} value={this.props.data.item.value} />
+						<Recording to={this.props.data.item.to} value={this.props.data.item.value} dime={this.props.dime}/>
 					</View>
 				)}
 			</View>
@@ -65,7 +65,7 @@ class currencyDetail extends Component {
 		this.navigate = this.props.navigation.navigate;
 		this.state = {
 			title: null,
-			recordData: [{to: '0xB6191e8EC7A01ddc8dE117A38E3a9297e719008B', from: '0xB6191e8EC7A01ddc8dE117A38E3a9297e719008B', value: '3333333'},{to: '0xB6191e8EC7A01ddc8dE117A38E3a9297e719008B', from: '0xB6191e8EC7A01ddc8dE117A38E3a9297e719008B', value: '3333333'}],
+			recordData: [],
 			ContractAddr: null
 		};
 	}
@@ -75,37 +75,35 @@ class currencyDetail extends Component {
 		headerTitle: null
 	});
 
-	componentDidMount() {
+    componentDidMount() {
 		const { params } = this.props.navigation.state;
 		this.state.currencyName = params.title;
 		this.state.banlance = params.banlance;
 		let ContractAddr = params.title + 'ContractAddr';
-		this.setState(
-			{
-				ContractAddr: store.getState().contractAddr[ContractAddr]
-			},
-			() => {
-				// if (params.title === 'ETH') {
-				// 	getTransactionRecord(store.getState().walletInfo.wallet_address).then((res) => {
-				// 		this.setState({
-				// 			recordData: res.data.result
-				// 		});
-				// 	});
-				// } else {
-				// 	getERC20TransactionRecord(
-				// 		store.getState().walletInfo.wallet_address,
-				// 		this.state.ContractAddr
-				// 	).then((res) => {
-				// 		this.setState({
-				// 			recordData: res.data.result
-				// 		});
-				// 	});
-				// }
-				this.setState({
-					recordData: this.state.recordData
-				});
-			}
-		);
+        if (params.title === 'ETH') {
+            getTransactionRecord(store.getState().walletInfo.wallet_address).then((res) => {
+                this.setState(
+                    {
+                        ContractAddr: store.getState().contractAddr[ContractAddr],
+                        recordData: res.data.result,
+                        dime: 1e18
+                    }
+                );
+            });
+        } else {
+            getERC20TransactionRecord(
+                store.getState().walletInfo.wallet_address,
+                store.getState().contractAddr[ContractAddr]
+            ).then((res) => {
+                this.setState(
+                    {
+                        ContractAddr: store.getState().contractAddr[ContractAddr],
+                        recordData: res.data.result,
+                        dime: 1000000
+                    }
+                );
+            });
+        }
 	}
 
 	render() {
@@ -130,7 +128,7 @@ class currencyDetail extends Component {
 						<FlatList
 							style={styles.marginTop_20}
 							data={this.state.recordData}
-							renderItem={(item, index) => <TransactionRecord data={item} key={index} />}
+							renderItem={(item, index) => <TransactionRecord data={item} key={index} dime={this.state.dime}/>}
 							keyExtractor={(item, index) => index.toString()}
 						/>
 					) : (
