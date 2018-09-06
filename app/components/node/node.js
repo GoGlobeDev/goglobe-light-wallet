@@ -96,9 +96,10 @@ class Node extends Component {
 		storage
 		.load({ key: 'user'})
 		.then((user) => {
-			console.log(user)
+			// console.log(user)
 			if(user.userId && user.passwordExists){
 				getDevice(user.userId).then((res) => {
+					console.log(res.data)
 					this.setState({
 						device: res.data,
 						userId: user.userId,
@@ -143,7 +144,7 @@ class Node extends Component {
 
 	}
 	_clickToWithdrawCash = () => {
-		this.props.navigation.navigate('WithdrawCash')
+		this.props.navigation.navigate('WithdrawCash', { gog_banlance: this.state.device.balance})
 	}
 	render() {
 		const { device } = this.state
@@ -178,7 +179,7 @@ class Node extends Component {
 									</View>
 									<View>
 										<Text style={styles.sm_title}>{I18n.t('node.totalPower')}</Text>
-										<Text style={styles.sm_content}>{device.power}</Text>
+										<Text style={styles.sm_content}>{device.totalDeposit}</Text>
 									</View>
 									<View>
 										<Text style={styles.sm_title}>{I18n.t('node.dailyProducts')}</Text>

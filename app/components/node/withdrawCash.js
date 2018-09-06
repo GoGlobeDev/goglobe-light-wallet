@@ -42,36 +42,39 @@ class WithdrawCash extends React.Component {
 		num = num.match(/\d+\.\d{5}/)[0];
 		return num;
 	}
-    getAllBalance() {
-		getBalance(
-			abi,
-			this.state.walletAddress,
-			store.getState().contractAddr.GOGContractAddr,
-			(gog_banlance) => {
-				gog_banlance = this.show(gog_banlance);
-                this.setState({ gog_banlance });
-			}
-		);
-	}
+    // getAllBalance() {
+	// 	getBalance(
+	// 		abi,
+	// 		this.state.walletAddress,
+	// 		store.getState().contractAddr.GOGContractAddr,
+	// 		(gog_banlance) => {
+	// 			gog_banlance = this.show(gog_banlance);
+    //             this.setState({ gog_banlance });
+	// 		}
+	// 	);
+	// }
 	componentDidMount() {
-		storage
-			.load({
-				key: 'walletInfo'
-			})
-			.then((walletInfo) => {
-				let walletAddress = walletInfo.walletAddress;
-				this.setState(
-					{
-						walletAddress: walletAddress
-					},
-					() => {
-						this.getAllBalance();
-					}
-				);
-			})
-			.catch((x) => {
-				console.log(x);
-            });
+		// storage
+		// 	.load({
+		// 		key: 'walletInfo'
+		// 	})
+		// 	.then((walletInfo) => {
+		// 		let walletAddress = walletInfo.walletAddress;
+		// 		this.setState(
+		// 			{
+		// 				walletAddress: walletAddress
+		// 			},
+		// 			() => {
+		// 				this.getAllBalance();
+		// 			}
+		// 		);
+		// 	})
+		// 	.catch((x) => {
+		// 		console.log(x);
+        //     });
+        this.setState({
+            gog_banlance: this.props.navigation.state.params.gog_banlance
+        })
         storage.load({ key: 'user'}).then((user) => {
             this.setState({
                 userId: user.userId
@@ -87,7 +90,7 @@ class WithdrawCash extends React.Component {
     }
     clickToAllWithdraw = () => {
         this.setState({
-            number: this.state.gog_banlance,
+            number: String(this.state.gog_banlance),
             banlance: this.state.gog_banlance - (this.state.gog_banlance * 0.01)
         })
     }
