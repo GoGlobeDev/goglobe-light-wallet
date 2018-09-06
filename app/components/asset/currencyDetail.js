@@ -29,7 +29,7 @@ class Recording extends Component {
 		return (
 			<View style={styles.recordDetail_item}>
 				<Text>{this.props.to.replace(this.props.to.slice('8', '32'), '......')}</Text>
-				<Text>{this.show(this.props.value / 1e18)}</Text>
+				<Text>{this.show(this.props.value / this.props.dime)}</Text>
 			</View>
 		);
 	}
@@ -44,14 +44,14 @@ class TransactionRecord extends Component {
 						<View>
 							<Icon name="icon-zhichusel" size={50} color="#34ccbf" />
 						</View>
-						<Recording to={this.props.data.item.to} value={this.props.data.item.value} />
+						<Recording to={this.props.data.item.to} value={this.props.data.item.value} dime={this.props.dime}/>
 					</View>
 				) : (
 					<View style={styles.recordDetail}>
 						<View>
 							<Icon name="icon-shourusel" size={50} color="#528bf7" />
 						</View>
-						<Recording to={this.props.data.item.to} value={this.props.data.item.value} />
+						<Recording to={this.props.data.item.to} value={this.props.data.item.value} dime={this.props.dime}/>
 					</View>
 				)}
 			</View>
@@ -85,7 +85,8 @@ class currencyDetail extends Component {
                 this.setState(
                     {
                         ContractAddr: store.getState().contractAddr[ContractAddr],
-                        recordData: res.data.result
+                        recordData: res.data.result,
+                        dime: 1e18
                     }
                 );
             });
@@ -97,7 +98,8 @@ class currencyDetail extends Component {
                 this.setState(
                     {
                         ContractAddr: store.getState().contractAddr[ContractAddr],
-                        recordData: res.data.result
+                        recordData: res.data.result,
+                        dime: 1000000
                     }
                 );
             });
@@ -126,7 +128,7 @@ class currencyDetail extends Component {
 						<FlatList
 							style={styles.marginTop_20}
 							data={this.state.recordData}
-							renderItem={(item, index) => <TransactionRecord data={item} key={index} />}
+							renderItem={(item, index) => <TransactionRecord data={item} key={index} dime={this.state.dime}/>}
 							keyExtractor={(item, index) => index.toString()}
 						/>
 					) : (

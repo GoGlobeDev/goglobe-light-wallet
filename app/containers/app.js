@@ -113,7 +113,7 @@ storage
 		check(webHost);
 	})
 	.catch((e) => {
-		check('https://ropsten.infura.io/e5a89d7eb503409c85747dfb4c863e69');
+		check('https://ropsten.infura.io:443/v3/e5a89d7eb503409c85747dfb4c863e69');
 	});
 
 const Node = createStackNavigator({
