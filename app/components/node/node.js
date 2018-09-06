@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
-import { getNodeRank, getMemberStatus, getTeamAddress } from '../../api/loged';
 // import { Button } from 'react-native-elements';
 import { scaleSize } from '../../utils/ScreenUtil';
 import { I18n } from '../../../language/i18n';

@@ -65,7 +65,7 @@ class currencyDetail extends Component {
 		this.navigate = this.props.navigation.navigate;
 		this.state = {
 			title: null,
-			recordData: [{to: '0xB6191e8EC7A01ddc8dE117A38E3a9297e719008B', from: '0xB6191e8EC7A01ddc8dE117A38E3a9297e719008B', value: '3333333'},{to: '0xB6191e8EC7A01ddc8dE117A38E3a9297e719008B', from: '0xB6191e8EC7A01ddc8dE117A38E3a9297e719008B', value: '3333333'}],
+			recordData: [],
 			ContractAddr: null
 		};
 	}
@@ -75,37 +75,33 @@ class currencyDetail extends Component {
 		headerTitle: null
 	});
 
-	componentDidMount() {
+    componentDidMount() {
 		const { params } = this.props.navigation.state;
 		this.state.currencyName = params.title;
 		this.state.banlance = params.banlance;
 		let ContractAddr = params.title + 'ContractAddr';
-		this.setState(
-			{
-				ContractAddr: store.getState().contractAddr[ContractAddr]
-			},
-			() => {
-				// if (params.title === 'ETH') {
-				// 	getTransactionRecord(store.getState().walletInfo.wallet_address).then((res) => {
-				// 		this.setState({
-				// 			recordData: res.data.result
-				// 		});
-				// 	});
-				// } else {
-				// 	getERC20TransactionRecord(
-				// 		store.getState().walletInfo.wallet_address,
-				// 		this.state.ContractAddr
-				// 	).then((res) => {
-				// 		this.setState({
-				// 			recordData: res.data.result
-				// 		});
-				// 	});
-				// }
-				this.setState({
-					recordData: this.state.recordData
-				});
-			}
-		);
+        if (params.title === 'ETH') {
+            getTransactionRecord(store.getState().walletInfo.wallet_address).then((res) => {
+                this.setState(
+                    {
+                        ContractAddr: store.getState().contractAddr[ContractAddr],
+                        recordData: res.data.result
+                    }
+                );
+            });
+        } else {
+            getERC20TransactionRecord(
+                store.getState().walletInfo.wallet_address,
+                store.getState().contractAddr[ContractAddr]
+            ).then((res) => {
+                this.setState(
+                    {
+                        ContractAddr: store.getState().contractAddr[ContractAddr],
+                        recordData: res.data.result
+                    }
+                );
+            });
+        }
 	}
 
 	render() {
