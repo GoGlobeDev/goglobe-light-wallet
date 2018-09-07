@@ -2,10 +2,6 @@ import axios from 'axios';
 import { serverUrl, etherscanApiKey, hostMode } from '../utils/config';
 axios.defaults.baseURL = serverUrl;
 
-const getcodeUrl = '/smsCaptcha';
-// const loginUrl = '/login';
-const checkVersionUrl = '/checkVersion';
-
 //获取eth交易记录
 const getTransactionRecord = (walletAddress, contractaddress) => {
 	if (hostMode === 'ropsten') {
@@ -49,8 +45,10 @@ const getERC20TransactionRecord = (walletAddress, contractaddress) => {
 };
 
 //获取版本信息
-const checkVersion = () => {
-	return axios.get(checkVersionUrl);
+const checkUpdate = async (type) => {
+	return axios.post('/wallet/checkupdate', {
+        type
+	});
 };
 
-export { getTransactionRecord, getERC20TransactionRecord, checkVersion };
+export { getTransactionRecord, getERC20TransactionRecord, checkUpdate };

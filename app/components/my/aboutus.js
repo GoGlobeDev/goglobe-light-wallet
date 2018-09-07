@@ -3,7 +3,7 @@ import { Text, View, Image, StyleSheet, TouchableHighlight, Modal, Alert, Linkin
 import { I18n } from '../../../language/i18n';
 import { withNavigation } from 'react-navigation';
 import Icon from '../../pages/iconSets';
-import { checkVersion } from '../../api/index';
+import { checkUpdate } from '../../api/index';
 var DeviceInfo = require('react-native-device-info');
 
 export class AboutUs extends Component {
@@ -54,21 +54,13 @@ export class AboutUs extends Component {
 	}
 
 	_checkVersion() {
-		checkVersion()
-			.then((result) => {
-				return result.data.data;
-			})
-			.then((res) => {
-				this.setState({
-					newVersion: res.version
-				});
-				let ver_new = res.version.replace(/\./g, '');
-				// if (ver_new > this.state.currentVersion) {
-				// 	this.setState({ modalVisible: true });
-				// } else {
-				// 	Alert.alert(null, I18n.t('my.version.noUpdate'));
-				// }
+		checkUpdate('android')
+		.then((res) => {
+            Alert.alert(res.data.androidVersion);
+			this.setState({
+				newVersion: res.data.androidVersion
 			});
+		});
 	}
 
 	render() {
@@ -88,9 +80,6 @@ export class AboutUs extends Component {
 								{I18n.t('my.version._newVersion')} {this.state.newVersion}
 								{I18n.t('my.version._version')}
 							</Text>
-							{/* <View>
-								<Text style={styles.versionText}>版本更新说明版本更新说明版本更新说明 版本更新说明版本更新说明版本更新说</Text>
-							</View> */}
 							<View style={styles.modalBottomBtn}>
 								<View>
 									<Text
@@ -128,12 +117,12 @@ export class AboutUs extends Component {
 						source={require('../../assets/images/logo.png')}
 						style={styles.logo}
 					/>
-					<View>
-						{/* <Text style={styles.version}>
+					{/* <View>
+						<Text style={styles.version}>
 							{' '}
 							{I18n.t('my.home.aboutUs.currentVersion')}：{DeviceInfo.getVersion()}
-						</Text> */}
-					</View>
+						</Text>
+					</View> */}
 					<View>
 						<Text style={[ styles.txtCen, styles.descr ]}>
 							{I18n.t('my.home.aboutUs.introduction')}

@@ -4,15 +4,15 @@ import { Input } from 'react-native-elements';
 import Modal from 'react-native-modalbox';
 import { I18n } from '../../../language/i18n';
 import { scaleSize } from '../../utils/ScreenUtil';
-import { bindRCode } from '../../api/bind';
+import { bindRCode, bindRCodeChild } from '../../api/bind';
 
 export default class BindInCode extends React.Component {
 	constructor(){
 		super();
 		this.state = {
 			bindCode: '',
-			modalVisible: false,
-			failModal: false
+			child: null,
+
 		}
 	}
 	static navigationOptions = {
@@ -42,17 +42,29 @@ export default class BindInCode extends React.Component {
 		}
 	}
 	_clickToBindCode = () => {
-		bindRCode(this.state.userId, this.state.bindCode, this.state.password).then((res) => {
-			if(res.data.status === 'success') {
-				this.props.navigation.navigate('InvitationCode', { boundNumber: res.data.boundNumber });
-			} else if (res.data.status === 'fail' && res.data.message === 'numberLimited') {
-                Alert.alert(null, I18n.t('my.home.invitationCode.' + res.data.message));
-            } else {
-				Alert.alert(null, I18n.t('my.home.invitationCode.' + res.data.message));
-			}
-		}).catch((e) => {
-			console.log(e)
-		})
+        if (this.state.child) {
+            bindRCodeChild(this.state.userId, this.state.bindCode, this.state.password, this.state.child - 1).then((res) => {
+                if(res.data.status === 'success') {
+                    this.props.navigation.navigate('InvitationCode', { boundMember: res.data.message });
+                } else {
+                    Alert.alert(null, I18n.t('my.home.invitationCode.' + res.data.message));
+                }
+            }).catch((e) => {
+                alert(e)
+            })
+        } else {
+            bindRCode(this.state.userId, this.state.bindCode, this.state.password).then((res) => {
+                if(res.data.status === 'success') {
+                    this.props.navigation.navigate('InvitationCode', { boundMember: res.data.message });
+                } else if (res.data.status === 'fail' && res.data.message === 'numberLimited') {
+                    this.refs.codeChild.open()
+                } else {
+                    Alert.alert(null, I18n.t('my.home.invitationCode.' + res.data.message));
+                }
+            }).catch((e) => {
+                alert(e)
+            })
+        }
 	}
 	clickToClose = () => {
         // this.props.navigation.navigate('SetPwd')
@@ -81,7 +93,6 @@ export default class BindInCode extends React.Component {
                     coverScreen={true}
                     position={'center'}
                     ref={'codePwd'}
-                    isOpen={this.state.huhu}
                     swipeArea={20}
                     >
                     <View>
@@ -123,59 +134,55 @@ export default class BindInCode extends React.Component {
                         </View>
                     </View>
                 </Modal>
-				{/* <Modal
-                    animationType={'slide'}
-                    transparent={true}
-                    visible={this.state.modalVisible}
-                    onRequestClose={() => this.setState({ modalVisible: false })}
+                <Modal
+                    style={[styles.modal, styles.modal_child]}
+                    coverScreen={true}
+                    position={'center'}
+                    ref={'codeChild'}
+                    swipeArea={20}
                     >
-                    <View style={{ flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onPress={this.clickToClose}>
-                        <View style={styles.modalView}>
-                            <Text style={styles.modalTitle}>输入交易密码</Text>
-                            <Input
-                                style={styles.input}
-                                />
-                            <View style={styles.modalBottom}>
-                                <TouchableOpacity style={{ width: scaleSize(249), justifyContent: 'center', borderRightWidth: scaleSize(2), borderRightColor: '#DFDFDF'}} onPress={() => this.clickToClose()}>
-                                    <Text style={[styles.btn, { color: '#999999'}]}>取消</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={{ width: scaleSize(249), justifyContent: 'center' }} onPress={this.clickToClose}>
-                                    <Text style={styles.btn}>确定</Text>
-                                </TouchableOpacity>
-                            </View>
+                    <View>
+                        <View style={styles.paymentDetails_title}>
+                            <Text>{I18n.t('my.home.invitationCode.numberLimited')}</Text>
+                        </View>
+                        <View style={styles.bottom_child}>
+                            <TouchableHighlight style={styles.bottom_child_item_done}>
+                                <Text
+                                    style={styles.bottom_child_item}
+                                    onPress={() => {
+                                        this.refs.codeChild.close();
+                                        this.setState({
+                                            child: 1
+                                        });
+                                        setTimeout(() => {
+                                            this._clickToBindCode()
+                                        }, 1000);
+                                    }}
+                                >
+                                    第一推荐人
+                                    {/* 确定 */}
+                                </Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight style={styles.bottom_child_item_done}>
+                                <Text
+                                    style={styles.bottom_child_item}
+                                    onPress={() => {
+                                        this.refs.codeChild.close();
+                                        this.setState({
+                                            child: 2
+                                        });
+                                        setTimeout(() => {
+                                            this._clickToBindCode()
+                                        }, 1000);
+                                    }}
+                                >
+                                    第二推荐人
+                                    {/* 确定 */}
+                                </Text>
+                            </TouchableHighlight>
                         </View>
                     </View>
-                </Modal> */}
-				{/* <Modal
-					animationType={'slide'}
-                    transparent={true}
-                    visible={this.state.failModal}
-                    onRequestClose={() => this.setState({ failModal: false })}
-                    >
-					<View style={{ flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-                        <View style={[styles.modalView, { height: scaleSize(250) }]}>
-                            <Text style={styles.modalText}>{I18n.t('my.home.bindingCode.codeUsed')}</Text>
-                            <TouchableOpacity style={[styles.modalBottom, { justifyContent: 'center', alignItems: 'center' }]}  onPress={this.clickToClose}>
-                                <Text style={styles.btn}>{I18n.t('my.home.bindingCode.getIt')}</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-				</Modal> */}
-				{/* <Modal
-					animationType={'slide'}
-                    transparent={true}
-                    visible={this.state.modalVisible}
-                    onRequestClose={() => this.setState({ modalVisible: false })}
-                    >
-					<View style={{ flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-                        <View style={[styles.modalView, { height: scaleSize(250) }]}>
-                            <Text style={styles.modalText}>{I18n.t('my.home.bindingCode.codeUsed')}</Text>
-                            <TouchableOpacity style={[styles.modalBottom, { justifyContent: 'center', alignItems: 'center' }]}  onPress={this.clickToClose}>
-                                <Text style={styles.btn}>{I18n.t('my.home.bindingCode.getIt')}</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-				</Modal> */}
+                </Modal>
 			</View>
 		);
 	}
@@ -280,10 +287,29 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 1,
 		borderBottomColor: '#E7E7E7'
     },
-    bottom_fun: {
-		flexDirection: 'row',
-		justifyContent: 'center'
+    modal_child: {
+        height: scaleSize(256)
 	},
+    bottom_child: {
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    bottom_child_item: {
+        height: scaleSize(100),
+        lineHeight: scaleSize(100),
+        color: '#fff',
+        textAlign: 'center',
+    },
+    bottom_child_item_done: {
+        width: scaleSize(300),
+        borderRadius: scaleSize(44),
+        marginLeft: scaleSize(10),
+        backgroundColor: '#FF8725'
+    },
+    bottom_fun: {
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
 	bottom_fun_item: {
 		height: scaleSize(100),
 		lineHeight: scaleSize(100),
