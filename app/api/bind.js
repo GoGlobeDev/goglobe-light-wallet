@@ -49,6 +49,16 @@ const bindRCode = async (userId, bindedreferralCode, password) => {
 	});
 };
 
+//绑定邀请码
+const bindRCodeChild = async (userId, bindedreferralCode, password, child) => {
+	return axios.post('/wallet/referralcode/child', {
+        userId,
+		bindedreferralCode,
+		password,
+        child
+	});
+};
+
 //获取矿机
 const getDevice = (userId) => {
 	return axios.post('/wallet/get/device', {
@@ -84,5 +94,6 @@ export {
     bindRCode,
     getDevice,
 	bindDevice,
-	withdraw
+	withdraw,
+    bindRCodeChild
 }

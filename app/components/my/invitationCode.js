@@ -13,14 +13,13 @@ class InvitationCode extends React.Component {
 		super(props);
 		this.state = {
 			code: '',
-			bindCode: '',
             boundMember: '',
             binders: []
 		};
 	}
 	componentWillReceiveProps(newProps) {
 		this.setState({
-			boundNumber: newProps.navigation.state.params.boundNumber
+			boundMember: newProps.navigation.state.params.boundMember
 		})
 	}
 	componentDidMount() {
