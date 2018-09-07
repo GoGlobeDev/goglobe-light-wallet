@@ -110,7 +110,7 @@ class VCode extends React.Component {
                     storage.save({ key: 'user', data: { phone: this.state.phone, userId: res.data.id }, expires: null })
                     this.props.navigation.navigate('SetPwd', { page: this.state.page, userId: res.data.id, phone: this.state.phone})
                 } else if (res.data.message === 'exists' ){
-                    if(this.props.navigation.state.params.page === 'node') {
+                    if(this.state.page === 'node') {
                         this.props.navigation.navigate('Node', { userId: res.data.id, passwordExists: true})
                     } else {
                         this.props.navigation.navigate('BindingPhone', {phone: this.state.phone})

@@ -34,7 +34,7 @@ export function checkPwd(pwd) {
   return new Promise(function(resolve, reject) {
     pwd = pwd.trim();
     const regExp = /\s/;
-    if (pwd.length >= 8 && !regExp.test(pwd)) {
+    if (pwd.length >= 8 && pwd.length <=18 && !regExp.test(pwd)) {
       resolve(pwd);
     } else if (pwd.length === 0) {
       reject(I18n.t('wallet.enterPwd'));
@@ -75,7 +75,7 @@ export function checkPassword(pwd) {
     pwd = pwd.trim();
     const regExp = /^(?!\s)((?=.*[a-zA-Z])(?=.*[a-z])(?=.*[A-Z])(?=.*[\d]).\S{7,})$/;
     const noRegExp = /[~!@#$%^&*?;:,.'"/]+/;
-    if (pwd.length >= 8 && regExp.test(pwd) && !noRegExp.test(pwd)) {
+    if (pwd.length >= 8 && pwd.length <= 12 && regExp.test(pwd) && !noRegExp.test(pwd)) {
       resolve(pwd);
     } else if (pwd.length === 0) {
       reject(I18n.t('wallet.enterPwd'));
