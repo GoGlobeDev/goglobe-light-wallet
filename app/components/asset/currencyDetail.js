@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, Image, FlatList, Dimensions, StyleSheet } from 'react-native';
+import { View, Text, Image, FlatList, Dimensions, StyleSheet, StatusBar } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { getTransactionRecord, getERC20TransactionRecord } from '../../api/index';
 import { I18n } from '../../../language/i18n';
 import Icon from '../../pages/iconSets';
-import { scaleSize } from '../../utils/ScreenUtil';
+import { scaleSize, ifIphoneX } from '../../utils/ScreenUtil';
 import { ImageBackground } from 'react-native-vector-icons/lib/react-native';
 
+
+const minHeight = ifIphoneX(scaleSize(62), 0, 0);
 class Recording extends Component {
 	show(num) {
 		num += '';
@@ -130,7 +132,7 @@ class currencyDetail extends Component {
 				<View style={styles.record}>
 					{this.state.recordData.length >= 1 ? (
 						<FlatList
-							style={styles.marginTop_20}
+							style={[styles.marginTop_20, { marginBottom: 312, backgroundColor: '#faa'}]}
 							data={this.state.recordData}
 							renderItem={(item, index) => <TransactionRecord data={item} key={index} dime={this.state.dime}/>}
 							keyExtractor={(item, index) => index.toString()}
@@ -242,17 +244,20 @@ const styles = StyleSheet.create({
 	},
 	bottom_fun: {
 		position: 'absolute',
-		bottom: scaleSize(88),
+		bottom: scaleSize(0),
 		left: 0,
 		right: 0,
 		flexDirection: 'row',
 		justifyContent: 'center',
 		borderWidth: 1,
-		borderColor: 'transparent'
+		borderColor: 'transparent',
+		backgroundColor: '#fff'
 	},
 	bottom_fun_item: {
 		width: scaleSize(318),
 		height: scaleSize(88),
+		marginTop: scaleSize(26),
+		marginBottom: scaleSize(26) + minHeight,
 		borderRadius: scaleSize(44),
 		justifyContent: 'center'
 		// width: Dimensions.get('window').width / 2
