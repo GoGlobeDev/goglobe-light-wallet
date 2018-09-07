@@ -167,6 +167,7 @@ class Node extends Component {
 	}
 	_clickToWithdrawCash = () => {
 		this.props.navigation.navigate('WithdrawCash', { gog_banlance: this.state.device.balance})
+		// this.props.navigation.navigate('SetPwd', { page: 'node', userId: this.state.userId, phone: this.state.phone})
 	}
 	render() {
 		const { device } = this.state
