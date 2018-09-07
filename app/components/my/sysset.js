@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Dimensions, TouchableHighlight } from 'react-native';
+import { Text, View, StyleSheet, Dimensions, TouchableHighlight, Alert } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { I18n } from '../../../language/i18n';
 import Icon from '../../pages/iconSets';
@@ -43,6 +43,12 @@ class SysSet extends Component {
 						this.navigate('SysLanguage');
 					}}
 				/>
+                <ListFun
+                    fun_name={I18n.t('my.sysSetting.jnb._title')}
+                    onPress={() => {
+                        Alert.alert(null, I18n.t('my.sysSetting.jnb.alert'))
+                    }}
+                />
 			</View>
 		);
 	}

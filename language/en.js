@@ -69,8 +69,12 @@ export default {
                 _title: 'Invitation Code',
                 myInvitationCode: 'My Inviation Code',
                 myBoundCode: 'My Bound Code',
+                myBoundMember: 'My Bound Member',
                 notBind: 'Not Bound',
-                button: 'Bind'
+                button: 'Bind',
+                noBinders: 'Not Used',
+                myBinders: 'My refered members',
+                notUsed: 'Not Used'
             },
             bindPhone: {
                 _title: 'Bind Phone',
@@ -86,7 +90,11 @@ export default {
 				multi_language: 'Multi language',
 				changeToChinese: '简体中文',
 				changeToEnglish: 'English'
-			}
+			},
+            jnb: {
+                _title: 'JNB Exchange Setting',
+                alert: 'Please wait for listing on JNB'
+            }
 		},
 		version: {
 			_newVersion: 'Find GoGlobe',

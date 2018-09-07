@@ -51,8 +51,12 @@ export default {
 				_title: '邀请码',
                 myInvitationCode: '我的邀请码',
                 myBoundCode: '我绑定的邀请码',
+                myBoundMember: '我绑定的用户',
                 notBind: '还未绑定',
-                button: '去绑定'
+                button: '去绑定',
+                myBinders: '我推荐的用户',
+                noBinders: '还没有人使用',
+                notUsed: '还未使用'
 			},
             verificationCode: {
                 _title: '短信验证码'
@@ -93,7 +97,11 @@ export default {
 				multi_language: '多语言',
 				changeToChinese: '简体中文',
 				changeToEnglish: 'English'
-			}
+			},
+            jnb: {
+                _title: 'JNB 交易所设置',
+                alert: '请等待交易所上币后开启'
+            }
 		},
 		version: {
 			_newVersion: '发现GoGlobe',

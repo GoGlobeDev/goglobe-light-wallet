@@ -4,16 +4,18 @@ import { Button, Input } from 'react-native-elements';
 import { I18n } from '../../../language/i18n';
 import Toast from 'react-native-easy-toast';
 import { scaleSize } from '../../utils/ScreenUtil';
-import { getRCode, bindRCode } from '../../api/bind';
+import { getRCode, bindRCode, getBinders } from '../../api/bind';
 class InvitationCode extends React.Component {
 	static navigationOptions = {
-		headerTitle: I18n.t('my.invitationCode._title')
+		headerTitle: I18n.t('my.home.invitationCode._title')
 	};
 	constructor(props) {
 		super(props);
 		this.state = {
 			code: '',
-			bindCode: ''
+			bindCode: '',
+            boundMember: '',
+            binders: []
 		};
 	}
 	componentWillReceiveProps(newProps) {
@@ -27,14 +29,16 @@ class InvitationCode extends React.Component {
 				code: user.rcode,
 				userId: user.userId
 			})
-		}).then((res) => {
+		}).then(async (res) => {
 			if(this.state.userId) {
 				getRCode(this.state.userId).then((res) => {
 					const rcode = res.data.referralCode;
-					const bindCode = res.data.bindedCode[0];
+                    const boundMember = res.data.boundMember;
+					const binders = res.data.binders;
 					this.setState({
 						code: rcode,
-						bindCode: bindCode
+						boundMember,
+                        binders
 					})
 				})
 			}
@@ -58,7 +62,7 @@ class InvitationCode extends React.Component {
 		return (
 			<View style={styles.container}>
 				<View style={styles.view}>
-					<Text style={styles.title}>{I18n.t('my.invitationCode.myInvitationCode')}</Text>
+					<Text style={styles.title}>{I18n.t('my.home.invitationCode.myInvitationCode')}</Text>
 					<View style={styles.lineView}>
 						<Text style={styles.content}>{this.state.code}</Text>
 						{!!this.state.code && <TouchableOpacity style={styles.button} onPress={this._setClipboardContent}>
@@ -67,19 +71,34 @@ class InvitationCode extends React.Component {
 					</View>
 				</View>
 				<View style={styles.view}>
-					<Text style={styles.title}>{I18n.t('my.invitationCode.myBoundCode')}</Text>
-					{!!this.state.bindCode
+					<Text style={styles.title}>{I18n.t('my.home.invitationCode.myBoundMember')}</Text>
+					{!!this.state.boundMember
 						? <View style={styles.lineView}>
-							<Text style={styles.content}>{this.state.bindCode}</Text>
+							<Text style={styles.content}>{this.state.boundMember}</Text>
 						</View>
 						: <View style={styles.lineView}>
-							<Text style={[styles.content, { color: '#CFCFD0' }]}>{I18n.t('my.invitationCode.notBind')}</Text>
+							<Text style={[styles.content, { color: '#CFCFD0' }]}>{I18n.t('my.home.invitationCode.notBind')}</Text>
 							{!!this.state.code && <TouchableOpacity style={[styles.button, { width: scaleSize(160) }]} onPress={this._setBindInCode}>
-								<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('my.invitationCode.button')}</Text>
+								<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('my.home.invitationCode.button')}</Text>
 							</TouchableOpacity>}
 						</View>
 					}
 				</View>
+                <View style={styles.view}>
+                    <Text style={styles.title}>{I18n.t('my.home.invitationCode.myBinders')}</Text>
+                    { this.state.binders && this.state.binders.length > 0
+                        ? <View style={styles.listView}>
+                            <Text style={styles.content}>{this.state.binders[0]}</Text>
+                            { this.state.binders.length > 1
+                                ? <Text style={styles.content}>{this.state.binders[1]}</Text>
+                                : <Text style={[styles.content, { color: '#CFCFD0' }]}>{I18n.t('my.home.invitationCode.notUsed')}</Text>
+                            }
+                        </View>
+                        : <View style={styles.lineView}>
+                            <Text style={[styles.content, { color: '#CFCFD0' }]}>{I18n.t('my.home.invitationCode.noBinders')}</Text>
+                        </View>
+                    }
+                </View>
 				<Toast ref="toast" position="center" />
 
 			</View>
@@ -111,6 +130,9 @@ const styles = StyleSheet.create({
 		height: scaleSize(150),
 		justifyContent: 'space-between'
 	},
+    listView: {
+
+    },
 	content: {
 		fontSize: 34,
 		color: '#0D0E15',
