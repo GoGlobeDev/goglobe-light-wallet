@@ -40,8 +40,8 @@ export function checkPwd(pwd) {
       reject(I18n.t('wallet.enterPwd'));
     } else if (pwd.length < 8) {
       reject('密码不能小于八位,请重新输入');
-    } else if (pwd.length > 12) {
-      reject('密码不能大于十二位,请重新输入');
+    } else if (pwd.length > 18) {
+      reject('密码不能大于十八位,请重新输入');
     } else if (regExp.test(pwd)) {
       reject('密码不能有空格');
     }

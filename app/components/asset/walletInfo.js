@@ -118,7 +118,8 @@ class WalletInfo extends Component {
 		Clipboard.setString(this.state.PrivateKey);
 		try {
 			var content = await Clipboard.getString();
-			this.refs.toast.show(I18n.t('public.copySuccess'));
+			Alert.alert(null, I18n.t('public.copySuccess'))
+			// this.refs.toast.show(I18n.t('public.copySuccess'));
 		} catch (e) {
 			this.refs.toast.show(I18n.t('public.copyFailed'));
 		}
