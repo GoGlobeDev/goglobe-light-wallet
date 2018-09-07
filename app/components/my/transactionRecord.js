@@ -102,8 +102,8 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#fff',
-		paddingLeft: 20,
-		paddingRight: 20
+		paddingLeft: scaleSize(32),
+		paddingRight: scaleSize(32)
 	},
 	balance: {
 		height: 150,

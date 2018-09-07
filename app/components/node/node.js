@@ -98,9 +98,11 @@ class Node extends Component {
 		storage
 		.load({ key: 'user'})
 		.then((user) => {
-			// console.log(user)
+			console.log(user)
 			if(user.userId && user.passwordExists){
+				console.log('ddd')
 				getDevice(user.userId).then((res) => {
+					console.log('ddd')
 					console.log(res.data)
 					const balance = show(String(res.data.balance));
 					// balance = String(balance).replace(/^(.*\..{4}).*$/,"$1");
@@ -113,6 +115,7 @@ class Node extends Component {
 						passwordExists: user.passwordExists
 					})
 				}).catch((e) => {
+					console.log('dd')
 					this.setState({
 						userId: user.userId,
 						passwordExists: user.passwordExists
@@ -178,7 +181,9 @@ class Node extends Component {
 										<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.withdrawCash')}</Text>
 									</TouchableOpacity>
 								</View>
-
+								<View style={{ flexDirection: 'row', alignItems: 'center'}}>
+									<Text style={{ fontSize: 13, fontFamily: 'PingFangSC-Regular', color: 'rgba(255,255,255,1)' }}>日利率</Text><Text style={{ color: '#FF8018', fontSize: 12, marginLeft: scaleSize(4) }}>+12.8242</Text>
+								</View>
 								<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 									<View>
 										<Text style={styles.sm_title}>{I18n.t('node.minerCount')}</Text>
