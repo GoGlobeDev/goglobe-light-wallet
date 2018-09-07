@@ -14,7 +14,7 @@ import {
 import { withNavigation } from 'react-navigation';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 // import { Button } from 'react-native-elements';
-import { scaleSize, ifIphoneX } from '../../utils/ScreenUtil';
+import { scaleSize, ifIphoneX, show } from '../../utils/ScreenUtil';
 import { I18n } from '../../../language/i18n';
 import Icon from '../../pages/iconSets';
 import { getDevice, getUser} from '../../api/bind';
@@ -93,22 +93,6 @@ class Node extends Component {
 			console.log(x);
 		});
 	}
-	show(num) {
-		num += '';
-		num = num.replace(/[^0-9|\.]/g, '');
-		if (/^0+/) {
-			num = num.replace(/^0+/, '');
-		}
-		if (!/\./.test(num)) {
-			num += '.00000';
-		}
-		if (/^\./.test(num)) {
-			num = '0' + num;
-		}
-		num += '00000';
-		num = num.match(/\d+\.\d{4}/)[0];
-		return num;
-	}
 	// 组件初始渲染挂载界面完成后 异步加载数据
 	componentDidMount() {
 		storage
@@ -118,7 +102,7 @@ class Node extends Component {
 			if(user.userId && user.passwordExists){
 				getDevice(user.userId).then((res) => {
 					console.log(res.data)
-					const balance = this.show(String(res.data.balance));
+					const balance = show(String(res.data.balance));
 					// balance = String(balance).replace(/^(.*\..{4}).*$/,"$1");
 					console.log(balance);
 					this.setState({

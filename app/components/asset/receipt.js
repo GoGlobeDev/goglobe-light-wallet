@@ -27,9 +27,7 @@ export default class Receipt extends Component {
 		Clipboard.setString(this.state.walletAddress);
 		try {
 			var content = await Clipboard.getString();
-			Alert.alert(null, I18n.t('public.copySuccess'))
-			// this.refs.toast.show('复制成功!');
-			// this.refs.toast.show(I18n.t('public.copySuccess'));
+			this.refs.toast.show(I18n.t('public.copySuccess'));
 		} catch (e) {
 			this.refs.toast.show(I18n.t('public.copyFailed'));
 		}
@@ -38,6 +36,7 @@ export default class Receipt extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
+				<Toast ref="toast" position="center" />
 				{/* <View style={styles.bg} /> */}
 				<View style={styles.avatar}>
 					<Image style={styles.avatar_item} source={require('../../assets/images/asset/head_2x.png')} />
@@ -66,7 +65,7 @@ export default class Receipt extends Component {
 						buttonStyle={styles.buttonStyle}
 						onPress={this._setClipboardContent.bind(this)}
 					/>
-					<Toast ref="toast" position="center" />
+					
 				</View>
 			</View>
 		);
