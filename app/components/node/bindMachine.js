@@ -43,9 +43,9 @@ class BindMachine extends React.Component {
 	}
 	_clickTocomfirm = () => {
 		if(!this.state.deviceNo){
-			Alert.alert(null, '矿机编号不能为空，请重新输入')
+			Alert.alert(null, I18n.t('node.registerMiner.emptyNoError'))
 		} else if (!this.state.code) {
-			Alert.alert(null, '矿机code不能为空，请重新输入')
+			Alert.alert(null, I18n.t('node.registerMiner.emptyCodeError'))
 		} else {
 			this.refs.devicePwd.open()
 		}
@@ -60,7 +60,7 @@ class BindMachine extends React.Component {
 				Alert.alert(null, res.data.message)
 			}
 		}).catch((e) => {
-			Alert.alert(null, '绑定失败，请重新输入')
+			Alert.alert(null, I18n.t('node.registerMiner.failedError'))
 		})
     }
 	render() {
@@ -99,7 +99,7 @@ class BindMachine extends React.Component {
                     >
                     <View>
                         <View style={styles.paymentDetails_title}>
-                            <Text>输入交易密码</Text>
+                            <Text>{I18n.t('node.registerMiner.inputTradingPwd')}</Text>
                         </View>
                         <Input
                             placeholder={I18n.t('public.inputPwd')} //"请输入你的密码"

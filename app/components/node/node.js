@@ -31,9 +31,9 @@ class MachineList extends Component {
 				</View>
 				<View>
 					<Text style={styles.listTitle}>GoGlobe挖矿手机</Text>
-					<Text style={styles.listContent}>编号：{this.props.item.id}</Text> 
+					<Text style={styles.listContent}>{I18n.t('node.id')}：{this.props.item.id}</Text>
 					<Text style={styles.listContent}>{I18n.t('node.power')}：{this.props.item.deposit}</Text>
-					<Text style={styles.listContent}>状态：{this.props.item.status === 2 ? '已激活': '未激活' } </Text>
+					<Text style={styles.listContent}>{I18n.t('node.status')}：{this.props.item.status === 2 ? I18n.t('node.active'): I18n.t('node.inactive') } </Text>
 					{/* <Text style={styles.listContent}>{I18n.t('node.dailyProduct')}：1000</Text> */}
 					{/* <Text style={styles.listContent}>{I18n.t('node.address')}：{this.props.item.description}</Text> */}
 				</View>

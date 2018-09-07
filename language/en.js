@@ -41,6 +41,7 @@ export default {
 		my: 'My'
 	},
 	my: {
+        _title: 'My',
 		home: {
 			walletManagement: 'Wallet Management',
 			transactionRecord: 'Transaction Record',
@@ -63,7 +64,20 @@ export default {
 				privacyPolicy: 'Privacy Policy',
 				versionLog: 'Version Log',
 				checkVersion: 'Detect new version'
-			}
+			},
+            invitationCode: {
+                _title: 'Invitation Code',
+                myInvitationCode: 'My Inviation Code',
+                myBoundCode: 'My Bound Code',
+                notBind: 'Not Bound',
+                button: 'Bind'
+            },
+            bindPhone: {
+                _title: 'Bind Phone',
+                bindPhoneNumber: 'Bound Phone Number',
+                notBind: 'Not Bound',
+                button: 'Bind'
+            }
 		},
 		sysSetting: {
 			_title: 'System Settings',
@@ -84,6 +98,7 @@ export default {
 		webHost: 'Web3 Settings'
 	},
 	assets: {
+        _title: 'My Wallet',
 		totalAssets: 'TotalAssets',
 		walletInfo: {
 			title: 'Account Infomation',
@@ -129,7 +144,7 @@ export default {
 		currency: {
 			transfer: 'Transfer',
 			orderInformation:'Order Information',
-			recentTradeRecord: 'RecentTrade Record',
+			recentTradeRecord: 'Recent Transactions',
 			receipt: 'Receipt',
 			receiptAddr: 'Receipt Address',
 			transferCount: 'Transfer Count',
@@ -150,16 +165,24 @@ export default {
         miner: 'Miner',
         minerCount: 'Miner #',
         totalPower: 'Total Power',
-        dailyProducts: 'Daily Products',
-        withdraw: 'Withdraw',
+        dailyProducts: 'Daily Earnings',
+        withdrawCash: 'Withdraw',
         balance: 'Balance(GOG)',
         power: 'Power',
-        dailyProduct: 'Daily Product',
+        id: 'ID',
+        status: 'Status',
+        active: 'Active',
+        inactive: 'Inactive',
+        dailyProduct: 'Daily Earning',
         address: 'Address',
         registerMiner: {
             _title: 'Register Miner',
 			inputMinerNumber: 'Input Miner Number',
-			inputMinerCode: 'Input Miner Code'
+			inputMinerCode: 'Input Miner Code',
+            emptyNoError: 'Miner No. is empty!',
+            emptyCodeError: 'Miner code is empty!',
+            failedError: 'Failed, bind again!',
+            inputTradingPwd: 'Enter your trading password'
         },
         withdrawRule: {
             _title: 'Rule',
@@ -191,6 +214,7 @@ export default {
         }
 	},
 	public: {
+        OK: 'OK',
 		second: 'Second',
 		next: 'Next',
 		back: 'Back',
@@ -207,6 +231,7 @@ export default {
 		PwdIsNull: 'Please enter your password',
 		define: 'OK',
 		cancel: 'Cancel',
+        copy: 'Copy',
 		copySuccess: 'Successful copy',
 		copyFailed: 'Replication failed',
 		wrongPwd: 'Password error, please retype',

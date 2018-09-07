@@ -49,6 +49,10 @@ export default {
 			//新加的
 			invitationCode: {
 				_title: '邀请码',
+                myInvitationCode: '我的邀请码',
+                myBoundCode: '我绑定的邀请码',
+                notBind: '还未绑定',
+                button: '去绑定'
 			},
             verificationCode: {
                 _title: '短信验证码'
@@ -167,12 +171,20 @@ export default {
         withdrawCash: '提现',
         balance: '当前持有(GOG)',
         power: '算力',
+        id: '编号',
+        status: '状态',
+        active: '激活',
+        inactive: '未激活',
         dailyProduct: '日产出',
         address: '地点',
         registerMiner: {
             _title: '绑定矿机',
 			inputMinerNumber: '输入矿机编号',
-			inputMinerCode: '输入矿机code'
+			inputMinerCode: '输入矿机code',
+            emptyNoError: '矿机编号不能为空，请重新输入',
+            emptyCodeError: '矿机code不能为空，请重新输入',
+            failedError: '绑定失败，请重新输入',
+            inputTradingPwd: '输入交易密码'
         },
         withdrawRule: {
             _title: '提币规则',
@@ -220,6 +232,7 @@ export default {
 		OK: '确定',
 		define: '确定',
 		cancel: '取消',
+        copy: '复制',
 		copySuccess: '复制成功',
 		copyFailed: '复制失败',
 		wrongPwd: '密码错误,请重新输入',

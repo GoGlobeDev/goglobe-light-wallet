@@ -42,7 +42,7 @@ class BindingPhone extends React.Component {
 						: <View style={styles.lineView}>
 							<Text style={[styles.content, { color: '#CFCFD0' }]}>{I18n.t('my.home.bindPhone.notBind')}</Text>
 							<TouchableOpacity style={[styles.button, { width: scaleSize(160) }]} onPress={this._setBindingPhone}>
-								<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>去绑定</Text>
+								<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('my.home.bindPhone.button')}</Text>
 							</TouchableOpacity>
 						</View>
 					}
