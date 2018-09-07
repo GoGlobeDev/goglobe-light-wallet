@@ -118,8 +118,8 @@ class WalletInfo extends Component {
 		Clipboard.setString(this.state.PrivateKey);
 		try {
 			var content = await Clipboard.getString();
-			// Alert.alert(null, I18n.t('public.copySuccess'))
-			this.refs.toast.show(I18n.t('public.copySuccess'));
+			Alert.alert(null, I18n.t('public.copySuccess'))
+			// this.refs.toast.show(I18n.t('public.copySuccess'));
 		} catch (e) {
 			this.refs.toast.show(I18n.t('public.copyFailed'));
 		}
@@ -128,6 +128,7 @@ class WalletInfo extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
+				<Toast ref="toast" position="center" />
 				<View style={styles.walletInfo}>
 					<Image style={styles.walletAvatar} source={require('../../assets/images/asset/head_2x.png')} />
 					<View style={styles.walletInfo_item}>
@@ -376,7 +377,6 @@ class WalletInfo extends Component {
 						/>
 					</View>
 				</Modal>
-
 				<Modal
 					style={styles.modalCode}
 					position={'center'}
@@ -442,7 +442,7 @@ class WalletInfo extends Component {
 							<Text>{this.state.PrivateKey}</Text>
 						</View>
 					</TouchableHighlight>
-					<Toast ref="toast" position="center" />
+
 					<View style={styles.copy}>
 						<Button
 							title={I18n.t('assets.walletInfo.copyPrivaateKey')}

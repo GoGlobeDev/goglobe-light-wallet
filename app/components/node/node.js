@@ -182,7 +182,7 @@ class Node extends Component {
 							<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.registerMiner._title')}</Text>
 						</TouchableOpacity>
 					</View>
-					: <ScrollView style={{ marginBottom: scaleSize(98)}}>
+					: <ScrollView style={{ marginBottom: scaleSize(106) + 20}}>
 						<ImageBackground style={{ width: scaleSize(750), height: scaleSize(568)}} source={require('../../assets/images/node/node-top.png')}>
 							<View style={styles.top}>
 								<Text style={styles.title}>{I18n.t('node.miner')}</Text>
