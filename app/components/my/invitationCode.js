@@ -7,7 +7,7 @@ import { scaleSize } from '../../utils/ScreenUtil';
 import { getRCode, bindRCode } from '../../api/bind';
 class InvitationCode extends React.Component {
 	static navigationOptions = {
-		headerTitle: '我的邀请码'
+		headerTitle: I18n.t('my.invitationCode._title')
 	};
 	constructor(props) {
 		super(props);
@@ -58,24 +58,24 @@ class InvitationCode extends React.Component {
 		return (
 			<View style={styles.container}>
 				<View style={styles.view}>
-					<Text style={styles.title}>我的邀请码</Text>
+					<Text style={styles.title}>{I18n.t('my.invitationCode.myInvitationCode')}</Text>
 					<View style={styles.lineView}>
 						<Text style={styles.content}>{this.state.code}</Text>
 						{!!this.state.code && <TouchableOpacity style={styles.button} onPress={this._setClipboardContent}>
-							<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>复制</Text>
+							<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('public.copy')}</Text>
 						</TouchableOpacity>}
 					</View>
 				</View>
 				<View style={styles.view}>
-					<Text style={styles.title}>我绑定的邀请码</Text>
+					<Text style={styles.title}>{I18n.t('my.invitationCode.myBoundCode')}</Text>
 					{!!this.state.bindCode
 						? <View style={styles.lineView}>
 							<Text style={styles.content}>{this.state.bindCode}</Text>
 						</View>
 						: <View style={styles.lineView}>
-							<Text style={[styles.content, { color: '#CFCFD0' }]}>还未绑定</Text>
+							<Text style={[styles.content, { color: '#CFCFD0' }]}>{I18n.t('my.invitationCode.notBind')}</Text>
 							{!!this.state.code && <TouchableOpacity style={[styles.button, { width: scaleSize(160) }]} onPress={this._setBindInCode}>
-								<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>去绑定</Text>
+								<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('my.invitationCode.button')}</Text>
 							</TouchableOpacity>}
 						</View>
 					}

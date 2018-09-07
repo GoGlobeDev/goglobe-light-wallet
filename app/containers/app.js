@@ -349,7 +349,7 @@ const App = createStackNavigator(
 		QRscanner: {
 			screen: QRscanner,
 			navigationOptions: {
-				headerTitle: () => <Text>扫描</Text>
+				headerTitle: () => <Text>{I18n.t('public.scan')}</Text>
 			}
 		}
 	},
