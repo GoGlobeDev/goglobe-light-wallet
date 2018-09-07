@@ -36,13 +36,13 @@ class CreateWallet extends Component {
 				res.localLanguage.includes('zh')
 					? this.setState({
 							service_source: {
-								uri: 'https://qiniu.baixiaojian.com/True_Chain_Wallet_Terms_of_Service_zh.pdf',
+								uri: 'http://goglobechain.com/whitepaper/GoGlobe_Chain_Wallet_Terms_of_Service_zh.pdf',
 								cache: true
 							}
 						})
 					: this.setState({
 							service_source: {
-								uri: 'https://qiniu.baixiaojian.com/True_Chain_Wallet_Terms_of_Service_en.pdf',
+								uri: 'http://goglobechain.com/whitepaper/GoGlobe_Chain_Wallet_Terms_of_Service_en.pdf',
 								cache: true
 							}
 						});
@@ -51,13 +51,13 @@ class CreateWallet extends Component {
 				DeviceInfo.getDeviceLocale().includes('zh')
 					? this.setState({
 							service_source: {
-								uri: 'https://qiniu.baixiaojian.com/True_Chain_Wallet_Terms_of_Service_zh.pdf',
+								uri: 'http://goglobechain.com/whitepaper/GoGlobe_Chain_Wallet_Terms_of_Service_zh.pdf',
 								cache: true
 							}
 						})
 					: this.setState({
 							service_source: {
-								uri: 'https://qiniu.baixiaojian.com/True_Chain_Wallet_Terms_of_Service_en.pdf',
+								uri: 'http://goglobechain.com/whitepaper/GoGlobe_Chain_Wallet_Terms_of_Service_en.pdf',
 								cache: true
 							}
 						});
