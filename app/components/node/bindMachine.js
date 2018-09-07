@@ -52,10 +52,12 @@ class BindMachine extends React.Component {
 	}
 	_clickToBindDevice = () => {
         bindDevice(this.props.navigation.state.params.userId, Number(this.state.deviceNo), this.state.code, this.state.password).then((res) => {
+			console.log(res)
+			console.log(res.data)
 			if(res.data.status === 'success') {
 				this.props.navigation.navigate('Node', {userId: this.props.navigation.state.params.userId, passwordExists: true})
 			} else {
-				Alert.alert(null, '矿机编号或矿机code错误，请重新输入')
+				Alert.alert(null, res.data.message)
 			}
 		}).catch((e) => {
 			Alert.alert(null, '绑定失败，请重新输入')
