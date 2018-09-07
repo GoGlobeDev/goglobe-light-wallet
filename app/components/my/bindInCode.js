@@ -16,7 +16,7 @@ export default class BindInCode extends React.Component {
 		}
 	}
 	static navigationOptions = {
-		headerTitle: I18n.t('my.home.bindingCode._title')
+		headerTitle: I18n.t('my.home.invitationCode._title')
 	};
 	componentDidMount() {
 		storage.load({ key: 'user' }).then((user) => {
@@ -44,16 +44,17 @@ export default class BindInCode extends React.Component {
 	_clickToBindCode = () => {
 		bindRCode(this.state.userId, this.state.bindCode, this.state.password).then((res) => {
 			if(res.data.status === 'success') {
-				this.props.navigation.navigate('InvitationCode', { bindCode: this.state.bindCode})
-			} else {
-				Alert.alert(null, '绑定失败，请重新输入')
+				this.props.navigation.navigate('InvitationCode', { boundNumber: res.data.boundNumber });
+			} else if (res.data.status === 'fail' && res.data.message === 'numberLimited') {
+                Alert.alert(null, I18n.t('my.home.invitationCode.' + res.data.message));
+            } else {
+				Alert.alert(null, I18n.t('my.home.invitationCode.' + res.data.message));
 			}
 		}).catch((e) => {
 			console.log(e)
 		})
 	}
 	clickToClose = () => {
-
         // this.props.navigation.navigate('SetPwd')
         this.setState({
             failModal: false
