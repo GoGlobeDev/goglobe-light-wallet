@@ -20,7 +20,7 @@ class InvitationCode extends React.Component {
 	}
 	componentWillReceiveProps(newProps) {
 		this.setState({
-			bindCode: newProps.navigation.state.params.bindCode
+			boundNumber: newProps.navigation.state.params.boundNumber
 		})
 	}
 	componentDidMount() {

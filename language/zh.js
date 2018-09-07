@@ -48,7 +48,7 @@ export default {
 			},
 			//新加的
 			invitationCode: {
-				_title: '邀请码',
+				_title: '绑定邀请码',
                 myInvitationCode: '我的邀请码',
                 myBoundCode: '我绑定的邀请码',
                 myBoundMember: '我绑定的用户',
@@ -56,7 +56,12 @@ export default {
                 button: '去绑定',
                 myBinders: '我推荐的用户',
                 noBinders: '还没有人使用',
-                notUsed: '还未使用'
+                notUsed: '还未使用',
+                codeNotExists: '推荐码不存在',
+                userWrong: '请确保您已经绑定矿机',
+                hasBound: '您已经绑定过推荐码',
+                passwordWrong: '交易密码错误',
+                numberLimited: '该推荐码已使用两次，您可以选择相关的推荐人：'
 			},
             verificationCode: {
                 _title: '短信验证码'
