@@ -54,7 +54,7 @@ class VCode extends React.Component {
             this.setState({
                 page: 'phone',
                 phone: this.props.navigation.state.params.phone
-            }) 
+            })
         }
 		storage
 			.load({
@@ -118,7 +118,7 @@ class VCode extends React.Component {
                     }
                 }
                 else {
-                    Alert.alert(null, res.data.message); // 提示 错误原因
+                    Alert.alert(null, I18n.t('error.' + res.data.message)); // 提示 错误原因
                 }
             })
         })

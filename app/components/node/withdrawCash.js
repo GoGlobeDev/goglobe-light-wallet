@@ -76,7 +76,7 @@ class WithdrawCash extends React.Component {
                 Alert.alert(null, '提币请求已经成功提交，等待审批')
                 this.props.navigation.navigate('Node', { userId: this.state.userId, passwordExists: true})
             } else {
-                Alert.alert(null, res.data.message)
+                Alert.alert(null, I18n.t('error.' + res.data.message))
             }
         }).catch((e) => {
             console.log(e)

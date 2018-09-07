@@ -55,7 +55,7 @@ class BindMachine extends React.Component {
 			if(res.data.status === 'success') {
 				this.props.navigation.navigate('Node', {userId: this.props.navigation.state.params.userId, passwordExists: true})
 			} else {
-				Alert.alert(null, res.data.message)
+				Alert.alert(null, I18n.t('error.' + res.data.message))
 			}
 		}).catch((e) => {
 			Alert.alert(null, I18n.t('node.registerMiner.failedError'))
