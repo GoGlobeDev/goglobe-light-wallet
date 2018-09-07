@@ -49,7 +49,7 @@ import QRscanner from '../components/public/QRscanner'; //转账 -> 扫描二维
 import Storage from 'react-native-storage';
 import Icon from '../pages/iconSets';
 
-const minHeight = ifIphoneX(0, 0, 10);
+const minHeight = ifIphoneX(0, 0, scaleSize(10));
 
 const storage = new Storage({
 	size: 1000,
@@ -173,7 +173,7 @@ const TabBarPage = createBottomTabNavigator(
 					<Text style={{ color: tintColor, fontSize: 12, textAlign: 'center' }}></Text>
 				),
 				tabBarIcon: ({ focused }) => (
-					<Image style={{ width: scaleSize(70), height: scaleSize(70), marginTop: scaleSize(20) }} source={focused ? require('../assets/images/common/asset_selected.png') : require('../assets/images/common/asset.png')} />
+					<Image style={{ width: scaleSize(70), height: scaleSize(70), marginTop: scaleSize(16) }} source={focused ? require('../assets/images/common/asset_selected.png') : require('../assets/images/common/asset.png')} />
 				  ),
 				// tabBarIcon: ({ focused, tintColor }) => <Icon name="icon-zichan" size={30} color={tintColor} />
 			}
@@ -185,7 +185,7 @@ const TabBarPage = createBottomTabNavigator(
 					<Text style={{ color: tintColor, fontSize: 12, textAlign: 'center' }}></Text>
 				),
 				tabBarIcon: ({ focused }) => (
-					<Image style={{ width: scaleSize(70), height: scaleSize(70), marginTop: scaleSize(20) }} source={focused ? require('../assets/images/common/node_selected.png') : require('../assets/images/common/node.png')} />
+					<Image style={{ width: scaleSize(70), height: scaleSize(70), marginTop: scaleSize(16) }} source={focused ? require('../assets/images/common/node_selected.png') : require('../assets/images/common/node.png')} />
 				  ),
 				// tabBarOnPress: ({ navigation, defaultHandler }) => {
 				// 	storage
@@ -208,7 +208,7 @@ const TabBarPage = createBottomTabNavigator(
 					<Text style={{ color: tintColor, fontSize: 12, textAlign: 'center' }}></Text>
 				),
 				tabBarIcon: ({ focused }) => (
-					<Image style={{ width: scaleSize(70), height: scaleSize(70), marginTop: scaleSize(20) }} source={focused ? require('../assets/images/common/user_selected.png') : require('../assets/images/common/user.png')} />
+					<Image style={{ width: scaleSize(70), height: scaleSize(70), marginTop: scaleSize(16) }} source={focused ? require('../assets/images/common/user_selected.png') : require('../assets/images/common/user.png')} />
 				  ),
 			}
 		}
