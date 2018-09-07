@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity, TouchableHighligh
 import { Input } from 'react-native-elements';
 import Modal from 'react-native-modalbox';
 import { I18n } from '../../../language/i18n';
-import { scaleSize } from '../../utils/ScreenUtil';
+import { scaleSize, show } from '../../utils/ScreenUtil';
 import getBalance from '../../utils/addTokens';
 import abi from '../../utils/abi';
 import { withdraw } from '../../api/bind';
@@ -26,52 +26,7 @@ class WithdrawCash extends React.Component {
             gog_banlance: 0
 		}
     }
-    show(num) {
-		num += '';
-		num = num.replace(/[^0-9|\.]/g, '');
-		if (/^0+/) {
-			num = num.replace(/^0+/, '');
-		}
-		if (!/\./.test(num)) {
-			num += '.00000';
-		}
-		if (/^\./.test(num)) {
-			num = '0' + num;
-		}
-		num += '00000';
-		num = num.match(/\d+\.\d{5}/)[0];
-		return num;
-	}
-    // getAllBalance() {
-	// 	getBalance(
-	// 		abi,
-	// 		this.state.walletAddress,
-	// 		store.getState().contractAddr.GOGContractAddr,
-	// 		(gog_banlance) => {
-	// 			gog_banlance = this.show(gog_banlance);
-    //             this.setState({ gog_banlance });
-	// 		}
-	// 	);
-	// }
 	componentDidMount() {
-		// storage
-		// 	.load({
-		// 		key: 'walletInfo'
-		// 	})
-		// 	.then((walletInfo) => {
-		// 		let walletAddress = walletInfo.walletAddress;
-		// 		this.setState(
-		// 			{
-		// 				walletAddress: walletAddress
-		// 			},
-		// 			() => {
-		// 				this.getAllBalance();
-		// 			}
-		// 		);
-		// 	})
-		// 	.catch((x) => {
-		// 		console.log(x);
-        //     });
         this.setState({
             gog_banlance: this.props.navigation.state.params.gog_banlance
         })
@@ -142,12 +97,12 @@ class WithdrawCash extends React.Component {
                         />
                     </View>
                     <View style={[styles.rows, { justifyContent: 'space-between', marginTop: scaleSize(25)}]}>
-                        <Text style={[styles.text14, { opacity: 0.5 }]}>{I18n.t('node.withdraw.availableBalance')}：{this.state.gog_banlance}GOG</Text>
+                        <Text style={[styles.text14, { opacity: 0.5 }]}>{I18n.t('node.withdraw.availableBalance')}：{show(this.state.gog_banlance)}GOG</Text>
                         <TouchableOpacity onPress={() => this.clickToAllWithdraw()}>
                             <Text style={[styles.text14, { color: '#486495'} ]}>{I18n.t('node.withdraw.withdrawAll')}</Text>
                         </TouchableOpacity>
                     </View>
-                    <Text style={styles.text17}>{I18n.t('node.withdraw.receivedAmount')}：{this.state.banlance}</Text>
+                    <Text style={styles.text17}>{I18n.t('node.withdraw.receivedAmount')}：{show(this.state.banlance)}</Text>
                     <TouchableOpacity style={[styles.button, this.state.number === '' ? { backgroundColor: '#F7C9A9' } : {  backgroundColor: '#EA7828' }]} onPress={this._clickTocomfirm}>
                         <Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.withdraw.withdrawToken')}</Text>
                     </TouchableOpacity>

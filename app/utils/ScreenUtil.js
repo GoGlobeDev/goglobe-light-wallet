@@ -40,3 +40,21 @@ export function ifIphoneX(iphoneXStyle, iphoneStyle, androidStyle) {
     return androidStyle;
   }
 }
+
+//保留4位小数
+export function show(num) {
+  num += '';
+  num = num.replace(/[^0-9|\.]/g, '');
+  if (/^0+/) {
+    num = num.replace(/^0+/, '');
+  }
+  if (!/\./.test(num)) {
+    num += '.00000';
+  }
+  if (/^\./.test(num)) {
+    num = '0' + num;
+  }
+  num += '00000';
+  num = num.match(/\d+\.\d{4}/)[0];
+  return num;
+}

@@ -4,35 +4,19 @@ import { withNavigation } from 'react-navigation';
 import { getTransactionRecord, getERC20TransactionRecord } from '../../api/index';
 import { I18n } from '../../../language/i18n';
 import Icon from '../../pages/iconSets';
-import { scaleSize, ifIphoneX } from '../../utils/ScreenUtil';
+import { scaleSize, ifIphoneX, show } from '../../utils/ScreenUtil';
 import { ImageBackground } from 'react-native-vector-icons/lib/react-native';
-
+import { getTime } from '../../utils/getTime';
 
 const minHeight = ifIphoneX(scaleSize(62), 0, 0);
 class Recording extends Component {
-	show(num) {
-		num += '';
-		num = num.replace(/[^0-9|\.]/g, '');
-		if (/^0+/) {
-			num = num.replace(/^0+/, '');
-		}
-		if (!/\./.test(num)) {
-			num += '.00000';
-		}
-		if (/^\./.test(num)) {
-			num = '0' + num;
-		}
-		num += '00000';
-		num = num.match(/\d+\.\d{4}/)[0];
-		return num;
-	}
-
 	render() {
 		return (
 			<View style={styles.recordDetail_item}>
 				<Text>{this.props.to.replace(this.props.to.slice('8', '32'), '......')}</Text>
-				<Text>{this.show(this.props.value / this.props.dime)}</Text>
+				<Text style={{ color: '#FF8018', fontSize: 20}}>{show(this.props.value / this.props.dime)}</Text>
 			</View>
+				
 		);
 	}
 }
@@ -43,17 +27,23 @@ class TransactionRecord extends Component {
 			<View>
 				{this.props.data.item.from === store.getState().walletInfo.wallet_address ? (
 					<View style={styles.recordDetail}>
-						<View>
-							<Icon name="icon-zhichusel" size={50} color="#34ccbf" />
+						<View style={{ width: scaleSize(100)}}>
+							<Icon name="icon-zhichusel" size={40} color="#34ccbf" />
 						</View>
-						<Recording to={this.props.data.item.to} value={this.props.data.item.value} dime={this.props.dime}/>
+						<View style={{ width: scaleSize(600)}}>
+							<Recording to={this.props.data.item.to} value={this.props.data.item.value} dime={this.props.dime}/>
+							<Text>{getTime(this.props.data.item.timeStamp)}</Text>
+						</View>
 					</View>
 				) : (
 					<View style={styles.recordDetail}>
-						<View>
-							<Icon name="icon-shourusel" size={50} color="#528bf7" />
+						<View style={{ width: scaleSize(100)}}>
+							<Icon name="icon-shourusel" size={40} color="#528bf7" />
 						</View>
-						<Recording to={this.props.data.item.to} value={this.props.data.item.value} dime={this.props.dime}/>
+						<View style={{ width: scaleSize(600)}}>
+							<Recording to={this.props.data.item.to} value={this.props.data.item.value} time={this.props.data.item.timeStamp} dime={this.props.dime}/>
+							<Text>{getTime(this.props.data.item.timeStamp)}</Text>
+						</View>
 					</View>
 				)}
 			</View>
@@ -132,7 +122,7 @@ class currencyDetail extends Component {
 				<View style={styles.record}>
 					{this.state.recordData.length >= 1 ? (
 						<FlatList
-							style={[styles.marginTop_20, { marginBottom: 312, backgroundColor: '#faa'}]}
+							style={[styles.marginTop_20, { marginBottom: 280 + minHeight }]}
 							data={this.state.recordData}
 							renderItem={(item, index) => <TransactionRecord data={item} key={index} dime={this.state.dime}/>}
 							keyExtractor={(item, index) => index.toString()}
@@ -227,18 +217,18 @@ const styles = StyleSheet.create({
 		// right: 0
 	},
 	recordDetail: {
-		height: 75,
+		height: scaleSize(150),
 		flexDirection: 'row',
-		alignItems: 'center'
+		// alignItems: 'center'
 	},
 	record_icon: {
 		width: 50,
 		height: 50
 	},
 	recordDetail_item: {
-		flex: 1,
-		height: 75,
-		padding: 10,
+		// flex: 1,
+		// height: 75,
+		paddingRight: scaleSize(32),
 		flexDirection: 'row',
 		justifyContent: 'space-between'
 	},

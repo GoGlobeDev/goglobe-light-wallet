@@ -14,7 +14,7 @@ import {
 	StatusBar
 } from 'react-native';
 import { connect } from 'react-redux';
-import { scaleSize, ifIphoneX } from '../../utils/ScreenUtil';
+import { scaleSize, ifIphoneX, show } from '../../utils/ScreenUtil';
 import actions from '../../store/action/walletInfo';
 import getBalance from '../../utils/addTokens';
 import abi from '../../utils/abi';
@@ -75,29 +75,13 @@ class Assets extends Component {
 		};
 	}
 
-	show(num) {
-		num += '';
-		num = num.replace(/[^0-9|\.]/g, '');
-		if (/^0+/) {
-			num = num.replace(/^0+/, '');
-		}
-		if (!/\./.test(num)) {
-			num += '.00000';
-		}
-		if (/^\./.test(num)) {
-			num = '0' + num;
-		}
-		num += '00000';
-		num = num.match(/\d+\.\d{5}/)[0];
-		return num;
-	}
 
 	getAllBalance() {
 		this.setState({
 			isRefreshing: true
 		});
 		web3.eth.getBalance(this.state.walletAddress).then((res) => {
-			let eth_banlance = this.show(web3.utils.fromWei(res, 'ether'));
+			let eth_banlance = show(web3.utils.fromWei(res, 'ether'));
 			this.setState({ eth_banlance });
 		});
 		getBalance(
@@ -105,7 +89,7 @@ class Assets extends Component {
 			this.state.walletAddress,
 			store.getState().contractAddr.GOGContractAddr,
 			(gog_banlance) => {
-				gog_banlance = this.show(gog_banlance);
+				gog_banlance = show(gog_banlance);
 				this.setState({ gog_banlance });
 			}
 		);

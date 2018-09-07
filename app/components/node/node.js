@@ -14,7 +14,7 @@ import {
 import { withNavigation } from 'react-navigation';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 // import { Button } from 'react-native-elements';
-import { scaleSize, ifIphoneX } from '../../utils/ScreenUtil';
+import { scaleSize, ifIphoneX, show } from '../../utils/ScreenUtil';
 import { I18n } from '../../../language/i18n';
 import Icon from '../../pages/iconSets';
 import { getDevice, getUser} from '../../api/bind';
@@ -93,32 +93,18 @@ class Node extends Component {
 			console.log(x);
 		});
 	}
-	show(num) {
-		num += '';
-		num = num.replace(/[^0-9|\.]/g, '');
-		if (/^0+/) {
-			num = num.replace(/^0+/, '');
-		}
-		if (!/\./.test(num)) {
-			num += '.00000';
-		}
-		if (/^\./.test(num)) {
-			num = '0' + num;
-		}
-		num += '00000';
-		num = num.match(/\d+\.\d{4}/)[0];
-		return num;
-	}
 	// 组件初始渲染挂载界面完成后 异步加载数据
 	componentDidMount() {
 		storage
 		.load({ key: 'user'})
 		.then((user) => {
-			// console.log(user)
+			console.log(user)
 			if(user.userId && user.passwordExists){
+				console.log('ddd')
 				getDevice(user.userId).then((res) => {
+					console.log('ddd')
 					console.log(res.data)
-					const balance = this.show(String(res.data.balance));
+					const balance = show(String(res.data.balance));
 					// balance = String(balance).replace(/^(.*\..{4}).*$/,"$1");
 					console.log(balance);
 					this.setState({
@@ -129,6 +115,7 @@ class Node extends Component {
 						passwordExists: user.passwordExists
 					})
 				}).catch((e) => {
+					console.log('dd')
 					this.setState({
 						userId: user.userId,
 						passwordExists: user.passwordExists
@@ -194,7 +181,9 @@ class Node extends Component {
 										<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.withdrawCash')}</Text>
 									</TouchableOpacity>
 								</View>
-
+								<View style={{ flexDirection: 'row', alignItems: 'center'}}>
+									<Text style={{ fontSize: 13, fontFamily: 'PingFangSC-Regular', color: 'rgba(255,255,255,1)' }}>日利率</Text><Text style={{ color: '#FF8018', fontSize: 12, marginLeft: scaleSize(4) }}>+12.8242</Text>
+								</View>
 								<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 									<View>
 										<Text style={styles.sm_title}>{I18n.t('node.minerCount')}</Text>
