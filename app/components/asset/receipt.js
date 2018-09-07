@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Dimensions, StyleSheet, Clipboard } from 'react-native';
+import { View, Text, Image, Dimensions, StyleSheet, Clipboard, Alert } from 'react-native';
 import { I18n } from '../../../language/i18n';
 import { Input, Button } from 'react-native-elements';
 import QRCode from 'react-native-qrcode';
@@ -27,8 +27,9 @@ export default class Receipt extends Component {
 		Clipboard.setString(this.state.walletAddress);
 		try {
 			var content = await Clipboard.getString();
+			Alert.alert(null, I18n.t('public.copySuccess'))
 			// this.refs.toast.show('复制成功!');
-			this.refs.toast.show(I18n.t('public.copySuccess'));
+			// this.refs.toast.show(I18n.t('public.copySuccess'));
 		} catch (e) {
 			this.refs.toast.show(I18n.t('public.copyFailed'));
 		}
