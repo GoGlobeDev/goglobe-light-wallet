@@ -114,7 +114,6 @@ class Assets extends Component {
 			.then((walletInfo) => {
 				let walletAddress = walletInfo.walletAddress;
 				getUser(walletAddress).then((res) => {
-					console.log(res)
 					if(res.data && res.data.userId){
 						storage.save({
 							key: 'user',

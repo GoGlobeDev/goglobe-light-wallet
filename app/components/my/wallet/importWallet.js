@@ -257,7 +257,7 @@ class ImportWallet extends Component {
 
 							setTimeout(() => {
 								option._this.refs.loading.close();
-								option._this.props.navigation.navigate('Assets');
+								option._this.props.navigation.navigate('Home');
 							}, 100);
 						});
 					}

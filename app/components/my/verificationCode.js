@@ -105,7 +105,7 @@ class VCode extends React.Component {
             code: this.state.code0 + this.state.code1 + this.state.code2 + this.state.code3 + this.state.code4 + txt
         },() => {
             bindPhone(this.state.phone, this.state.code, this.state.walletAddress).then((res) => {
-                console.log(res)
+                // console.log(res)
                 if(res.data.status === 'success' && res.data.message !== 'exists') {
                     storage.save({ key: 'user', data: { phone: this.state.phone, userId: res.data.id }, expires: null })
                     this.props.navigation.navigate('SetPwd', { page: this.state.page, userId: res.data.id, phone: this.state.phone})
@@ -137,7 +137,7 @@ class VCode extends React.Component {
       }
       _clickToSendCode = () => {
         sendCode(this.state.phone).then((res) => {
-            console.log(res)
+            // console.log(res)
             if(res.data.status === 'success'){
                 this.setState({
                     state: false,

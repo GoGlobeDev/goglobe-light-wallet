@@ -42,6 +42,26 @@ class MachineList extends Component {
 	}
 }
 
+class DeviceList extends Component {
+	render() {
+		return (
+			<View style={styles.machineList}>
+				<View>
+					<Image style={styles.listLeft} source={require('../../assets/images/node/machine-left.png')} />
+				</View>
+				<View>
+					<Text style={styles.listTitle}>GoGlobe挖矿手机(来自好友)</Text>
+					<Text style={styles.listContent}>{I18n.t('node.id')}：{this.props.item.id}</Text>
+					<Text style={styles.listContent}>{I18n.t('node.power')}：{this.props.item.deposit}</Text>
+					<Text style={styles.listContent}>{I18n.t('node.status')}：{this.props.item.status === 2 ? I18n.t('node.active'): I18n.t('node.inactive') } </Text>
+					{/* <Text style={styles.listContent}>{I18n.t('node.dailyProduct')}：1000</Text> */}
+					{/* <Text style={styles.listContent}>{I18n.t('node.address')}：{this.props.item.description}</Text> */}
+				</View>
+			</View>
+		)
+	}
+}
+
 class Node extends Component {
 	// 初始化组件节点状态
 	constructor(props) {
@@ -53,8 +73,6 @@ class Node extends Component {
 	}
 	componentWillReceiveProps(newProps) {
 		getDevice(newProps.navigation.state.params.userId).then((res) => {
-			console.log('ddd')
-			console.log(res.data)
 			this.setState({
 				device: res.data,
 				balance: res.data.balance,
@@ -101,15 +119,9 @@ class Node extends Component {
 		storage
 		.load({ key: 'user'})
 		.then((user) => {
-			console.log(user)
 			if(user.userId && user.passwordExists){
-				console.log('ddd')
 				getDevice(user.userId).then((res) => {
-					console.log('ddd')
-					console.log(res.data)
-					const balance = show(String(res.data.balance));
-					// balance = String(balance).replace(/^(.*\..{4}).*$/,"$1");
-					console.log(balance);
+					const balance = res.data.balance;
 					this.setState({
 						device: res.data,
 						userId: res.data.userId,
@@ -118,7 +130,6 @@ class Node extends Component {
 						passwordExists: user.passwordExists
 					})
 				}).catch((e) => {
-					console.log('dd')
 					this.setState({
 						userId: user.userId,
 						passwordExists: user.passwordExists
@@ -178,7 +189,7 @@ class Node extends Component {
 								<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
 									<View>
 										<Text style={styles.sm_title}>{I18n.t('node.balance')}</Text>
-										<Text style={styles.sm_content}>{this.state.balance}</Text>
+										<Text style={styles.sm_content}>{show(String(this.state.balance))}</Text>
 									</View>
 									<TouchableOpacity style={[styles.button, { width: scaleSize(150), height: scaleSize(72) }]} onPress={this._clickToWithdrawCash}>
 										<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.withdrawCash')}</Text>
@@ -206,6 +217,11 @@ class Node extends Component {
 						<View>
 							{device.deviceSum > 0 && device.deviceList.map((item, index) => {
 								return <MachineList item={item} key={index}/>
+							})}
+						</View>
+						<View>
+							{device.bindDeviceList.length > 0 && device.bindDeviceList.map((item, index) => {
+								return <DeviceList item={item} key={index}/>
 							})}
 						</View>
 						{device.deviceSum < 2 && <TouchableOpacity style={styles.button} onPress={this._clickToBindMachine}>

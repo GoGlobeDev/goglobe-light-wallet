@@ -74,8 +74,6 @@ class currencyDetail extends Component {
 		let ContractAddr = params.title + 'ContractAddr';
         if (params.title === 'ETH') {
             getTransactionRecord(store.getState().walletInfo.wallet_address).then((res) => {
-				console.log('res')
-				console.log(res)
                 this.setState(
                     {
                         ContractAddr: store.getState().contractAddr[ContractAddr],
@@ -89,8 +87,6 @@ class currencyDetail extends Component {
                 store.getState().walletInfo.wallet_address,
                 store.getState().contractAddr[ContractAddr]
             ).then((res) => {
-				console.log('res')
-				console.log(res)
                 this.setState(
                     {
                         ContractAddr: store.getState().contractAddr[ContractAddr],
