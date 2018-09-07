@@ -178,7 +178,11 @@ export default {
         registerMiner: {
             _title: 'Register Miner',
 			inputMinerNumber: 'Input Miner Number',
-			inputMinerCode: 'Input Miner Code'
+			inputMinerCode: 'Input Miner Code',
+            emptyNoError: 'Miner No. is empty!',
+            emptyCodeError: 'Miner code is empty!',
+            failedError: 'Failed, bind again!',
+            inputTradingPwd: 'Enter your trading password'
         },
         withdrawRule: {
             _title: 'Rule',

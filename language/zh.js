@@ -180,7 +180,11 @@ export default {
         registerMiner: {
             _title: '绑定矿机',
 			inputMinerNumber: '输入矿机编号',
-			inputMinerCode: '输入矿机code'
+			inputMinerCode: '输入矿机code',
+            emptyNoError: '矿机编号不能为空，请重新输入',
+            emptyCodeError: '矿机code不能为空，请重新输入',
+            failedError: '绑定失败，请重新输入',
+            inputTradingPwd: '输入交易密码'
         },
         withdrawRule: {
             _title: '提币规则',
