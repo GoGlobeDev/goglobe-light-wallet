@@ -428,7 +428,7 @@ class WalletInfo extends Component {
 					coverScreen={true}
 					ref={'privateKey'}
 					swipeArea={20}
-				>
+					>
 					<View style={styles.privateKeyTitle}>
 						<Text style={styles.modalTitle}>{I18n.t('assets.walletInfo.exportPrivateKey')}</Text>
 					</View>

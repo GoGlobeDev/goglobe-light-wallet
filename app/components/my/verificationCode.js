@@ -105,10 +105,18 @@ class VCode extends React.Component {
             code: this.state.code0 + this.state.code1 + this.state.code2 + this.state.code3 + this.state.code4 + txt
         },() => {
             bindPhone(this.state.phone, this.state.code, this.state.walletAddress).then((res) => {
-                if(res.data.status === 'success') {
+                console.log(res)
+                if(res.data.status === 'success' && res.data.message !== 'exists') {
                     storage.save({ key: 'user', data: { phone: this.state.phone, userId: res.data.id }, expires: null })
                     this.props.navigation.navigate('SetPwd', { page: this.state.page, userId: res.data.id, phone: this.state.phone})
-                } else {
+                } else if (res.data.message === 'exists' ){
+                    if(this.props.navigation.state.params.page === 'node') {
+                        this.props.navigation.navigate('Node', { userId: res.data.id, passwordExists: true})
+                    } else {
+                        this.props.navigation.navigate('BindingPhone', {phone: this.state.phone})
+                    }
+                }
+                else {
                     Alert.alert(null, res.data.message); // 提示 错误原因
                 }
             })

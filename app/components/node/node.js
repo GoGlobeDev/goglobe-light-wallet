@@ -53,8 +53,11 @@ class Node extends Component {
 	}
 	componentWillReceiveProps(newProps) {
 		getDevice(newProps.navigation.state.params.userId).then((res) => {
+			console.log('ddd')
+			console.log(res.data)
 			this.setState({
 				device: res.data,
+				balance: res.data.balance,
 				userId: newProps.navigation.state.params.userId,
 				passwordExists: newProps.navigation.state.params.passwordExists
 			})
@@ -181,8 +184,8 @@ class Node extends Component {
 										<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.withdrawCash')}</Text>
 									</TouchableOpacity>
 								</View>
-								<View style={{ flexDirection: 'row', alignItems: 'center'}}>
-									<Text style={{ fontSize: 13, fontFamily: 'PingFangSC-Regular', color: 'rgba(255,255,255,1)' }}>日利率</Text><Text style={{ color: '#FF8018', fontSize: 12, marginLeft: scaleSize(4) }}>+12.8242</Text>
+								<View style={{ flexDirection: 'row', alignItems: 'center', marginTop: scaleSize(10)}}>
+									<Text style={{ fontSize: 13, fontFamily: 'PingFangSC-Regular', color: 'rgba(255,255,255,1)' }}>日利率</Text><Text style={{ color: '#FF8018', fontSize: 12, marginLeft: scaleSize(4) }}>+{show(device.dailyInterest)}</Text>
 								</View>
 								<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 									<View>
@@ -195,7 +198,7 @@ class Node extends Component {
 									</View>
 									<View>
 										<Text style={styles.sm_title}>{I18n.t('node.dailyProducts')}</Text>
-										<Text style={styles.sm_content}>{device.dailyProduce}</Text>
+										<Text style={styles.sm_content}>{show(device.dailyProduce)}</Text>
 									</View>
 								</View>
 							</View>
@@ -236,7 +239,7 @@ const styles = StyleSheet.create({
 		fontSize: 13,
 		fontFamily: 'PingFangSC-Regular',
 		color: 'rgba(255,255,255,1)',
-		marginTop: scaleSize(46),
+		marginTop: scaleSize(36),
 		marginBottom: scaleSize(20),
 	},
 	sm_content: {

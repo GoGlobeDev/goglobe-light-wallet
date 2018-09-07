@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, TouchableHighlight, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, TouchableHighlight, Alert, Image } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import Modal from 'react-native-modalbox';
 import { I18n } from '../../../language/i18n';
@@ -98,7 +98,10 @@ class BindMachine extends React.Component {
                     swipeArea={20}
                     >
                     <View>
-                        <View style={styles.paymentDetails_title}>
+                        <View style={[styles.paymentDetails_title, { position: 'relative'}]}>
+							<TouchableHighlight style={{ width: scaleSize(44), height: scaleSize(44), position: 'absolute', left: scaleSize(30), top: scaleSize(30)}} underlayColor={'transparent'} onPress={() => this.refs.devicePwd.close()}>
+								<Image style={{ width: scaleSize(44), height: scaleSize(44) }} source={require('../../assets/images/common/close.png')} />
+							</TouchableHighlight>
                             <Text>{I18n.t('node.registerMiner.inputTradingPwd')}</Text>
                         </View>
                         <Input

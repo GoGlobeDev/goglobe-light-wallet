@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, TouchableHighlight, Alert } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, TouchableHighlight, Alert, Image } from 'react-native';
 import { Input } from 'react-native-elements';
 import Modal from 'react-native-modalbox';
 import { I18n } from '../../../language/i18n';
@@ -56,10 +56,11 @@ class WithdrawCash extends React.Component {
         })
     }
     _clickTocomfirm = () => {
-        // withdraw(userId, password, this.state.banlance)
         if(Number(this.state.gog_banlance) < Number(this.state.number)){
             Alert.alert(null, '您当前输入的数量大于最大可提的数量，请重新输入')
-        } else if(Number(this.state.number) < 5000){
+        } else if(this.state.number.indexOf('.') > 0 && this.state.number.length - this.state.number.indexOf('.') > 5){
+            Alert.alert(null, '每次提现金额不能超过四位小数，请重新输入')
+        }else if(Number(this.state.number) < 5000){
             Alert.alert(null, '每次提现不能少于5000GOG,您当前输入的数额不可提现')
         } else {
             Alert.alert('提示','您确定要提币吗？这样做回导致您无法获得后续利息',[
@@ -117,8 +118,11 @@ class WithdrawCash extends React.Component {
                     swipeArea={20}
                     >
                     <View>
-                        <View style={styles.paymentDetails_title}>
-                            <Text>输入交易密码</Text>
+                        <View style={[styles.paymentDetails_title, { position: 'relative'}]}>
+                            <TouchableHighlight style={{ width: scaleSize(44), height: scaleSize(44), position: 'absolute', left: scaleSize(30), top: scaleSize(30)}} underlayColor={'transparent'} onPress={() => this.refs.withdrawPwd.close()}>
+								<Image style={{ width: scaleSize(44), height: scaleSize(44) }} source={require('../../assets/images/common/close.png')} />
+							</TouchableHighlight>
+                            <Text>{I18n.t('node.registerMiner.inputTradingPwd')}</Text>
                         </View>
                         <Input
                             placeholder={I18n.t('public.inputPwd')} //"请输入你的密码"
