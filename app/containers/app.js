@@ -2,8 +2,8 @@ import React from 'react';
 import { I18n } from '../../language/i18n'; // 多国语言支持
 import { StyleSheet, Text, AsyncStorage, Image } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator, StackNavigator } from 'react-navigation'; // 页面切换 路由导航组件
-// import { host } from '../utils/config';
-import { scaleSize } from '../utils/ScreenUtil';
+import { hostMode } from '../utils/config';
+import { scaleSize, ifIphoneX } from '../utils/ScreenUtil';
 
 //TabBar 底部栏位页面
 import Splash from '../pages/Splash'; // app开屏画面
@@ -49,6 +49,8 @@ import QRscanner from '../components/public/QRscanner'; //转账 -> 扫描二维
 import Storage from 'react-native-storage';
 import Icon from '../pages/iconSets';
 
+const minHeight = ifIphoneX(0, 0, 10);
+
 const storage = new Storage({
 	size: 1000,
 	storageBackend: AsyncStorage,
@@ -85,21 +87,21 @@ const Web3 = require('web3');
 
 function check(host) {
 	// console.log(host)
-	store.dispatch({
-		type: 'CONTRACTADDR',
-		GOGContractAddr: '0x8c191f956a287096bb306c422536cd1151fc4a3c'
-	});
-	// if (host.includes('ropsten')) {
-	// 	store.dispatch({
-	// 		type: 'CONTRACTADDR',
-	// 		GOGContractAddr: '0x41c11ee289fdaf498500314ab719a64673f72a40'
-	// 	});
-	// } else {
-	// 	store.dispatch({
-	// 		type: 'CONTRACTADDR',
-	// 		GOGContractAddr: '0x41c11ee289fdaf498500314ab719a64673f72a40'
-	// 	});
-	// }
+	// store.dispatch({
+	// 	type: 'CONTRACTADDR',
+	// 	GOGContractAddr: '0x8c191f956a287096bb306c422536cd1151fc4a3c'
+	// });
+	if (hostMode === 'ropsten') {
+		store.dispatch({
+			type: 'CONTRACTADDR',
+			GOGContractAddr: '0x8c191f956a287096bb306c422536cd1151fc4a3c'
+		});
+	} else {
+		store.dispatch({
+			type: 'CONTRACTADDR',
+			GOGContractAddr: '0x7ad38d200cffa2b1606931c104cde833872ebb7f'
+		});
+	}
 	global.host = host;
 	const web3 = new Web3(new Web3.providers.HttpProvider(host));
 	global.web3 = web3;
@@ -113,7 +115,12 @@ storage
 		check(webHost);
 	})
 	.catch((e) => {
-		check('https://ropsten.infura.io:443/v3/e5a89d7eb503409c85747dfb4c863e69');
+		if (hostMode === 'ropsten') {
+			check('https://ropsten.infura.io:443/v3/e5a89d7eb503409c85747dfb4c863e69');
+		} else {
+			check('https://mainnet.infura.io:443/v3/e5a89d7eb503409c85747dfb4c863e69');
+		}
+		
 	});
 
 const Node = createStackNavigator({
@@ -217,7 +224,7 @@ const TabBarPage = createBottomTabNavigator(
 			showIcon: true,
 			style: {
 				backgroundColor: '#fff',
-				height: scaleSize(98)
+				height: scaleSize(98) + minHeight
 			},
 			indicatorStyle: {
 				opacity: 0
