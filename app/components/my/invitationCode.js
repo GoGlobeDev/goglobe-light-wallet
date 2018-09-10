@@ -49,7 +49,7 @@ class InvitationCode extends React.Component {
 			var content = await Clipboard.getString();
 			this.refs.toast.show(I18n.t('public.copySuccess'));
 		} catch (e) {
-			console.log(e)
+			// console.log(e)
 			this.refs.toast.show(I18n.t('public.copyFailed'));
 		}
 	}
@@ -64,6 +64,7 @@ class InvitationCode extends React.Component {
 					<Text style={styles.title}>{I18n.t('my.home.invitationCode.myInvitationCode')}</Text>
 					<View style={styles.lineView}>
 						<Text style={styles.content}>{this.state.code}</Text>
+						{!this.state.code && <Text style={[styles.content, { color: '#CFCFD0' }]}>绑定手机号获取邀请码</Text>}
 						{!!this.state.code && <TouchableOpacity style={styles.button} onPress={this._setClipboardContent}>
 							<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('public.copy')}</Text>
 						</TouchableOpacity>}

@@ -8,6 +8,7 @@ import Toast from 'react-native-easy-toast';
 import { I18n } from '../../../language/i18n';
 import Icon from '../../pages/iconSets';
 import { scaleSize } from '../../utils/ScreenUtil';
+import { checkWalletName } from '../../utils/valiServices';
 
 const screen = Dimensions.get('window');
 
@@ -38,7 +39,8 @@ class WalletInfo extends Component {
 			onPress: null,
 			modalTitle: null,
 			deleteBtnshow: true,
-			selectExportMnemonic: false
+			selectExportMnemonic: false,
+			newWalletName: ''
 		};
 		this.verifyPwd = this.verifyPwd.bind(this);
 	}
@@ -95,11 +97,36 @@ class WalletInfo extends Component {
 		inputContainerStyle: styles.walletNameStyle,
 		onChangeText: (walletName) => {
 			this.setState({
-				walletName: walletName
+				newWalletName: walletName
 			});
 		}
 	};
-
+	clickToWalletName = () => {
+		console.log(this.state.newWalletName);
+		checkWalletName(this.state.newWalletName).then(() => {
+			this.setState({
+				walletName: this.state.newWalletName
+			})
+			storage.save({
+				key: 'walletName',
+				data: {
+					walletName: this.state.newWalletName
+				},
+				expires: null
+			});
+			this.refs.changeWalletName.close();
+		}).catch((e) => {
+			Alert.alert(null, e)
+		})
+		// storage.save({
+		// 	key: 'walletName',
+		// 	data: {
+		// 		walletName: this.state.walletName
+		// 	},
+		// 	expires: null
+		// });
+		// this.refs.changeWalletName.close();
+	}
 	verifyPwd() {
 		try {
 			web3.eth.accounts.decrypt(this.state.keystoreV3, this.state.walletPassword);
@@ -405,14 +432,7 @@ class WalletInfo extends Component {
 							<Text
 								style={styles.bottom_fun_item}
 								onPress={() => {
-									storage.save({
-										key: 'walletName',
-										data: {
-											walletName: this.state.walletName
-										},
-										expires: null
-									});
-									this.refs.changeWalletName.close();
+									this.clickToWalletName()
 								}}
 							>
 								{I18n.t('public.define')}
