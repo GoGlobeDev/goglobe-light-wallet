@@ -152,9 +152,9 @@ class Node extends Component {
 					if(!res.data.userId) {
 						this.props.navigation.navigate('GoBindPhone', { page: 'node'});
 					} else if (!res.data.passwordExists) {
-						this.props.navigation.navigate('SetPwd', { page: 'node', userId: this.state.userId, phone: this.state.phone})
+						this.props.navigation.navigate('SetPwd', { page: 'node', userId: res.data.userId, phone: this.state.phone})
 					} else {
-						this.props.navigation.navigate('BindMachine', {userId: this.state.userId})
+						this.props.navigation.navigate('BindMachine', {userId: res.data.userId })
 					}
 				}
 			}).catch((e) => {
