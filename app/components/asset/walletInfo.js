@@ -9,6 +9,8 @@ import { I18n } from '../../../language/i18n';
 import Icon from '../../pages/iconSets';
 import { scaleSize } from '../../utils/ScreenUtil';
 import { checkWalletName } from '../../utils/valiServices';
+import { connect } from 'react-redux';
+import { updateWalletName } from '../../store/reducers/wallet';
 
 const screen = Dimensions.get('window');
 
@@ -107,6 +109,7 @@ class WalletInfo extends Component {
 			this.setState({
 				walletName: this.state.newWalletName
 			})
+			this.props.updateWalletName(this.state.newWalletName);
 			storage.save({
 				key: 'walletName',
 				data: {
@@ -476,7 +479,14 @@ class WalletInfo extends Component {
 	}
 }
 
-export default withNavigation(WalletInfo);
+export default connect(
+	state => ({
+		wallet: state.wallet
+	}),{
+		updateWalletName
+	}
+)(WalletInfo)
+// export default withNavigation(WalletInfo);
 
 const styles = StyleSheet.create({
 	container: {

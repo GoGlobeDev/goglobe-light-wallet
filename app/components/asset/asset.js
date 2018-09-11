@@ -101,7 +101,14 @@ class Assets extends Component {
 			});
 		}, 1000);
 	}
-
+	componentWillReceiveProps(newProps){
+		if(newProps.wallet.walletName){
+			this.setState({
+				walletName: newProps.wallet.walletName
+			})
+		}
+		// console.log(newProps.wallet.walletName)
+	}
 	componentDidMount() {
 		const minHeight = ifIphoneX(0, 20, StatusBar.currentHeight);
 		this.setState({
@@ -112,7 +119,12 @@ class Assets extends Component {
 				key: 'walletInfo'
 			})
 			.then((walletInfo) => {
-				let walletAddress = walletInfo.walletAddress;
+				let walletAddress = '';
+				if(this.props.wallet.address){
+					walletAddress = this.props.wallet.address
+				} else {
+					walletAddress = walletInfo.walletAddress;
+				}
 				getUser(walletAddress).then((res) => {
 					if(res.data && res.data.userId){
 						storage.save({
@@ -310,7 +322,12 @@ class Assets extends Component {
 	}
 }
 
-export default connect((state) => state.walletInfo, actions)(Assets);
+export default connect(
+	state => ({
+		wallet: state.wallet
+	}),
+	actions
+)(Assets);
 
 const styles = StyleSheet.create({
 	marginLeft: {

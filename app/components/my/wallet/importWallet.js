@@ -12,6 +12,8 @@ const screen = Dimensions.get('window');
 var DeviceInfo = require('react-native-device-info');
 var Mnemonic = require('bitcore-mnemonic');
 import { scaleSize } from '../../../utils/ScreenUtil';
+import { connect } from 'react-redux';
+import { updateWalletAddress } from '../../../store/reducers/wallet';
 class ImportWallet extends Component {
 	constructor() {
 		super();
@@ -237,6 +239,7 @@ class ImportWallet extends Component {
 							let keystoreV3 = web3.eth.accounts
 								.privateKeyToAccount('0x' + ks.exportPrivateKey(address[0], pwDerivedKey))
 								.encrypt(option.password);
+							this.props.updateWalletAddress(address[0]);
 							storage.save({
 								key: 'walletInfo',
 								data: {
@@ -314,6 +317,7 @@ class ImportWallet extends Component {
 				setTimeout(() => {
 					try {
 						let keystoreV3 = web3.eth.accounts.encrypt(this.state.privateFile, this.state.privatePwd);
+						this.props.updateWalletAddress('0x' + keystoreV3.address);
 						storage.save({
 							key: 'walletInfo',
 							data: {
@@ -357,6 +361,7 @@ class ImportWallet extends Component {
 			setTimeout(() => {
 				try {
 					let account = web3.eth.accounts.decrypt(this.state.keystoreFile, this.state.keystorePwd);
+					this.props.updateWalletAddress(account.address);
 					storage.save({
 						key: 'walletInfo',
 						data: {
@@ -577,7 +582,15 @@ class ImportWallet extends Component {
 	}
 }
 
-export default withNavigation(ImportWallet);
+export default connect(
+	state => ({
+		wallet: state.wallet
+	}),{
+		updateWalletAddress
+	}
+)(ImportWallet)
+
+// export default withNavigation(ImportWallet);
 
 const styles = StyleSheet.create({
 	mnemonicArea: {

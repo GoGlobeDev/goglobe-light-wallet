@@ -8,6 +8,10 @@ import { StackActions, NavigationActions, withNavigation } from 'react-navigatio
 import { I18n } from '../../../../language/i18n';
 import { scaleSize } from '../../../utils/ScreenUtil';
 import { checkWalletName, checkPwd, checkTwoPwd, checkisAgress } from '../../../utils/valiServices';
+
+import { connect } from 'react-redux';
+import { updateWalletAddress } from '../../../store/reducers/wallet';
+
 const screen = Dimensions.get('window');
 var DeviceInfo = require('react-native-device-info');
 
@@ -120,6 +124,7 @@ class CreateWallet extends Component {
 										let keystoreV3 = web3.eth.accounts
 											.privateKeyToAccount('0x' + ks.exportPrivateKey(address[0], pwDerivedKey))
 											.encrypt(this.state.pwd);
+										this.props.updateWalletAddress(address[0]);
 										storage.save({
 											key: 'walletInfo',
 											data: {
@@ -260,7 +265,14 @@ class CreateWallet extends Component {
 	}
 }
 
-export default withNavigation(CreateWallet);
+export default connect(
+	state => ({
+		wallet: state.wallet
+	}),{
+		updateWalletAddress
+	}
+)(CreateWallet)
+// export default withNavigation(CreateWallet);
 
 const styles = StyleSheet.create({
 	container: {
