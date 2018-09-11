@@ -260,7 +260,7 @@ class Transfer extends Component {
 						// "转账金额"
 						onChangeText={(amount) => {
 							this.setState({ amount });
-							if (amount) {
+							if (Number(amount)) {
 								this.setState(
 									{
 										amountFlag: true

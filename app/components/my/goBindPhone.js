@@ -42,6 +42,8 @@ class GoBindPhone extends React.Component {
 				} else {
 					Alert.alert(null, '获取验证码失败');
 				}
+			}).catch((e) => {
+				console.log(e)
 			})
 		}
 
