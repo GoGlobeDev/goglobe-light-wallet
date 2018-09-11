@@ -51,7 +51,7 @@ class BindMachine extends React.Component {
 		}
 	}
 	_clickToBindDevice = () => {
-        bindDevice(this.props.navigation.state.params.userId, Number(this.state.deviceNo), this.state.code, this.state.password).then((res) => {
+        bindDevice(this.props.navigation.state.params.userId, this.state.deviceNo, this.state.code, this.state.password).then((res) => {
 			if(res.data.status === 'success') {
 				this.props.navigation.navigate('Node', {userId: this.props.navigation.state.params.userId, passwordExists: true})
 			} else {

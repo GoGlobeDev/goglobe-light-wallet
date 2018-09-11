@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
 	logo: {
 		width: 90,
 		height: 90,
-		borderRadius: 10,
+		borderRadius: 45,
 		marginTop: 50
 	},
 	version: {
