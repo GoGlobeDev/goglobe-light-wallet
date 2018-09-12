@@ -5,7 +5,10 @@ import { withNavigation } from 'react-navigation';
 const versionData = [
 	{
 		version: '1.0.0',
-		con: [ '发布内测版本，该版本实现了', '基于助记词和BIP44规范创建 HDWallet', '支持钱包基本功能：转账、收款、交易记录', '支持ETH和GOG' ]
+		con: [ '发布内测版本，该版本实现了', '基于助记词和BIP44规范创建 HDWallet', '支持钱包基本功能：转账、收款、交易记录', '支持ETH和GOG' ],
+	}, {
+		version: '1.0.1',
+		con: [ '在1.0版本的基础上优化了矿机系统', '修改bug' ]
 	}
 ];
 

@@ -57,7 +57,8 @@ export default {
                 myBinders: '我推荐的用户',
                 noBinders: '还没有人使用',
                 notUsed: '还未使用',
-                codeNotExists: '推荐码不存在',
+				codeNotExists: '推荐码不存在',
+				circle:'您当前输入的邀请码不可用',
                 userWrong: '请确保您已经绑定矿机',
                 hasBound: '您已经绑定过推荐码',
                 passwordWrong: '交易密码错误',
@@ -282,6 +283,7 @@ export default {
         passwordWrong: '密码错误',
         codeWrong: '验证码错误',
         deviceNotExists: '矿机不存在',
-        deviceCodeWrong: '矿机code错误'
+		deviceCodeWrong: '矿机code错误',
+		deviceBound: '您输入的矿机号已被绑定'
     }
 };
