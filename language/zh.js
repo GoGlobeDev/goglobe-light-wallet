@@ -73,6 +73,9 @@ export default {
                 notBind: '还未绑定',
 				button: '去绑定'
 			},
+			changePwd: {
+				_title: '修改交易密码',
+			},
             bindingCode: {
                 _title: '绑定邀请码',
                 inputCode: '输入邀请码',

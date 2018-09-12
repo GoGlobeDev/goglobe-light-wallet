@@ -14,6 +14,7 @@ var Mnemonic = require('bitcore-mnemonic');
 import { scaleSize } from '../../../utils/ScreenUtil';
 import { connect } from 'react-redux';
 import { updateWalletAddress } from '../../../store/reducers/wallet';
+import { getUser } from '../../../api/bind';
 class ImportWallet extends Component {
 	constructor() {
 		super();
@@ -240,6 +241,32 @@ class ImportWallet extends Component {
 								.privateKeyToAccount('0x' + ks.exportPrivateKey(address[0], pwDerivedKey))
 								.encrypt(option.password);
 							this.props.updateWalletAddress(address[0]);
+							getUser(address[0]).then((res) => {
+								if(res.data && res.data.userId){
+									storage.save({
+										key: 'user',
+										data: {
+											userId: res.data.userId,
+											phone: res.data.phone,
+											rcode: res.data.referralCode,
+											passwordExists: res.data.passwordExists
+										},
+										expires: null
+									});
+								} else {
+									storage.save({
+										key: 'user',
+										data: {
+											userId: '',
+											phone: '',
+											rcode: '',
+										},
+										expires: null
+									});
+								}
+							}).catch((e) => {
+								console.log(e)
+							})
 							storage.save({
 								key: 'walletInfo',
 								data: {
@@ -318,6 +345,32 @@ class ImportWallet extends Component {
 					try {
 						let keystoreV3 = web3.eth.accounts.encrypt(this.state.privateFile, this.state.privatePwd);
 						this.props.updateWalletAddress('0x' + keystoreV3.address);
+						getUser('0x' + keystoreV3.address).then((res) => {
+							if(res.data && res.data.userId){
+								storage.save({
+									key: 'user',
+									data: {
+										userId: res.data.userId,
+										phone: res.data.phone,
+										rcode: res.data.referralCode,
+										passwordExists: res.data.passwordExists
+									},
+									expires: null
+								});
+							} else {
+								storage.save({
+									key: 'user',
+									data: {
+										userId: '',
+										phone: '',
+										rcode: '',
+									},
+									expires: null
+								});
+							}
+						}).catch((e) => {
+							console.log(e)
+						})
 						storage.save({
 							key: 'walletInfo',
 							data: {
@@ -362,6 +415,32 @@ class ImportWallet extends Component {
 				try {
 					let account = web3.eth.accounts.decrypt(this.state.keystoreFile, this.state.keystorePwd);
 					this.props.updateWalletAddress(account.address);
+					getUser(account.address).then((res) => {
+						if(res.data && res.data.userId){
+							storage.save({
+								key: 'user',
+								data: {
+									userId: res.data.userId,
+									phone: res.data.phone,
+									rcode: res.data.referralCode,
+									passwordExists: res.data.passwordExists
+								},
+								expires: null
+							});
+						} else {
+							storage.save({
+								key: 'user',
+								data: {
+									userId: '',
+									phone: '',
+									rcode: '',
+								},
+								expires: null
+							});
+						}
+					}).catch((e) => {
+						console.log(e)
+					})
 					storage.save({
 						key: 'walletInfo',
 						data: {

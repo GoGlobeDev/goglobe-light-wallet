@@ -38,6 +38,9 @@ import VCode from '../components/my/verificationCode'; //我的 -> 验证码
 import InvitationCode from '../components/my/invitationCode'; //我的 -> 邀请码
 import BindInCode from '../components/my/bindInCode'; //我的 -> 绑定邀请码
 
+import changePwd from '../components/my/changePwd'; //我的 -> 修改交易密码
+import setNewPwd from '../components/my/setNewPwd'; //我的 -> 修改交易密码 -> 设置新交易密码
+
 import BindMachine from '../components/node/bindMachine'; //矿机 -> 绑定矿机
 import SetPwd from '../components/node/setPwd'; // 矿机 -> 设置交易密码
 import WithdrawCash from '../components/node/withdrawCash'; //矿机 -> 提现
@@ -323,6 +326,8 @@ const App = createStackNavigator(
 		BindingPhone,
 		VCode,
 		GoBindPhone,
+		changePwd,
+		setNewPwd,
 		SysSet: {
 			screen: SysSet,
 			navigationOptions: {

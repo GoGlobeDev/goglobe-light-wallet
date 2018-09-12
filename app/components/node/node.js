@@ -18,6 +18,7 @@ import { scaleSize, ifIphoneX, show } from '../../utils/ScreenUtil';
 import { I18n } from '../../../language/i18n';
 import Icon from '../../pages/iconSets';
 import { getDevice, getUser} from '../../api/bind';
+import { connect } from 'react-redux';
 
 const screen = Dimensions.get('window');
 const minHeight = ifIphoneX(0, 20, StatusBar.currentHeight);
@@ -62,12 +63,13 @@ class DeviceList extends Component {
 	}
 }
 
-class Node extends Component {
+class NodeItem extends Component {
 	// 初始化组件节点状态
 	constructor(props) {
 		super(props);
 		this.state = {
 			device: {},
+			sum: 0
 		};
 		// this.navigate = this.props.navigation.navigate;
 	}
@@ -83,51 +85,23 @@ class Node extends Component {
 			console.log(e)
 		})
 	}
-	getuser = (userId) => {
-		storage
-		.load({
-			key: 'walletInfo'
-		})
-		.then((walletInfo) => {
-			let walletAddress = walletInfo.walletAddress;
-			getUser(walletAddress).then((res) => {
-				if(res.data && res.data.userId){
-					this.setState({
-						userId: res.data.userId,
-						phone: res.data.phone,
-						rcode: res.data.referralCode,
-						passwordExists: res.data.passwordExists
-					})
-				} else {
-					this.setState({
-						userId: '',
-						phone: '',
-						rcode: '',
-						passwordExists: false
-					})
-				}
-			}).catch((e) => {
-				console.log(e)
-			})
-		})
-		.catch((x) => {
-			console.log(x);
-		});
-	}
 	// 组件初始渲染挂载界面完成后 异步加载数据
 	componentDidMount() {
+		// console.log('this.props.wallet')
 		storage
 		.load({ key: 'user'})
 		.then((user) => {
 			if(user.userId && user.passwordExists){
 				getDevice(user.userId).then((res) => {
+					const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
 					const balance = res.data.balance;
 					this.setState({
 						device: res.data,
 						userId: res.data.userId,
 						balance: balance,
 						phone: user.phone,
-						passwordExists: user.passwordExists
+						passwordExists: user.passwordExists,
+						sum: sum
 					})
 				}).catch((e) => {
 					this.setState({
@@ -175,7 +149,7 @@ class Node extends Component {
 		return (
 			<View style={styles.container}>
 				{
-					!device.deviceSum || device.deviceSum === 0 ? <View>
+					this.state.sum === 0 ? <View>
 						<Text style={[styles.title, {color: '#0D0E15', marginTop: scaleSize(114) - minHeight, marginLeft: scaleSize(32)}]}>{I18n.t('node.miner')}</Text>
 						<Image style={styles.machineIcon} source={require('../../assets/images/node/machine.png')}/>
 						<TouchableOpacity style={styles.button} onPress={this._clickToBindMachine}>
@@ -236,7 +210,15 @@ class Node extends Component {
 		);
 	}
 }
-export default withNavigation(Node);
+
+export default connect(
+	state => ({
+		wallet: state.wallet
+	}),{
+
+	}
+)(NodeItem);
+// export default withNavigation(NodeItem);
 
 const styles = StyleSheet.create({
 	container: {

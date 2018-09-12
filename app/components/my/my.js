@@ -57,7 +57,7 @@ class My extends Component {
 							onPress={() => this.props.navigation.navigate('InvitationCode')}
 							underlayColor={'#ddd'}
 							activeOpacity={0.5}
-						>
+							>
 							<View style={styles.myColsConPartRow}>
 								<View style={styles.myColsConPartRowLf}>
 								<Image style={styles.icon36} source={require('../../assets/images/my/icon_invitation_code.png')} />
@@ -74,13 +74,30 @@ class My extends Component {
 							onPress={() => this.props.navigation.navigate('BindingPhone')}
 							underlayColor={'#ddd'}
 							activeOpacity={0.5}
-						>
+							>
 							<View style={styles.myColsConPartRow}>
 								<View style={styles.myColsConPartRowLf}>
 								<Image style={styles.icon36} source={require('../../assets/images/my/icon_phone.png')} />
 								</View>
 								<View style={[ styles.myColsConPartRowRi, styles.noSplitLine ]}>
 									<Text>{I18n.t('my.home.bindPhone._title')}</Text>
+									<View style={styles.myColsConPartRowRi2R}>
+										<Icon name="icon-right" size={15} color="#000" />
+									</View>
+								</View>
+							</View>
+						</TouchableHighlight>
+						<TouchableHighlight
+							onPress={() => this.props.navigation.navigate('changePwd')}
+							underlayColor={'#ddd'}
+							activeOpacity={0.5}
+							>
+							<View style={styles.myColsConPartRow}>
+								<View style={styles.myColsConPartRowLf}>
+								<Image style={styles.icon36} source={require('../../assets/images/my/icon_pwd.png')} />
+								</View>
+								<View style={[ styles.myColsConPartRowRi, styles.noSplitLine ]}>
+									<Text>{I18n.t('my.home.changePwd._title')}</Text>
 									<View style={styles.myColsConPartRowRi2R}>
 										<Icon name="icon-right" size={15} color="#000" />
 									</View>
