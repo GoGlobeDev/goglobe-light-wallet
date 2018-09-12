@@ -84,7 +84,7 @@ export default class SetPwd extends React.Component {
 	render() {
 		const { params } = this.props.navigation.state;
 		return (
-			<View style={styles.container}>
+			<ScrollView style={styles.container}>
 				<View>
 					<Text style={[styles.title, {color: '#0D0E15', marginTop: scaleSize(114), marginLeft: scaleSize(32)}]} >{I18n.t('node.setPassword._title')}</Text>
 				</View>
@@ -115,7 +115,7 @@ export default class SetPwd extends React.Component {
 				<TouchableOpacity style={[styles.button, this.state.pwd === '' ? { backgroundColor: '#F7C9A9' } : {  backgroundColor: '#EA7828' }]} onPress={this._clickTocomfirm}>
 					<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('public.OK')}</Text>
 				</TouchableOpacity>
-			</View>
+			</ScrollView>
 		);
 	}
 }
