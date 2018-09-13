@@ -13,7 +13,7 @@ var DeviceInfo = require('react-native-device-info');
 var Mnemonic = require('bitcore-mnemonic');
 import { scaleSize } from '../../../utils/ScreenUtil';
 import { connect } from 'react-redux';
-import { updateWalletAddress } from '../../../store/reducers/wallet';
+import { updateWalletAddress, updateUserId } from '../../../store/reducers/wallet';
 import { getUser } from '../../../api/bind';
 class ImportWallet extends Component {
 	constructor() {
@@ -243,6 +243,7 @@ class ImportWallet extends Component {
 							this.props.updateWalletAddress(address[0]);
 							getUser(address[0]).then((res) => {
 								if(res.data && res.data.userId){
+									this.props.updateUserId(res.data.userId);
 									storage.save({
 										key: 'user',
 										data: {
@@ -347,6 +348,7 @@ class ImportWallet extends Component {
 						this.props.updateWalletAddress('0x' + keystoreV3.address);
 						getUser('0x' + keystoreV3.address).then((res) => {
 							if(res.data && res.data.userId){
+								this.props.updateUserId(res.data.userId);
 								storage.save({
 									key: 'user',
 									data: {
@@ -417,6 +419,7 @@ class ImportWallet extends Component {
 					this.props.updateWalletAddress(account.address);
 					getUser(account.address).then((res) => {
 						if(res.data && res.data.userId){
+							this.props.updateUserId(res.data.userId);
 							storage.save({
 								key: 'user',
 								data: {
@@ -665,7 +668,8 @@ export default connect(
 	state => ({
 		wallet: state.wallet
 	}),{
-		updateWalletAddress
+		updateWalletAddress,
+		updateUserId
 	}
 )(ImportWallet)
 

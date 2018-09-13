@@ -5,7 +5,7 @@ import update from 'immutability-helper';
 
 const UPDATE_WALLET_ADDRESS = 'dbc/wallet/UPDATE_WALLET_ADDRESS';
 const UPDATE_WALLET_NAME = 'dbc/wallet/UPDATE_WALLET_NAME';
-// const UPDATE_WALLET_FAIL = 'dbc/wallet/UPDATE_WALLET_FAIL';
+const UPDATE_WALLET_USERID = 'dbc/wallet/UPDATE_WALLET_USERID';
 // const UPDATE_WALLET_ADDRESS = 'wallet/UPDATE_WALLET_ADDRESS'
 
 
@@ -13,6 +13,7 @@ const UPDATE_WALLET_NAME = 'dbc/wallet/UPDATE_WALLET_NAME';
 const initialState = {
   address: '',
   walletName: '',
+  userId: ''
 };
 
 export default function wallet(state = initialState, action = {}) {
@@ -25,6 +26,11 @@ export default function wallet(state = initialState, action = {}) {
     case UPDATE_WALLET_NAME: {
       return update(state, {
         walletName: { $set: action.payload.walletName },
+      });
+    }
+    case UPDATE_WALLET_USERID: {
+      return update(state, {
+        userId: { $set: action.payload.userId },
       });
     }
     default: return state;
@@ -51,6 +57,14 @@ export function updateWalletName(walletName) {
   };
 }
 
+export function updateUserId(userId){
+  return {
+    type: UPDATE_WALLET_USERID,
+    payload: {
+      userId
+    }
+  };
+}
 
 
 

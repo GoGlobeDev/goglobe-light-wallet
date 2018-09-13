@@ -87,12 +87,12 @@ class NodeItem extends Component {
 	}
 	// 组件初始渲染挂载界面完成后 异步加载数据
 	componentDidMount() {
-		// console.log('this.props.wallet')
+		// console.log(this.props.wallet)
 		storage
 		.load({ key: 'user'})
 		.then((user) => {
 			if(user.userId && user.passwordExists){
-				getDevice(user.userId).then((res) => {
+				getDevice(this.props.wallet.userId || user.userId).then((res) => {
 					const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
 					const balance = res.data.balance;
 					this.setState({
