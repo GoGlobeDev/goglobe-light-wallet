@@ -14,22 +14,9 @@ export default class SetNewPwd extends React.Component {
 		}
 	}
 	static navigationOptions = {
-		header: null
-		// headerTitle: 
+		headerTitle: I18n.t('node.setPassword.setNewPassword')
 	};
 	componentDidMount() {
-		storage
-			.load({
-				key: 'user'
-			})
-			.then((user) => {
-				this.setState({
-					userId: user.userId
-				});
-			})
-			.catch((e) => {
-				console.log(e);
-			});
 	}
 	_changePwd = (pwd) => {
 		this.setState({
@@ -46,11 +33,8 @@ export default class SetNewPwd extends React.Component {
 			return checkTwoPwd(this.state.pwd, this.state.pwd1).then((res) => {
 				bindPwd(this.props.navigation.state.params.userId, this.state.pwd).then((res) => {
 					if(res.data.status === 'success'){
-						if(this.props.navigation.state.params.page === 'node') {
-							this.props.navigation.navigate('Node', { userId: this.props.navigation.state.params.userId, passwordExists: true})
-						} else {
-							this.props.navigation.navigate('BindingPhone', {phone: this.props.navigation.state.params.phone})
-						}
+						Alert.alert(null, '密码修改成功')
+						this.props.navigation.navigate('Home')
 					} else {
 						Alert.alert(null, res.data.status)
 					}
@@ -61,39 +45,17 @@ export default class SetNewPwd extends React.Component {
 		}).catch((e) => {
 			Alert.alert(null, e)
 		})
-		// if(!this.state.pwd){
-		// 	Alert.alert(null, I18n.t('wallet.enterPwd'));
-		// } else if(this.state.pwd !== this.state.pwd1 ) {
-		// 	Alert.alert(null, I18n.t('wallet.pwdIsWrong')); 
-		// } else {
-		// 	bindPwd(this.props.navigation.state.params.userId, this.state.pwd).then((res) => {
-		// 		if(res.data.status === 'success'){
-		// 			if(this.props.navigation.state.params.page === 'node') {
-		// 				this.props.navigation.navigate('Node', { userId: this.props.navigation.state.params.userId, passwordExists: true})
-		// 			} else {
-		// 				this.props.navigation.navigate('BindingPhone', {phone: this.props.navigation.state.params.phone})
-		// 			}
-		// 		} else {
-		// 			Alert.alert(null, res.data.status)
-		// 		}
-		// 	}).catch((e) => {
-		// 		console.log(e)
-		// 	})
-		// }
 	}
 	render() {
 		const { params } = this.props.navigation.state;
 		return (
 			<ScrollView style={styles.container}>
-				<View>
-					<Text style={[styles.title, {color: '#0D0E15', marginTop: scaleSize(114), marginLeft: scaleSize(32)}]} >{I18n.t('node.setPassword._title')}</Text>
-				</View>
             	<View style={styles.tip}>
 					<Text style={styles.tipText}>{I18n.t('node.setPassword.tip1')}</Text>
 					<Text style={styles.tipText}>{I18n.t('node.setPassword.tip2')}</Text>
 				</View>
 				<View style={styles.inputbox}>
-					<Text style={styles.inputTitle}>{I18n.t('node.setPassword.setPassword')}</Text>
+					<Text style={styles.inputTitle}>{I18n.t('node.setPassword.setNewPassword')}</Text>
 					<TextInput
 						underlineColorAndroid="transparent"
 						secureTextEntry={true}

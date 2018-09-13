@@ -79,7 +79,7 @@ class My extends Component {
 								<View style={styles.myColsConPartRowLf}>
 								<Image style={styles.icon36} source={require('../../assets/images/my/icon_phone.png')} />
 								</View>
-								<View style={[ styles.myColsConPartRowRi, styles.noSplitLine ]}>
+								<View style={[ styles.myColsConPartRowRi, styles.bottomLine ]}>
 									<Text>{I18n.t('my.home.bindPhone._title')}</Text>
 									<View style={styles.myColsConPartRowRi2R}>
 										<Icon name="icon-right" size={15} color="#000" />

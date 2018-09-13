@@ -61,25 +61,6 @@ export default class SetPwd extends React.Component {
 		}).catch((e) => {
 			Alert.alert(null, e)
 		})
-		// if(!this.state.pwd){
-		// 	Alert.alert(null, I18n.t('wallet.enterPwd'));
-		// } else if(this.state.pwd !== this.state.pwd1 ) {
-		// 	Alert.alert(null, I18n.t('wallet.pwdIsWrong')); 
-		// } else {
-		// 	bindPwd(this.props.navigation.state.params.userId, this.state.pwd).then((res) => {
-		// 		if(res.data.status === 'success'){
-		// 			if(this.props.navigation.state.params.page === 'node') {
-		// 				this.props.navigation.navigate('Node', { userId: this.props.navigation.state.params.userId, passwordExists: true})
-		// 			} else {
-		// 				this.props.navigation.navigate('BindingPhone', {phone: this.props.navigation.state.params.phone})
-		// 			}
-		// 		} else {
-		// 			Alert.alert(null, res.data.status)
-		// 		}
-		// 	}).catch((e) => {
-		// 		console.log(e)
-		// 	})
-		// }
 	}
 	render() {
 		const { params } = this.props.navigation.state;
