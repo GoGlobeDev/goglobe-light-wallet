@@ -290,7 +290,7 @@ class ImportWallet extends Component {
 
 							setTimeout(() => {
 								option._this.refs.loading.close();
-								option._this.props.navigation.navigate('Home');
+								option._this.props.navigation.replace('Home');
 							}, 100);
 						});
 					}
@@ -393,7 +393,7 @@ class ImportWallet extends Component {
 						});
 						setTimeout(() => {
 							this.refs.loading.close();
-							this.props.navigation.navigate('Home');
+							this.props.navigation.replace('Home');
 						}, 100);
 					} catch (err) {
 						this.refs.loading.close();
@@ -463,7 +463,7 @@ class ImportWallet extends Component {
 					});
 					setTimeout(() => {
 						this.refs.loading.close();
-						this.props.navigation.navigate('Home');
+						this.props.navigation.replace('Home');
 					}, 100);
 				} catch (e) {
 					this.refs.loading.close();
