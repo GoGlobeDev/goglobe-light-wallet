@@ -294,6 +294,7 @@ export default {
         codeWrong: '验证码错误',
         deviceNotExists: '矿机不存在',
 		deviceCodeWrong: '矿机code错误',
-		deviceBound: '您输入的矿机号已被绑定'
+		deviceBound: '您输入的矿机号已被绑定',
+		codeNumberLimited: '您当前发送的短信已超过本时效限制，请稍后再试'
     }
 };

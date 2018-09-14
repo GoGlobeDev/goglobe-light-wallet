@@ -237,37 +237,39 @@ class ImportWallet extends Component {
 						ks.keyFromPassword(option.password, (err, pwDerivedKey) => {
 							ks.generateNewAddress(pwDerivedKey, 1);
 							var address = ks.getAddresses();
+							// this.props.updateWalletAddress(address[0])
 							let keystoreV3 = web3.eth.accounts
 								.privateKeyToAccount('0x' + ks.exportPrivateKey(address[0], pwDerivedKey))
 								.encrypt(option.password);
-							this.props.updateWalletAddress(address[0]);
-							getUser(address[0]).then((res) => {
-								if(res.data && res.data.userId){
-									this.props.updateUserId(res.data.userId);
-									storage.save({
-										key: 'user',
-										data: {
-											userId: res.data.userId,
-											phone: res.data.phone,
-											rcode: res.data.referralCode,
-											passwordExists: res.data.passwordExists
-										},
-										expires: null
-									});
-								} else {
-									storage.save({
-										key: 'user',
-										data: {
-											userId: '',
-											phone: '',
-											rcode: '',
-										},
-										expires: null
-									});
-								}
-							}).catch((e) => {
-								console.log(e)
-							})
+								// console.log(address[0])
+							// this.props.updateWalletAddress(address[0]);
+							// getUser(address[0]).then((res) => {
+							// 	if(res.data && res.data.userId){
+							// 		this.props.updateUserId(res.data.userId);
+							// 		storage.save({
+							// 			key: 'user',
+							// 			data: {
+							// 				userId: res.data.userId,
+							// 				phone: res.data.phone,
+							// 				rcode: res.data.referralCode,
+							// 				passwordExists: res.data.passwordExists
+							// 			},
+							// 			expires: null
+							// 		});
+							// 	} else {
+							// 		storage.save({
+							// 			key: 'user',
+							// 			data: {
+							// 				userId: '',
+							// 				phone: '',
+							// 				rcode: '',
+							// 			},
+							// 			expires: null
+							// 		});
+							// 	}
+							// }).catch((e) => {
+							// 	console.log(e)
+							// })
 							storage.save({
 								key: 'walletInfo',
 								data: {

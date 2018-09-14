@@ -37,13 +37,13 @@ class Splash extends React.Component {
 				})
 				.then((res) => {
 					if(this.state.mnemonic) {
-						this.props.navigation.navigate('Guide');
+						this.props.navigation.replace('Guide');
 					} else {
-						this.props.navigation.navigate('Home');
+						this.props.navigation.replace('Home');
 					}
 				})
 				.catch((err) => {
-					this.props.navigation.navigate('Guide');
+					this.props.navigation.replace('Guide');
 				});
 		}, 1500);
 	}
