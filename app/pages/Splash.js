@@ -15,18 +15,32 @@ class Splash extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isWallet: false
+			isWallet: false,
+			mnemonic: false
 		};
 	}
 
 	componentDidMount() {
+		storage.load({ key: 'mnemonic'}).then((res) => {
+			this.setState({
+				mnemonic: res.mnemonic
+			})
+		}).catch(() => {
+			this.setState({
+				mnemonic: false
+			})
+		})
 		setTimeout(() => {
 			storage
 				.load({
 					key: 'walletInfo'
 				})
 				.then((res) => {
-					this.props.navigation.navigate('Home');
+					if(this.state.mnemonic) {
+						this.props.navigation.navigate('Guide');
+					} else {
+						this.props.navigation.navigate('Home');
+					}
 				})
 				.catch((err) => {
 					this.props.navigation.navigate('Guide');

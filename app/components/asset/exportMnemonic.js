@@ -33,6 +33,7 @@ export class ExportMnemonic extends Component {
 
 	componentDidMount() {
 		const { params } = this.props.navigation.state;
+		storage.save({ key: 'mnemonic', data: { mnemonic: true }, expires: null})
 		storage.load({ key: 'walletInfo' }).then((res) => {
 			let mneKeystore = lightwallet.keystore.deserialize(JSON.stringify(res.ks));
 			mneKeystore.keyFromPassword(params.walletPassword, (err, pwDerivedKey) => {

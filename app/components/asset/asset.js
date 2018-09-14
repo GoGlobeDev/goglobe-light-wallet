@@ -110,6 +110,7 @@ class Assets extends Component {
 		// console.log(newProps.wallet.walletName)
 	}
 	componentDidMount() {
+		storage.save({ key: 'mnemonic', data: { mnemonic: false }, expires: null})
 		const minHeight = ifIphoneX(0, 20, StatusBar.currentHeight);
 		this.setState({
 			minHeight: minHeight
