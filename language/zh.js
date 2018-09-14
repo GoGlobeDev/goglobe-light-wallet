@@ -221,11 +221,11 @@ export default {
         setPassword: {
             _title: '设置交易密码',
             tip1: '1.交易密码必须有大写字母、小写字母、数字，禁止使 用符号',
-            tip2: '2.交易密码限定在12位之内',
+            tip2: '2.交易密码限定在8-12位之间',
 			setPassword: '设置交易密码',
 			setNewPassword: '设置新交易密码',
             confirmPassword: '确认交易密码',
-            placehoder1: '字母、数字组合 12位以内',
+            placehoder1: '字母、数字组合 8-12位之间',
             placehoder2: '请重复输入交易密码'
         },
         withdraw: {
