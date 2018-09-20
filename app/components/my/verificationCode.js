@@ -1,4 +1,4 @@
-{I18n.t('assets.notUpdate')}{I18n.t('assets.notUpdate')}import React, { Component } from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, Alert, TouchableOpacity } from 'react-native';
 import { Input } from 'native-base';
 import { I18n } from '../../../language/i18n';
@@ -144,7 +144,7 @@ class VCode extends React.Component {
                     count: 60,
                 })
             } else {
-                Alert.alert(null, '获取验证码失败');
+                Alert.alert(null, I18n.t('error.' + res.data.status ));
             }
         })
       }

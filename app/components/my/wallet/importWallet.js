@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Alert, ScrollView, Dimensions } from 'react-native';
 import { I18n } from '../../../../language/i18n';
 import lightWallet from 'eth-lightwallet';
-import { withNavigation } from 'react-navigation';
+import { withNavigation, StackActions, NavigationActions } from 'react-navigation';
 import TextWidget from '../../public/textWidget/textWidget';
 import { CheckBox, Button, Input } from 'react-native-elements';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
@@ -217,6 +217,18 @@ class ImportWallet extends Component {
 		}
 	};
 
+	_navigateToHome = () => {
+		let resetAction = StackActions.reset({
+			index: 0,
+			actions: [
+				NavigationActions.navigate({
+					routeName: 'Home'
+				})
+			]
+		});
+		this.props.navigation.dispatch(resetAction);
+	}
+
 	_setSeed(option) {
 		option._this.refs.loading.show();
 		setTimeout(() => {
@@ -241,35 +253,6 @@ class ImportWallet extends Component {
 							let keystoreV3 = web3.eth.accounts
 								.privateKeyToAccount('0x' + ks.exportPrivateKey(address[0], pwDerivedKey))
 								.encrypt(option.password);
-								// console.log(address[0])
-							// this.props.updateWalletAddress(address[0]);
-							// getUser(address[0]).then((res) => {
-							// 	if(res.data && res.data.userId){
-							// 		this.props.updateUserId(res.data.userId);
-							// 		storage.save({
-							// 			key: 'user',
-							// 			data: {
-							// 				userId: res.data.userId,
-							// 				phone: res.data.phone,
-							// 				rcode: res.data.referralCode,
-							// 				passwordExists: res.data.passwordExists
-							// 			},
-							// 			expires: null
-							// 		});
-							// 	} else {
-							// 		storage.save({
-							// 			key: 'user',
-							// 			data: {
-							// 				userId: '',
-							// 				phone: '',
-							// 				rcode: '',
-							// 			},
-							// 			expires: null
-							// 		});
-							// 	}
-							// }).catch((e) => {
-							// 	console.log(e)
-							// })
 							storage.save({
 								key: 'walletInfo',
 								data: {
@@ -290,7 +273,8 @@ class ImportWallet extends Component {
 
 							setTimeout(() => {
 								option._this.refs.loading.close();
-								option._this.props.navigation.replace('Home');
+								
+								option._this._navigateToHome();
 							}, 100);
 						});
 					}
@@ -347,34 +331,6 @@ class ImportWallet extends Component {
 				setTimeout(() => {
 					try {
 						let keystoreV3 = web3.eth.accounts.encrypt(this.state.privateFile, this.state.privatePwd);
-						this.props.updateWalletAddress('0x' + keystoreV3.address);
-						getUser('0x' + keystoreV3.address).then((res) => {
-							if(res.data && res.data.userId){
-								this.props.updateUserId(res.data.userId);
-								storage.save({
-									key: 'user',
-									data: {
-										userId: res.data.userId,
-										phone: res.data.phone,
-										rcode: res.data.referralCode,
-										passwordExists: res.data.passwordExists
-									},
-									expires: null
-								});
-							} else {
-								storage.save({
-									key: 'user',
-									data: {
-										userId: '',
-										phone: '',
-										rcode: '',
-									},
-									expires: null
-								});
-							}
-						}).catch((e) => {
-							console.log(e)
-						})
 						storage.save({
 							key: 'walletInfo',
 							data: {
@@ -393,7 +349,8 @@ class ImportWallet extends Component {
 						});
 						setTimeout(() => {
 							this.refs.loading.close();
-							this.props.navigation.replace('Home');
+							this._navigateToHome();
+							// this.props.navigation.replace('Home');
 						}, 100);
 					} catch (err) {
 						this.refs.loading.close();
@@ -418,34 +375,34 @@ class ImportWallet extends Component {
 			setTimeout(() => {
 				try {
 					let account = web3.eth.accounts.decrypt(this.state.keystoreFile, this.state.keystorePwd);
-					this.props.updateWalletAddress(account.address);
-					getUser(account.address).then((res) => {
-						if(res.data && res.data.userId){
-							this.props.updateUserId(res.data.userId);
-							storage.save({
-								key: 'user',
-								data: {
-									userId: res.data.userId,
-									phone: res.data.phone,
-									rcode: res.data.referralCode,
-									passwordExists: res.data.passwordExists
-								},
-								expires: null
-							});
-						} else {
-							storage.save({
-								key: 'user',
-								data: {
-									userId: '',
-									phone: '',
-									rcode: '',
-								},
-								expires: null
-							});
-						}
-					}).catch((e) => {
-						console.log(e)
-					})
+					// this.props.updateWalletAddress(account.address);
+					// getUser(account.address).then((res) => {
+					// 	if(res.data && res.data.userId){
+					// 		this.props.updateUserId(res.data.userId);
+					// 		storage.save({
+					// 			key: 'user',
+					// 			data: {
+					// 				userId: res.data.userId,
+					// 				phone: res.data.phone,
+					// 				rcode: res.data.referralCode,
+					// 				passwordExists: res.data.passwordExists
+					// 			},
+					// 			expires: null
+					// 		});
+					// 	} else {
+					// 		storage.save({
+					// 			key: 'user',
+					// 			data: {
+					// 				userId: '',
+					// 				phone: '',
+					// 				rcode: '',
+					// 			},
+					// 			expires: null
+					// 		});
+					// 	}
+					// }).catch((e) => {
+					// 	console.log(e)
+					// })
 					storage.save({
 						key: 'walletInfo',
 						data: {
@@ -463,7 +420,7 @@ class ImportWallet extends Component {
 					});
 					setTimeout(() => {
 						this.refs.loading.close();
-						this.props.navigation.replace('Home');
+						this._navigateToHome();
 					}, 100);
 				} catch (e) {
 					this.refs.loading.close();

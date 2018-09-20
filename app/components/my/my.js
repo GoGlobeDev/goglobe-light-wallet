@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, StatusBar, Dimensions, TouchableHighlight } from 'react-native';
+import { View, Text, Image, StyleSheet, StatusBar, Dimensions, TouchableHighlight, BackHandler } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { I18n } from '../../../language/i18n';
 const screen = Dimensions.get('window');
 import Icon from '../../pages/iconSets';
 import { scaleSize, ifIphoneX } from '../../utils/ScreenUtil';
-
+import Toast from 'react-native-easy-toast';
 const minHeight = ifIphoneX(0, 20, StatusBar.currentHeight);
 
 class My extends Component {
@@ -13,10 +13,27 @@ class My extends Component {
 		super(props);
 		this.navigate = this.props.navigation.navigate;
 	}
-
+	// componentDidMount() {
+    //     BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+    // }
+    // componentWillUnmount() {
+    //     BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+    // }
+    // onBackPress = () => {
+	// 	console.log(this.props.navigation);
+	// 	const { dispatch, nav } = this.props;
+	// 	console.log(nav)
+	// 	console.log('ddd')
+	// 	if(nav.index ===0){
+	// 		return false;
+	// 	}
+	// 	dispatch(NavigationActions.back());
+	// 	return true;
+    //    };
 	render() {
 		return (
 			<View style={styles.myPage}>
+				<Toast ref="toast" position="center" />
 				<View style={{ backgroundColor: "#fff"}}>
 					<Text style={styles.title}>{I18n.t('my._title')}</Text>
 				</View>

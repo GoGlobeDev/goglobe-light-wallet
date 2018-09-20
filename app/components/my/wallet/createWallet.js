@@ -124,7 +124,7 @@ class CreateWallet extends Component {
 										let keystoreV3 = web3.eth.accounts
 											.privateKeyToAccount('0x' + ks.exportPrivateKey(address[0], pwDerivedKey))
 											.encrypt(this.state.pwd);
-										this.props.updateWalletAddress(address[0]);
+										// this.props.updateWalletAddress(address[0]);
 										storage.save({
 											key: 'walletInfo',
 											data: {

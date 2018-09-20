@@ -111,6 +111,19 @@ const withdraw = async (userId, password, withdrawAmount) => {
 	})
 }
 
+//分解算力
+const decompose = async (userId, password, deposit, devicedId) => {
+	var md = forge.md.md5.create();
+	md.update(password);
+	password1 = md.digest().toHex();
+	return axios.post('/wallet/decompose', {
+		userId,
+		password: password1,
+		deposit,
+		devicedId
+	})
+}
+
 export {
     getUser,
 	bindPhone,
@@ -122,5 +135,6 @@ export {
     getDevice,
 	bindDevice,
 	withdraw,
+	decompose,
     bindRCodeChild
 }

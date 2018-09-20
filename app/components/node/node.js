@@ -9,7 +9,9 @@ import {
 	StyleSheet,
 	TouchableOpacity,
 	ImageBackground,
-	StatusBar
+	StatusBar,
+	BackHandler,
+	Alert
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
@@ -19,11 +21,15 @@ import { I18n } from '../../../language/i18n';
 import Icon from '../../pages/iconSets';
 import { getDevice, getUser} from '../../api/bind';
 import { connect } from 'react-redux';
-
+import Toast from 'react-native-easy-toast';
 const screen = Dimensions.get('window');
 const minHeight = ifIphoneX(0, 20, StatusBar.currentHeight);
 
 class MachineList extends Component {
+	_clickToPower = () => {
+		console.log('ddd');
+		this.props.navigate('decomposePower');
+	}
 	render() {
 		return (
 			<View style={styles.machineList}>
@@ -38,6 +44,9 @@ class MachineList extends Component {
 					{/* <Text style={styles.listContent}>{I18n.t('node.dailyProduct')}：1000</Text> */}
 					{/* <Text style={styles.listContent}>{I18n.t('node.address')}：{this.props.item.description}</Text> */}
 				</View>
+				<TouchableOpacity onPress={this._clickToPower} style={{ marginLeft: scaleSize(84), marginTop: scaleSize(60), borderColor: '#EA7E25', borderWidth: scaleSize(2), padding: scaleSize(16), borderRadius: scaleSize(52), height: scaleSize(72)}}>
+					<Text style={{ color: '#EA7E25', fontSize: 14 }}>分解算力</Text>
+				</TouchableOpacity>
 			</View>
 		)
 	}
@@ -73,6 +82,23 @@ class NodeItem extends Component {
 		};
 		// this.navigate = this.props.navigation.navigate;
 	}
+	// componentDidMount() {
+        
+    // }
+    // componentWillUnmount() {
+    //     BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+    // }
+    // onBackPress = () => {
+    //     if(this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()){
+    //         return false
+    //     }
+    //     this.lastBackPressed = Date.now();
+    //     this.refs.toast.show('再点击一次退出');
+	// 	Alert.alert(null, this.props.navigation.state.routeName)
+    //     return true;
+        
+    //     // return true;
+    //    };
 	componentWillReceiveProps(newProps) {
 		// console.log(newProps)
 		getDevice(newProps.navigation.state.params.userId).then((res) => {
@@ -90,6 +116,7 @@ class NodeItem extends Component {
 	}
 	// 组件初始渲染挂载界面完成后 异步加载数据
 	componentDidMount() {
+		// BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
 		// console.log(this.props.wallet)
 		storage
 		.load({ key: 'user'})
@@ -98,6 +125,7 @@ class NodeItem extends Component {
 				getDevice(this.props.wallet.userId || user.userId).then((res) => {
 					const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
 					const balance = res.data.balance;
+					console.log(res.data)
 					this.setState({
 						device: res.data,
 						userId: res.data.userId,
@@ -151,15 +179,8 @@ class NodeItem extends Component {
 		const { device } = this.state
 		return (
 			<View style={styles.container}>
-				{
-					this.state.sum === 0 ? <View>
-						<Text style={[styles.title, {color: '#0D0E15', marginTop: scaleSize(114) - minHeight, marginLeft: scaleSize(32)}]}>{I18n.t('node.miner')}</Text>
-						<Image style={styles.machineIcon} source={require('../../assets/images/node/machine.png')}/>
-						<TouchableOpacity style={styles.button} onPress={this._clickToBindMachine}>
-							<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.registerMiner._title')}</Text>
-						</TouchableOpacity>
-					</View>
-					: <ScrollView style={{ marginBottom: scaleSize(106) + 20}}>
+				<Toast ref="toast" position="center" />
+					<ScrollView style={{ marginBottom: scaleSize(106) + 20}}>
 						<ImageBackground style={{ width: scaleSize(750), height: scaleSize(568)}} source={require('../../assets/images/node/node-top.png')}>
 							<View style={styles.top}>
 								<Text style={styles.title}>{I18n.t('node.miner')}</Text>
@@ -178,11 +199,11 @@ class NodeItem extends Component {
 								<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 									<View>
 										<Text style={styles.sm_title}>{I18n.t('node.minerCount')}</Text>
-										<Text style={styles.sm_content}>{device.deviceSum}</Text>
+										<Text style={styles.sm_content}>{device.deviceSum || 0}</Text>
 									</View>
 									<View>
 										<Text style={styles.sm_title}>{I18n.t('node.totalPower')}</Text>
-										<Text style={styles.sm_content}>{device.totalDeposit}</Text>
+										<Text style={styles.sm_content}>{device.totalDeposit || 0}</Text>
 									</View>
 									<View>
 										<Text style={styles.sm_title}>{I18n.t('node.dailyProducts')}</Text>
@@ -193,20 +214,19 @@ class NodeItem extends Component {
 						</ImageBackground>
 						<View>
 							{device.deviceSum > 0 && device.deviceList.map((item, index) => {
-								return <MachineList item={item} key={index}/>
+								return <MachineList item={item} key={index} navigate={this.props.navigation.navigate}/>
 							})}
 						</View>
 						<View>
-							{device.bindDeviceList.length > 0 && device.bindDeviceList.map((item, index) => {
+							{device.bindDeviceList && device.bindDeviceList.length > 0 && device.bindDeviceList.map((item, index) => {
 								return <DeviceList item={item} key={index}/>
 							})}
 						</View>
-						{device.deviceSum < 2 && <TouchableOpacity style={styles.button} onPress={this._clickToBindMachine}>
+						{(!this.state.sum || device.deviceSum < 2) && <TouchableOpacity style={styles.button} onPress={this._clickToBindMachine}>
 							<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.registerMiner._title')}</Text>
 						</TouchableOpacity>}
-
 					</ScrollView>
-				}
+				
 
 
 			</View>

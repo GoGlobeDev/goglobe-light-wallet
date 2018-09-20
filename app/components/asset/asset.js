@@ -11,7 +11,9 @@ import {
 	Modal,
 	Linking,
 	ImageBackground,
-	StatusBar
+	StatusBar,
+	BackHandler,
+	Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 import { scaleSize, ifIphoneX, show } from '../../utils/ScreenUtil';
@@ -21,6 +23,7 @@ import abi from '../../utils/abi';
 import { I18n } from '../../../language/i18n';
 import { checkVersion } from '../../api/index';
 import { getUser } from '../../api/bind';
+import Toast from 'react-native-easy-toast';
 var DeviceInfo = require('react-native-device-info');
 
 class CurrencyList extends Component {
@@ -109,7 +112,11 @@ class Assets extends Component {
 		}
 		// console.log(newProps.wallet.walletName)
 	}
+	// componentWillMount(){
+	// 	BackHandler.removeEventListener("hardwareBackPress", this.onBackPress)
+	// }
 	componentDidMount() {
+		// BackHandler.addEventListener("hardwareBackPress", this.onBackPress)
 		storage.save({ key: 'mnemonic', data: { mnemonic: false }, expires: null})
 		const minHeight = ifIphoneX(0, 20, StatusBar.currentHeight);
 		this.setState({
@@ -186,7 +193,19 @@ class Assets extends Component {
 		// 		}
 		// 	});
 	}
-
+	// onBackPress = () => {
+	// 	console.log('ddddddd')
+	// 	console.log(this.props.navigation)
+	// 	if(this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()){
+    //         return false
+    //     }
+	// 	this.lastBackPressed = Date.now();
+	// 	Alert.alert(null, this.props.navigation.state.routeName)
+    //     this.refs.toast.show('再点击一次退出');
+        
+    //     return true;
+        
+	// }
 	updataWalletName() {
 		storage
 			.load({
@@ -257,6 +276,7 @@ class Assets extends Component {
 						</View>
 					{/* </View> */}
 				</ImageBackground>
+				<Toast ref="toast" position="center" />
 				<Text style={styles.title}>{I18n.t('assets._title')}</Text>
 				<ScrollView
 					style={styles.scrollview}
@@ -278,7 +298,7 @@ class Assets extends Component {
 					})}
 				</ScrollView>
 
-				<Modal
+				{/* <Modal
 					animationType={'fade'}
 					transparent={true}
 					visible={this.state.modalVisible}
@@ -317,7 +337,7 @@ class Assets extends Component {
 							</View>
 						</View>
 					</View>
-				</Modal>
+				</Modal> */}
 			</View>
 		);
 	}

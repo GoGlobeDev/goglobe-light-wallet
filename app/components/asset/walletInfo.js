@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, Clipboard, TouchableHighlight, Alert } from 'react-native';
 import { Button, Input } from 'react-native-elements';
-import { withNavigation } from 'react-navigation';
+import { withNavigation, NavigationActions, StackActions } from 'react-navigation';
 import Modal from 'react-native-modalbox';
 import Loading from 'react-native-whc-loading';
 import Toast from 'react-native-easy-toast';
@@ -364,7 +364,16 @@ class WalletInfo extends Component {
 															key: 'walletName'
 														});
 														this.refs.loading.close();
-														this.navigate('Guide');
+														// this.navigate('Guide');
+														let resetAction = StackActions.reset({
+															index: 0,
+															actions: [
+																NavigationActions.navigate({
+																	routeName: 'Guide'
+																})
+															]
+														});
+														this.props.navigation.dispatch(resetAction);
 													} catch (error) {
 														this.refs.loading.close();
 														setTimeout(() => {

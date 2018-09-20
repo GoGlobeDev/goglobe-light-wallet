@@ -33,8 +33,17 @@ export default class SetNewPwd extends React.Component {
 			return checkTwoPwd(this.state.pwd, this.state.pwd1).then((res) => {
 				bindPwd(this.props.navigation.state.params.userId, this.state.pwd).then((res) => {
 					if(res.data.status === 'success'){
-						Alert.alert(null, '密码修改成功')
-						this.props.navigation.navigate('Home')
+						Alert.alert(null, '密码修改成功');
+						let resetAction = StackActions.reset({
+							index: 0,
+							actions: [
+								NavigationActions.navigate({
+									routeName: 'Home'
+								})
+							]
+						});
+						this.props.navigation.dispatch(resetAction);
+						// this.props.navigation.navigate('Home')
 					} else {
 						Alert.alert(null, res.data.status)
 					}

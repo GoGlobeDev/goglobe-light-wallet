@@ -81,7 +81,7 @@ export default class ChangePwd extends React.Component {
 					first: false
 				})
 			} else {
-				Alert.alert(null, I18n.t('my.home.changePwd.getCodeWrong'));
+				Alert.alert(null, I18n.t('error.' + res.data.status ));
 			}
 		}).catch((e) => {
 			console.log(e)

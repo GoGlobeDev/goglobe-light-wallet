@@ -119,7 +119,16 @@ class Transfer extends Component {
 									{
 										text: 'OK',
 										onPress: () => {
-											this.props.navigation.navigate('Home');
+											let resetAction = StackActions.reset({
+												index: 0,
+												actions: [
+													NavigationActions.navigate({
+														routeName: 'Home'
+													})
+												]
+											});
+											this.props.navigation.dispatch(resetAction);
+											// this.props.navigation.navigate('Home');
 										}
 									}
 								]);
@@ -159,7 +168,16 @@ class Transfer extends Component {
 									{
 										text: 'OK',
 										onPress: () => {
-											this.props.navigation.navigate('Home');
+											let resetAction = StackActions.reset({
+												index: 0,
+												actions: [
+													NavigationActions.navigate({
+														routeName: 'Home'
+													})
+												]
+											});
+											this.props.navigation.dispatch(resetAction);
+											// this.props.navigation.navigate('Home');
 										}
 									}
 								]);

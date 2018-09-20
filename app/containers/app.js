@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { I18n } from '../../language/i18n'; // 多国语言支持
-import { StyleSheet, Text, AsyncStorage, Image } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator, StackNavigator } from 'react-navigation'; // 页面切换 路由导航组件
+import { StyleSheet, Text, AsyncStorage, Image, Alert, BackHandler } from 'react-native';
+import { createStackNavigator, createBottomTabNavigator, NavigationActions, StackNavigator, addNavigationHelpers } from 'react-navigation'; // 页面切换 路由导航组件
 import { hostMode } from '../utils/config';
 import { scaleSize, ifIphoneX } from '../utils/ScreenUtil';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import { reduxifyNavigator, createReactNavigationReduxMiddleware, createNavigationReducer } from 'react-navigation-redux-helpers';
 
 //TabBar 底部栏位页面
 import Splash from '../pages/Splash'; // app开屏画面
@@ -43,9 +47,10 @@ import setNewPwd from '../components/my/setNewPwd'; //我的 -> 修改交易密�
 
 import BindMachine from '../components/node/bindMachine'; //矿机 -> 绑定矿机
 import SetPwd from '../components/node/setPwd'; // 矿机 -> 设置交易密码
+import decomposePower from '../components/node/decomposePower'; //分解算力
 import WithdrawCash from '../components/node/withdrawCash'; //矿机 -> 提现
 import CurrencyRule from '../components/node/currencyRule'; //矿机 -> 提现规则
-
+import powerRule from '../components/node/powerRule';
 import QRscanner from '../components/public/QRscanner'; //转账 -> 扫描二维码
 
 //rely
@@ -239,7 +244,7 @@ const TabBarPage = createBottomTabNavigator(
 	}
 );
 
-const App = createStackNavigator(
+const RootNavigator = createStackNavigator(
 	{
 		Splash: { screen: Splash },
 		Home: {
@@ -357,7 +362,9 @@ const App = createStackNavigator(
 		BindMachine,
 		SetPwd,
 		WithdrawCash,
+		decomposePower,
 		CurrencyRule,
+		powerRule,
 		QRscanner: {
 			screen: QRscanner,
 			navigationOptions: {
@@ -380,5 +387,54 @@ const App = createStackNavigator(
 		}
 	}
 );
+const middleware = createReactNavigationReduxMiddleware(
+	'root',
+	state => state.nav
+)
 
-export default App;
+
+
+const AppWithNavigationState = reduxifyNavigator(RootNavigator, 'root');
+const mapStateToProps = state => ({
+	state: state.nav
+});
+const AppNavigator = connect(mapStateToProps)(AppWithNavigationState);
+export { RootNavigator, middleware }
+
+class App extends Component {
+	componentDidMount() {
+        BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+    }
+    onBackPress = () => {
+		const { dispatch, state } = this.props;
+		if(state.index === 0){
+			if(this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+				Alert.alert('提示','您确定要退出吗？',[
+					{text: '取消', onPress: () => {return false }},
+					{text: '确定', onPress: () => { BackHandler.exitApp() }}
+				  ])
+			}
+			this.lastBackPressed = Date.now();
+			return true
+			// return false;
+		}
+		dispatch(NavigationActions.back());
+		return true;
+       };
+	render() {
+		const { dispatch, nav } = this.props;
+        // const navigation = addNavigationHelpers();
+		return <AppNavigator navigation={{
+			dispatch,
+			state: nav
+		}} />
+	}
+}
+// App.propTypes = {
+//     dispatch: PropTypes.func.isRequired,
+//     nav: PropTypes.object.isRequired,
+//   };
+export default connect(mapStateToProps)(App)
