@@ -7,12 +7,9 @@ const initialState = RootNavigator.router.getStateForAction(NavigationActions.in
 // ---------reducer---------
 
 export default function nav(state = initialState, action) {
-  console.log(action)
   let nextState;
   if (action && action.type.indexOf('Navigation/') === 0) {
     nextState = RootNavigator.router.getStateForAction(action, state);
   }
-  console.log(nextState)
-  console.log(state)
   return nextState || state;
 }
