@@ -220,7 +220,7 @@ export default {
         },
         withdrawRule: {
             _title: '提币规则',
-            rule1: '1、每次提现不可少于5000GOG。',
+            rule1: '1、每次提现不可少于3000GOG。',
             rule2: '2、每次提币的手续费为1%提现数额。',
             rule3: '3、请不要直接提现到ICO的众筹地址，这会导致您无法收取众筹到的数字资产。',
             rule4: '4、提币到合约地址可能会导致交易失败，将导致转账失败，资产将退回到GOG。GOG会人工处理将币转回到原账户。 ',
@@ -256,7 +256,10 @@ export default {
             withdrawAll: '全部提现',
             receivedAmount: '实际到账数量',
             withdrawToken: '提币'
-        }
+		},
+		moreInfo: {
+			_title: '矿机信息'
+		}
 	},
 	public: {
 		second: '秒',

@@ -30,9 +30,13 @@ class MachineList extends Component {
 		console.log('ddd');
 		this.props.navigate('decomposePower');
 	}
+	_clickToMore = () => {
+		console.log('aaa');
+		// this.props.navigate('moreInfo');
+	}
 	render() {
 		return (
-			<View style={styles.machineList}>
+			<View style={[styles.machineList, { position: 'relative'}]}>
 				<View>
 					<Image style={styles.listLeft} source={require('../../assets/images/node/machine-left.png')} />
 				</View>
@@ -44,9 +48,12 @@ class MachineList extends Component {
 					{/* <Text style={styles.listContent}>{I18n.t('node.dailyProduct')}：1000</Text> */}
 					{/* <Text style={styles.listContent}>{I18n.t('node.address')}：{this.props.item.description}</Text> */}
 				</View>
-				<TouchableOpacity onPress={this._clickToPower} style={{ marginLeft: scaleSize(84), marginTop: scaleSize(60), borderColor: '#EA7E25', borderWidth: scaleSize(2), padding: scaleSize(16), borderRadius: scaleSize(52), height: scaleSize(72)}}>
+				{/* <TouchableOpacity onPress={this._clickToMore} style={{ position: 'absolute', right: 0, top: scaleSize(40),  padding: scaleSize(16), borderRadius: scaleSize(52), height: scaleSize(72)}}>
+					<Image style={{ width: scaleSize(51), height: scaleSize(15)}} source={require("../../assets/images/node/more.png")}/>
+				</TouchableOpacity> */}
+				{/* <TouchableOpacity onPress={this._clickToPower} style={{ marginLeft: scaleSize(84), marginTop: scaleSize(60), borderColor: '#EA7E25', borderWidth: scaleSize(2), padding: scaleSize(16), borderRadius: scaleSize(52), height: scaleSize(72)}}>
 					<Text style={{ color: '#EA7E25', fontSize: 14 }}>分解算力</Text>
-				</TouchableOpacity>
+				</TouchableOpacity> */}
 			</View>
 		)
 	}
@@ -82,23 +89,6 @@ class NodeItem extends Component {
 		};
 		// this.navigate = this.props.navigation.navigate;
 	}
-	// componentDidMount() {
-        
-    // }
-    // componentWillUnmount() {
-    //     BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
-    // }
-    // onBackPress = () => {
-    //     if(this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()){
-    //         return false
-    //     }
-    //     this.lastBackPressed = Date.now();
-    //     this.refs.toast.show('再点击一次退出');
-	// 	Alert.alert(null, this.props.navigation.state.routeName)
-    //     return true;
-        
-    //     // return true;
-    //    };
 	componentWillReceiveProps(newProps) {
 		// console.log(newProps)
 		getDevice(newProps.navigation.state.params.userId).then((res) => {

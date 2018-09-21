@@ -45,7 +45,7 @@ class WithdrawCash extends React.Component {
     }
     clickToAllWithdraw = () => {
         this.setState({
-            number: String(this.state.gog_banlance),
+            number: String(show(this.state.gog_banlance)),
             banlance: this.state.gog_banlance - (this.state.gog_banlance * 0.01)
         })
     }
@@ -60,8 +60,8 @@ class WithdrawCash extends React.Component {
             Alert.alert(null, '您当前输入的数量大于最大可提的数量，请重新输入')
         } else if(this.state.number.indexOf('.') > 0 && this.state.number.length - this.state.number.indexOf('.') > 5){
             Alert.alert(null, '每次提现金额不能超过四位小数，请重新输入')
-        }else if(Number(this.state.number) < 5000){
-            Alert.alert(null, '每次提现不能少于5000GOG,您当前输入的数额不可提现')
+        }else if(Number(this.state.number) < 3000){
+            Alert.alert(null, '每次提现不能少于3000GOG,您当前输入的数额不可提现')
         } else {
             Alert.alert('提示','您确定要提币吗？这样做回导致您无法获得后续利息',[
                 {text: '取消', onPress: () => console.log('Ask me later pressed'), style: 'cancel'},

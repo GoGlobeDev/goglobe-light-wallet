@@ -52,7 +52,7 @@ import WithdrawCash from '../components/node/withdrawCash'; //矿机 -> 提现
 import CurrencyRule from '../components/node/currencyRule'; //矿机 -> 提现规则
 import powerRule from '../components/node/powerRule';
 import QRscanner from '../components/public/QRscanner'; //转账 -> 扫描二维码
-
+import moreInfo from '../components/node/moreInfo'; //矿机信息
 //rely
 import Storage from 'react-native-storage';
 import Icon from '../pages/iconSets';
@@ -365,6 +365,7 @@ const RootNavigator = createStackNavigator(
 		decomposePower,
 		CurrencyRule,
 		powerRule,
+		moreInfo,
 		QRscanner: {
 			screen: QRscanner,
 			navigationOptions: {
