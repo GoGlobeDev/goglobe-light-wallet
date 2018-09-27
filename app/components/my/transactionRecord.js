@@ -88,6 +88,10 @@ class TransactionRecord extends Component {
 					})
 					console.log(res)
 				})
+			}else {
+				this.setState({
+					recordData: []
+				})
 			}
 		})
         
@@ -96,7 +100,7 @@ class TransactionRecord extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				{this.state.recordData && this.state.recordData.length >= 1 ? (
+				{this.state.recordData ? this.state.recordData.length >= 1 ? (
 					<FlatList
 						onEndReachedThreshold={0.3}
 						onEndReached={this.pullLoading}
@@ -105,6 +109,8 @@ class TransactionRecord extends Component {
 						renderItem={(item) => <TransactionRecordCard data={item} />} />
 				) : (
 					<Text style={styles.textAlign}>~</Text>
+				) : (
+					<ActivityIndicator />
 				)}
 			</View>
 		);
