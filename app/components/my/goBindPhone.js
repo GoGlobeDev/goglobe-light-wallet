@@ -53,8 +53,8 @@ class GoBindPhone extends React.Component {
 		return (
 			<View style={styles.container}>
 				{this.state.tip && <View style={styles.tipbox}>
-					<Text style={styles.tip}>1.在未绑定手机号情况下，无法绑定矿机</Text>
-					<Text style={styles.tip}>2.完成绑定手机号后，即可绑定矿机，开始挖矿获取代币</Text>
+					<Text style={styles.tip}>1.在未绑定手机号情况下，无法绑定设备</Text>
+					<Text style={styles.tip}>2.完成绑定手机号后，即可开始每日获取系统奖励</Text>
 				</View>}
 				<View style={styles.inputbox}>
 					<Text style={styles.inputTitle}>手机号</Text>

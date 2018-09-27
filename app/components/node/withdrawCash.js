@@ -44,24 +44,27 @@ class WithdrawCash extends React.Component {
         })
     }
     clickToAllWithdraw = () => {
+        var banlance = Number(this.state.gog_banlance) > 2000 ? this.state.gog_banlance / 1.01 : this.state.gog_banlance - 20
         this.setState({
-            number: String(show(this.state.gog_banlance)),
-            banlance: this.state.gog_banlance - (this.state.gog_banlance * 0.01)
+            number: String(show(banlance)),
+            banlance: this.state.gog_banlance
         })
     }
     _changeBalance = (number) => {
+        var number = Number(number);
+        var banlance = number > 2000 ? number * 1.01 : number + 20
         this.setState({
-            number: number,
-            banlance: number- (number * 0.01)
+            number: String(number),
+            banlance: banlance
         })
     }
     _clickTocomfirm = () => {
-        if(Number(this.state.gog_banlance) < Number(this.state.number)){
+        if(Number(this.state.gog_banlance) < Number(this.state.banlance)){
             Alert.alert(null, '您当前输入的数量大于最大可提的数量，请重新输入')
         } else if(this.state.number.indexOf('.') > 0 && this.state.number.length - this.state.number.indexOf('.') > 5){
             Alert.alert(null, '每次提现金额不能超过四位小数，请重新输入')
-        }else if(Number(this.state.number) < 3000){
-            Alert.alert(null, '每次提现不能少于3000GOG,您当前输入的数额不可提现')
+        }else if(Number(this.state.number) < 20){
+            Alert.alert(null, '每次提现不能少于20GOG,您当前输入的数额不可提现')
         } else {
             Alert.alert('提示','您确定要提币吗？这样做回导致您无法获得后续利息',[
                 {text: '取消', onPress: () => console.log('Ask me later pressed'), style: 'cancel'},
@@ -87,7 +90,7 @@ class WithdrawCash extends React.Component {
 		return (
 			<View style={styles.container}>
 				<View style={styles.shadowView}>
-                    <Text style={styles.text14}>{I18n.t('node.withdraw.withdrawAmount')}{I18n.t('node.withdraw.withdrawFee')}</Text>
+                    <Text style={styles.text14}>{I18n.t('node.withdraw.withdrawFee')}</Text>
                     <View style={[styles.rows, { paddingBottom: scaleSize(12), borderBottomColor: '#E7E7E7', borderBottomWidth: scaleSize(1)}]}>
                         <Text style={styles.text17}>GOG</Text>
                         <Input

@@ -34,7 +34,7 @@ export default {
 	},
 	tab: {
 		assets: '资产',
-		node: '挖矿',
+		node: '系统奖励',
 		my: '我的'
 	},
 	my: {
@@ -59,7 +59,7 @@ export default {
                 notUsed: '还未使用',
 				codeNotExists: '推荐码不存在',
 				circle:'您当前输入的邀请码不可用',
-                userWrong: '请确保您已经绑定矿机',
+                userWrong: '请确保您已经绑定设备',
                 hasBound: '您已经绑定过推荐码',
                 passwordWrong: '交易密码错误',
                 numberLimited: '该推荐码已使用两次，您可以选择相关的推荐人：'
@@ -119,6 +119,7 @@ export default {
             }
 		},
 		version: {
+			_number: '1.1.0',
 			_newVersion: '发现GoGlobe',
 			_version: '版本',
 			upgradeNow: '立即升级',
@@ -187,8 +188,8 @@ export default {
 		},
 	},
 	node: {
-        miner: '矿机',
-        minerCount: '矿机数',
+        miner: '自游设备',
+        minerCount: '设备数',
         totalPower: '总算力',
         dailyProducts: '每日产出',
         withdrawCash: '提现',
@@ -201,11 +202,11 @@ export default {
         dailyProduct: '日产出',
         address: '地点',
         registerMiner: {
-            _title: '绑定矿机',
-			inputMinerNumber: '输入矿机编号',
-			inputMinerCode: '输入矿机code',
-            emptyNoError: '矿机编号不能为空，请重新输入',
-            emptyCodeError: '矿机code不能为空，请重新输入',
+            _title: '绑定设备',
+			inputMinerNumber: '输入设备编号',
+			inputMinerCode: '输入设备code',
+            emptyNoError: '设备编号不能为空，请重新输入',
+            emptyCodeError: '设备code不能为空，请重新输入',
             failedError: '绑定失败，请重新输入',
             inputTradingPwd: '输入交易密码'
 		},
@@ -220,12 +221,12 @@ export default {
         },
         withdrawRule: {
             _title: '提币规则',
-            rule1: '1、每次提现不可少于3000GOG。',
-            rule2: '2、每次提币的手续费为1%提现数额。',
-            rule3: '3、请不要直接提现到ICO的众筹地址，这会导致您无法收取众筹到的数字资产。',
-            rule4: '4、提币到合约地址可能会导致交易失败，将导致转账失败，资产将退回到GOG。GOG会人工处理将币转回到原账户。 ',
-            rule5: '5、网络转账费用及时间是不固定的，取决于转账时合约执行需要消耗的算力。当前支付的Gas limit为90000，用于执行转账或合约执行。如果此次转账消耗超过90000gas，将导致转账失败，资产将退回到GOG。',
-            rule6: '6、请务必确认电脑及手机安全，防止信息被泄露或篡改。'
+            rule1: '1、每次提币余额不得少于20GOG的单次提币手续费。当小于2000GOG的时候，每次收20个GOG的手续费。当提现数额大于2000的时候，每次收取1%的手续费。',
+            rule2: '2、请不要直接提现到ICO的众筹地址，这会导致您无法收取众筹到的数字资产。',
+            rule3: '3、提币到合约地址可能会导致交易失败，将导致转账失败，资产将退回到GOG。GOG会人工处理将币转回到原账户。',
+            rule4: '4、网络转账费用及时间是不固定的，取决于转账时合约执行需要消耗的算力。当前支付的Gas limit为90000，用于执行转账或合约执行。如果此次转账消耗超过90000gas，将导致转账失败，资产将退回到GOG。 ',
+            rule5: '5、请务必确认电脑及手机安全，防止信息被泄露或篡改。',
+            rule6: '6、每24小时申请只可提交一次，若未成功到账，请24小时后再重新提交一次。'
         },
         setPassword: {
             _title: '设置交易密码',
@@ -251,14 +252,14 @@ export default {
             _title: '提现',
             withdrawRule: '提币规则',
             withdrawAmount: '提币数量',
-            withdrawFee: '收取1%手续费',
+            withdrawFee: '当提币数量小于2000GOG的时候，每次收20个GOG的手续费。当提现数额大于2000的时候，每次收取1%的手续费。',
             availableBalance: '可用余额',
             withdrawAll: '全部提现',
-            receivedAmount: '实际到账数量',
+            receivedAmount: '实际所需数额',
             withdrawToken: '提币'
 		},
 		moreInfo: {
-			_title: '矿机信息'
+			_title: '设备信息'
 		}
 	},
 	public: {
@@ -314,9 +315,9 @@ export default {
     error: {
         passwordWrong: '密码错误',
         codeWrong: '验证码错误',
-        deviceNotExists: '矿机不存在',
-		deviceCodeWrong: '矿机code错误',
-		deviceBound: '您输入的矿机号已被绑定',
+        deviceNotExists: '设备不存在',
+		deviceCodeWrong: '设备code错误',
+		deviceBound: '您输入的设备号已被绑定',
 		codeNumberLimited: '您当前发送的短信已超过本时效限制，请稍后再试'
     }
 };

@@ -11,7 +11,8 @@ import {
 	ImageBackground,
 	StatusBar,
 	BackHandler,
-	Alert
+	Alert,
+	Linking
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
@@ -27,12 +28,10 @@ const minHeight = ifIphoneX(0, 20, StatusBar.currentHeight);
 
 class MachineList extends Component {
 	_clickToPower = () => {
-		console.log('ddd');
 		this.props.navigate('decomposePower');
 	}
-	_clickToMore = () => {
-		console.log('aaa');
-		// this.props.navigate('moreInfo');
+	_clickToMore = (item) => {
+		this.props.navigate('moreInfo', {info: item, title: 'GoGlobe魔方手机', friend: false });
 	}
 	render() {
 		return (
@@ -41,16 +40,16 @@ class MachineList extends Component {
 					<Image style={styles.listLeft} source={require('../../assets/images/node/machine-left.png')} />
 				</View>
 				<View>
-					<Text style={styles.listTitle}>GoGlobe挖矿手机</Text>
+					<Text style={styles.listTitle}>GoGlobe魔方手机</Text>
 					<Text style={styles.listContent}>{I18n.t('node.id')}：{this.props.item.deviceId}</Text>
 					<Text style={styles.listContent}>{I18n.t('node.power')}：{this.props.item.deposit}</Text>
 					<Text style={styles.listContent}>{I18n.t('node.status')}：{this.props.item.status === 2 ? I18n.t('node.active'): I18n.t('node.inactive') } </Text>
 					{/* <Text style={styles.listContent}>{I18n.t('node.dailyProduct')}：1000</Text> */}
 					{/* <Text style={styles.listContent}>{I18n.t('node.address')}：{this.props.item.description}</Text> */}
 				</View>
-				{/* <TouchableOpacity onPress={this._clickToMore} style={{ position: 'absolute', right: 0, top: scaleSize(40),  padding: scaleSize(16), borderRadius: scaleSize(52), height: scaleSize(72)}}>
-					<Image style={{ width: scaleSize(51), height: scaleSize(15)}} source={require("../../assets/images/node/more.png")}/>
-				</TouchableOpacity> */}
+				<TouchableOpacity onPress={() => this._clickToMore(this.props.item)} style={{ position: 'absolute', right: 0, top: scaleSize(40),  padding: scaleSize(16), borderRadius: scaleSize(52), height: scaleSize(72)}}>
+					<Image style={{ width: scaleSize(34), height: scaleSize(10)}} source={require("../../assets/images/node/more.png")}/>
+				</TouchableOpacity>
 				{/* <TouchableOpacity onPress={this._clickToPower} style={{ marginLeft: scaleSize(84), marginTop: scaleSize(60), borderColor: '#EA7E25', borderWidth: scaleSize(2), padding: scaleSize(16), borderRadius: scaleSize(52), height: scaleSize(72)}}>
 					<Text style={{ color: '#EA7E25', fontSize: 14 }}>分解算力</Text>
 				</TouchableOpacity> */}
@@ -60,6 +59,9 @@ class MachineList extends Component {
 }
 
 class DeviceList extends Component {
+	_clickToMore = (item) => {
+		this.props.navigate('moreInfo', {info: item, title: 'GoGlobe魔方(来自好友)', friend: true});
+	}
 	render() {
 		return (
 			<View style={styles.machineList}>
@@ -67,13 +69,16 @@ class DeviceList extends Component {
 					<Image style={styles.listLeft} source={require('../../assets/images/node/machine-left.png')} />
 				</View>
 				<View>
-					<Text style={styles.listTitle}>GoGlobe挖矿手机(来自好友)</Text>
+					<Text style={styles.listTitle}>GoGlobe魔方(来自好友)</Text>
 					<Text style={styles.listContent}>{I18n.t('node.id')}：{this.props.item.id}</Text>
 					<Text style={styles.listContent}>{I18n.t('node.power')}：{this.props.item.deposit}</Text>
 					<Text style={styles.listContent}>{I18n.t('node.status')}：{this.props.item.status === 2 ? I18n.t('node.active'): I18n.t('node.inactive') } </Text>
 					{/* <Text style={styles.listContent}>{I18n.t('node.dailyProduct')}：1000</Text> */}
 					{/* <Text style={styles.listContent}>{I18n.t('node.address')}：{this.props.item.description}</Text> */}
 				</View>
+				<TouchableOpacity onPress={() => this._clickToMore(this.props.item)} style={{ position: 'absolute', right: 0, top: scaleSize(40),  padding: scaleSize(16), borderRadius: scaleSize(52), height: scaleSize(72)}}>
+					<Image style={{ width: scaleSize(34), height: scaleSize(10)}} source={require("../../assets/images/node/more.png")}/>
+				</TouchableOpacity>
 			</View>
 		)
 	}
@@ -90,9 +95,11 @@ class NodeItem extends Component {
 		// this.navigate = this.props.navigation.navigate;
 	}
 	componentWillReceiveProps(newProps) {
-		// console.log(newProps)
+		console.log(newProps)
 		getDevice(newProps.navigation.state.params.userId).then((res) => {
 			const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
+			console.log(sum);
+			console.log(res)
 			this.setState({
 				sum: sum,
 				device: res.data,
@@ -103,6 +110,14 @@ class NodeItem extends Component {
 		}).catch((e) => {
 			console.log(e)
 		})
+	}
+	_clickTobaidu= () => {
+		var url = 'http://goglobechain.com/download';
+		Linking.openURL(url)
+		.catch((err)=>{
+		console.log('An error occurred', err);
+		})
+
 	}
 	// 组件初始渲染挂载界面完成后 异步加载数据
 	componentDidMount() {
@@ -115,7 +130,8 @@ class NodeItem extends Component {
 				getDevice(this.props.wallet.userId || user.userId).then((res) => {
 					const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
 					const balance = res.data.balance;
-					console.log(res.data)
+					console.log(sum);
+					console.log(res)
 					this.setState({
 						device: res.data,
 						userId: res.data.userId,
@@ -209,7 +225,7 @@ class NodeItem extends Component {
 						</View>
 						<View>
 							{device.bindDeviceList && device.bindDeviceList.length > 0 && device.bindDeviceList.map((item, index) => {
-								return <DeviceList item={item} key={index}/>
+								return <DeviceList item={item} key={index} navigate={this.props.navigation.navigate}/>
 							})}
 						</View>
 						{(!this.state.sum || device.deviceSum < 2) && <TouchableOpacity style={styles.button} onPress={this._clickToBindMachine}>

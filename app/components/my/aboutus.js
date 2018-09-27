@@ -4,6 +4,7 @@ import { I18n } from '../../../language/i18n';
 import { withNavigation } from 'react-navigation';
 import Icon from '../../pages/iconSets';
 import { checkUpdate } from '../../api/index';
+import { scaleSize } from '../../utils/ScreenUtil';
 var DeviceInfo = require('react-native-device-info');
 
 export class AboutUs extends Component {
@@ -56,10 +57,17 @@ export class AboutUs extends Component {
 	_checkVersion() {
 		checkUpdate('android')
 		.then((res) => {
-            Alert.alert(res.data.androidVersion);
-			this.setState({
-				newVersion: res.data.androidVersion
-			});
+			if(I18n.t('my.version._version') == res.data.androidVersion){
+				Alert.alert(I18n.t('my.version.noUpdate'));
+			} else {
+				this.setState({
+					newVersion: res.data.androidVersion,
+					modalVisible: true
+				});
+			}
+			// console.log(res.data.androidVersion)
+            // Alert.alert(res.data.androidVersion);
+			
 		});
 	}
 
@@ -67,13 +75,13 @@ export class AboutUs extends Component {
 		return (
 			<View style={styles.aboutusPage}>
 				<Modal
-					animationType={'fade'}
+					animationType={'slide'}
 					transparent={true}
 					visible={this.state.modalVisible}
 					onRequestClose={() => {
 						this.setState({ modalVisible: false });
 					}}
-				>
+					>
 					<View style={styles.modalCon}>
 						<View style={styles.modal}>
 							<Text style={styles.modalTitle}>
@@ -98,7 +106,7 @@ export class AboutUs extends Component {
 									<Text
 										style={styles.modalBottomBtnYesText}
 										onPress={() => {
-											Linking.openURL('http://wapxk.com/wapindex-1000-6635.html').catch((err) =>
+											Linking.openURL('http://goglobechain.com/download').catch((err) =>
 												console.error('An error occurred', err)
 											);
 										}}
@@ -279,13 +287,14 @@ const styles = StyleSheet.create({
 	modal: {
 		backgroundColor: 'white',
 		width: 260,
+		height: 120,
 		borderRadius: 10
 	},
 	modalTitle: {
-		fontSize: 16,
+		fontSize: 17,
 		color: '#222',
-		lineHeight: 50,
-		height: 50,
+		lineHeight: 80,
+		height: 70,
 		textAlign: 'center',
 		paddingLeft: 15,
 		paddingRight: 15
@@ -304,12 +313,12 @@ const styles = StyleSheet.create({
 		height: 50
 	},
 	modalBottomBtnNoText: {
-		color: 'rgb(0,118,255)',
+		color: '#999',
 		fontSize: 16,
 		textAlign: 'center'
 	},
 	modalBottomBtnYesText: {
-		color: 'rgb(254,56,36)',
+		color: '#EA7E25',
 		fontSize: 16,
 		textAlign: 'center'
 	}

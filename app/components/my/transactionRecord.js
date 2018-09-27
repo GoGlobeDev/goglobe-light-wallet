@@ -11,8 +11,11 @@ class Recording extends Component {
 	render() {
 		return (
 			<View style={styles.recordDetail_item}>
-				<Text>{this.props.to.replace(this.props.to.slice('8', '32'), '......')}</Text>
-				<Text style={{ color: '#FF8018', fontSize: 20}}>{show(this.props.value / this.props.dime)}</Text>
+				{this.props.data.status === 1 && <Text style={styles.status}>提币至{this.props.data.address.replace(this.props.data.address.slice('8', '32'), '......')}</Text>}
+				{this.props.data.status === 2 && <Text style={styles.status}>向账户内充值</Text>}
+				{this.props.data.status === 3 && <Text style={styles.status}>系统奖励算力 至 手机</Text>}
+				{this.props.data.status === 4 && <Text style={styles.status}>挖矿</Text>}
+				{this.props.data.status === 5 && <Text style={styles.status}>向账户内充值</Text>}
 			</View>
 		);
 	}
@@ -21,28 +24,16 @@ class Recording extends Component {
 class TransactionRecordCard extends Component {
 	render() {
 		return (
-			<View>
-				{this.props.data.item.from === store.getState().walletInfo.wallet_address ? (
-					<View style={styles.recordDetail}>
-						<View style={{ width: scaleSize(100)}}>
-							<Icon name="icon-zhichusel" size={40} color="#34ccbf" />
-						</View>
-						<View style={{ width: scaleSize(600)}}>
-							<Recording to={this.props.data.item.to} value={this.props.data.item.value} dime={this.props.dime}/>
-							<Text>{getTime(this.props.data.item.timeStamp)}</Text>
-						</View>
+			<View style={{ paddingTop: scaleSize(32), paddingBottom: scaleSize(32), borderBottomColor: '#E7E7E7', borderBottomWidth: scaleSize(1) }}>
+				<View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
+					<Recording data={this.props.data.item} />
+					<View style={{ flexDirection: 'row', alignItems: 'flex-end'}}>
+						<Text style={styles.balance}>{show(this.props.data.item.balance)}</Text>
+						{this.props.data.item.status !==2 && <Text style={styles.gog}>GOG</Text>}
 					</View>
-				) : (
-					<View style={styles.recordDetail}>
-						<View style={{ width: scaleSize(100)}}>
-							<Icon name="icon-shourusel" size={40} color="#528bf7" />
-						</View>
-						<View style={{ width: scaleSize(600)}}>
-							<Recording to={this.props.data.item.to} value={this.props.data.item.value} time={this.props.data.item.timeStamp} dime={this.props.dime}/>
-							<Text>{getTime(this.props.data.item.timeStamp)}</Text>
-						</View>
-					</View>
-				)}
+					
+				</View>
+				<Text style={styles.time}>{this.props.data.item.time}</Text>
 			</View>
 		);
 	}
@@ -52,31 +43,38 @@ class TransactionRecord extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			recordData: null
+			recordData: [
+				{ status: 1, balance: 3000, time: '2012-12-42', address: '0x34324defadfefefefe324334234343444' },
+				{ status: 2, balance: 3000, time: '2012-12-42', address: '0x34324324334234343444' },
+				{ status: 3, balance: 3000, time: '2012-12-42', address: '0x34324324334234343444' },
+				{ status: 4, balance: 3000, time: '2012-12-42', address: '0x34324324334234343444' },
+				{ status: 5, balance: 3000, time: '2012-12-42', address: '0x34324324334234343444' },
+				{ status: 1, balance: 3000, time: '2012-12-42', address: '0x34324324334234343444' }
+			]
 		};
 	}
 
 	componentDidMount() {
-        ContractAddr = 'GOGContractAddr';
-        getERC20TransactionRecord(
-            store.getState().walletInfo.wallet_address,
-            store.getState().contractAddr[ContractAddr]
-        ).then((res) => {
-            this.setState(
-                {
-                    ContractAddr: store.getState().contractAddr[ContractAddr],
-                    recordData: res.data.result,
-                    dime: 1000000
-                }
-            );
-        });
+        // ContractAddr = 'GOGContractAddr';
+        // getERC20TransactionRecord(
+        //     store.getState().walletInfo.wallet_address,
+        //     store.getState().contractAddr[ContractAddr]
+        // ).then((res) => {
+        //     this.setState(
+        //         {
+        //             ContractAddr: store.getState().contractAddr[ContractAddr],
+        //             recordData: res.data.result,
+        //             dime: 1000000
+        //         }
+        //     );
+        // });
 	}
 
 	render() {
 		return (
 			<View style={styles.container}>
 				{this.state.recordData ? this.state.recordData.length >= 1 ? (
-					<FlatList data={this.state.recordData} renderItem={(item) => <TransactionRecordCard data={item} dime={this.state.dime}/>} />
+					<FlatList data={this.state.recordData} renderItem={(item) => <TransactionRecordCard data={item} />} />
 				) : (
 					<Text style={styles.textAlign}>~</Text>
 				) : (
@@ -90,57 +88,34 @@ class TransactionRecord extends Component {
 export default withNavigation(TransactionRecord);
 
 const styles = StyleSheet.create({
-	textAlign: {
-		textAlign: 'center'
-	},
-	color_white: {
-		color: '#fff'
-	},
-	marginTop_20: {
-		marginTop: 20
-	},
 	container: {
 		flex: 1,
 		backgroundColor: '#fff',
-		paddingLeft: scaleSize(32),
-		paddingRight: scaleSize(32)
+		padding: scaleSize(32),
+		paddingTop: 0
+	},
+	textAlign: {
+		textAlign: 'center'
+	},
+	status: {
+		fontSize: 15,
+		color: '#424559',
+		// fontWeight: 'bold'
 	},
 	balance: {
-		height: 150,
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: '#528bf7'
-	},
-	balance_text_big: {
-		fontSize: 30,
+		fontSize: 17,
+		color: '#FF8018',
 		fontWeight: 'bold'
 	},
-	record: {
-		padding: scaleSize(32),
-		paddingTop: 0,
+	gog: {
+		fontSize: 14,
+		color: '#CDCDCD',
+		fontWeight: 'bold',
+		marginLeft: scaleSize(6)
 	},
-	recordDetail: {
-		height: scaleSize(120),
-		marginTop: scaleSize(36),
-		paddingBottom: scaleSize(32),
-		flexDirection: 'row',
-		borderBottomColor: '#E7E7E7',
-		borderBottomWidth: scaleSize(1)
-		// alignItems: 'center'
-	},
-	record_icon: {
-		width: 50,
-		height: 50
-	},
-	recordDetail_item: {
-		// flex: 1,
-		// height: 75,
-		paddingRight: scaleSize(32),
-		flexDirection: 'row',
-		justifyContent: 'space-between'
-	},
-	line: {
-		borderBottomColor: '#ccc',
-		borderBottomWidth: 1
+	time: {
+		fontSize: 12,
+		color: '#CDCDCD',
+		marginTop: scaleSize(12)
 	}
 });

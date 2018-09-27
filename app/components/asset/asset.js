@@ -112,9 +112,6 @@ class Assets extends Component {
 		}
 		// console.log(newProps.wallet.walletName)
 	}
-	// componentWillMount(){
-	// 	BackHandler.removeEventListener("hardwareBackPress", this.onBackPress)
-	// }
 	componentDidMount() {
 		// BackHandler.addEventListener("hardwareBackPress", this.onBackPress)
 		storage.save({ key: 'mnemonic', data: { mnemonic: false }, expires: null})
@@ -193,19 +190,6 @@ class Assets extends Component {
 		// 		}
 		// 	});
 	}
-	// onBackPress = () => {
-	// 	console.log('ddddddd')
-	// 	console.log(this.props.navigation)
-	// 	if(this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()){
-    //         return false
-    //     }
-	// 	this.lastBackPressed = Date.now();
-	// 	Alert.alert(null, this.props.navigation.state.routeName)
-    //     this.refs.toast.show('再点击一次退出');
-        
-    //     return true;
-        
-	// }
 	updataWalletName() {
 		storage
 			.load({
@@ -297,47 +281,6 @@ class Assets extends Component {
 						return <CurrencyList item={item} index={index} key={index} navigate={this.navigate} />;
 					})}
 				</ScrollView>
-
-				{/* <Modal
-					animationType={'fade'}
-					transparent={true}
-					visible={this.state.modalVisible}
-					onRequestClose={() => {
-						this.setState({ modalVisible: false });
-					}}
-					>
-					<View style={styles.modalCon}>
-						<View style={styles.modal}>
-							<Text style={styles.modalTitle}>{I18n.t('assets.findnewVersion')}{this.state.newVersion}</Text>
-							<View style={styles.modalBottomBtn}>
-								<View>
-									<Text
-										style={styles.modalBottomBtnNoText}
-										onPress={() => {
-											this.setState({
-												modalVisible: false
-											});
-										}}
-									>
-									    {I18n.t('assets.notUpdate')}
-									</Text>
-								</View>
-								<View>
-									<Text
-										style={styles.modalBottomBtnYesText}
-										onPress={() => {
-											Linking.openURL('http://wapxk.com/wapindex-1000-6635.html').catch((err) =>
-												console.error('An error occurred', err)
-											);
-										}}
-									>
-										{I18n.t('assets.update')}
-									</Text>
-								</View>
-							</View>
-						</View>
-					</View>
-				</Modal> */}
 			</View>
 		);
 	}

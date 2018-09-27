@@ -79,14 +79,14 @@ const bindRCodeChild = async (userId, bindedreferralCode, password, child) => {
 	});
 };
 
-//获取矿机
+//获取设备
 const getDevice = (userId) => {
 	return axios.post('/wallet/get/device', {
 		userId
 	});
 };
 
-//绑定矿机
+//绑定设备
 const bindDevice = async (userId, deviceNo, code, password) => {
 	var md = forge.md.md5.create();
 	md.update(password);
@@ -123,6 +123,9 @@ const decompose = async (userId, password, deposit, devicedId) => {
 		devicedId
 	})
 }
+
+//获取操作记录
+
 
 export {
     getUser,

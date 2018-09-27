@@ -45,14 +45,14 @@ import BindInCode from '../components/my/bindInCode'; //我的 -> 绑定邀请�
 import changePwd from '../components/my/changePwd'; //我的 -> 修改交易密码
 import setNewPwd from '../components/my/setNewPwd'; //我的 -> 修改交易密码 -> 设置新交易密码
 
-import BindMachine from '../components/node/bindMachine'; //矿机 -> 绑定矿机
-import SetPwd from '../components/node/setPwd'; // 矿机 -> 设置交易密码
+import BindMachine from '../components/node/bindMachine'; //设备 -> 绑定设备
+import SetPwd from '../components/node/setPwd'; // 设备 -> 设置交易密码
 import decomposePower from '../components/node/decomposePower'; //分解算力
-import WithdrawCash from '../components/node/withdrawCash'; //矿机 -> 提现
-import CurrencyRule from '../components/node/currencyRule'; //矿机 -> 提现规则
+import WithdrawCash from '../components/node/withdrawCash'; //设备 -> 提现
+import CurrencyRule from '../components/node/currencyRule'; //设备 -> 提现规则
 import powerRule from '../components/node/powerRule';
 import QRscanner from '../components/public/QRscanner'; //转账 -> 扫描二维码
-import moreInfo from '../components/node/moreInfo'; //矿机信息
+import moreInfo from '../components/node/moreInfo'; //设备信息
 //rely
 import Storage from 'react-native-storage';
 import Icon from '../pages/iconSets';
