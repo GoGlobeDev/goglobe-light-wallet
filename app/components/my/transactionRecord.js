@@ -12,11 +12,10 @@ class Recording extends Component {
 	render() {
 		return (
 			<View style={styles.recordDetail_item}>
-			{/* {this.props.data.ethAddress.replace(this.props.data.ethAddress.slice('8', '32'), '......')} */}
 				{this.props.data.opCode === 0 && <Text style={styles.status}>来自系统的每日利息</Text>}
 				{this.props.data.opCode === 1 && <Text style={styles.status}>系统奖励，获得</Text>}
-				{this.props.data.opCode === 2 && <Text style={styles.status}>提币至 </Text>}
-				{this.props.data.opCode === 3 && <Text style={styles.status}>分解算力，至{this.props.data.ethAddress.replace(this.props.data.ethAddress.slice('8', '32'), '......')}</Text>}
+				{this.props.data.opCode === 2 && this.props.data.ethAddress && <Text style={styles.status}>提币至 {this.props.data.ethAddress.replace(this.props.data.ethAddress.slice('8', '32'), '......')}</Text>}
+				{this.props.data.opCode === 3 && this.props.data.ethAddress && <Text style={styles.status}>分解算力，至{this.props.data.ethAddress.replace(this.props.data.ethAddress.slice('8', '32'), '......')}</Text>}
 				{this.props.data.opCode === 4 && <Text style={styles.status}>提币失败，返回GOG至账户内</Text>}
 				{this.props.data.opCode === 5 && <Text style={styles.status}>接受到来自系统的空投</Text>}
 			</View>
