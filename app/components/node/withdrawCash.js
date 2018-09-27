@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
 	shadowView:{
         margin: scaleSize(32),
         width: scaleSize(686),
-        height: scaleSize(598),
+        height: scaleSize(628),
         backgroundColor: '#fff',
 		borderRadius: scaleSize(20),
         shadowOffset: { width: 0, height: 0 },

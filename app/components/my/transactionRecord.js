@@ -46,14 +46,7 @@ class TransactionRecord extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			recordData: [
-				{ status: 1, balance: 3000, time: '2012-12-12 10:12:34', address: '0x34324defadfefefefe324334234343444' },
-				{ status: 2, balance: 3000, time: '2012-12-42', address: '0x34324324334234343444' },
-				{ status: 3, balance: 3000, time: '2012-12-42', address: '0x34324324334234343444' },
-				{ status: 4, balance: 3000, time: '2012-12-42', address: '0x34324324334234343444' },
-				{ status: 5, balance: 3000, time: '2012-12-42', address: '0x34324324334234343444' },
-				{ status: 1, balance: 3000, time: '2012-12-42', address: '0x34324324334234343444' }
-			],
+			recordData: null,
 			start: 0,
 			rows: 10,
 		};
@@ -103,7 +96,7 @@ class TransactionRecord extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				{this.state.recordData ? this.state.recordData.length >= 1 ? (
+				{this.state.recordData && this.state.recordData.length >= 1 ? (
 					<FlatList
 						onEndReachedThreshold={0.3}
 						onEndReached={this.pullLoading}
@@ -112,8 +105,6 @@ class TransactionRecord extends Component {
 						renderItem={(item) => <TransactionRecordCard data={item} />} />
 				) : (
 					<Text style={styles.textAlign}>~</Text>
-				) : (
-					<ActivityIndicator />
 				)}
 			</View>
 		);
