@@ -125,7 +125,13 @@ const decompose = async (userId, password, deposit, devicedId) => {
 }
 
 //获取操作记录
-
+const record = async (userId, start, rows) => {
+	return axios.post('/wallet/record', {
+		userId,
+		start,
+		rows
+	})
+}
 
 export {
     getUser,
@@ -139,5 +145,6 @@ export {
 	bindDevice,
 	withdraw,
 	decompose,
-    bindRCodeChild
+	bindRCodeChild,
+	record
 }

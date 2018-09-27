@@ -95,7 +95,6 @@ class NodeItem extends Component {
 		// this.navigate = this.props.navigation.navigate;
 	}
 	componentWillReceiveProps(newProps) {
-		console.log(newProps)
 		getDevice(newProps.navigation.state.params.userId).then((res) => {
 			const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
 			console.log(sum);
@@ -111,14 +110,6 @@ class NodeItem extends Component {
 			console.log(e)
 		})
 	}
-	_clickTobaidu= () => {
-		var url = 'http://goglobechain.com/download';
-		Linking.openURL(url)
-		.catch((err)=>{
-		console.log('An error occurred', err);
-		})
-
-	}
 	// 组件初始渲染挂载界面完成后 异步加载数据
 	componentDidMount() {
 		// BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
@@ -130,8 +121,6 @@ class NodeItem extends Component {
 				getDevice(this.props.wallet.userId || user.userId).then((res) => {
 					const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
 					const balance = res.data.balance;
-					console.log(sum);
-					console.log(res)
 					this.setState({
 						device: res.data,
 						userId: res.data.userId,

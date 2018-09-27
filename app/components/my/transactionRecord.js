@@ -6,16 +6,19 @@ import { I18n } from '../../../language/i18n';
 import Icon from '../../pages/iconSets';
 import { show, scaleSize } from '../../utils/ScreenUtil';
 import { getTime } from '../../utils/getTime';
+import { record } from '../../api/bind';
 
 class Recording extends Component {
 	render() {
 		return (
 			<View style={styles.recordDetail_item}>
-				{this.props.data.status === 1 && <Text style={styles.status}>提币至{this.props.data.address.replace(this.props.data.address.slice('8', '32'), '......')}</Text>}
-				{this.props.data.status === 2 && <Text style={styles.status}>向账户内充值</Text>}
-				{this.props.data.status === 3 && <Text style={styles.status}>系统奖励算力 至 手机</Text>}
-				{this.props.data.status === 4 && <Text style={styles.status}>挖矿</Text>}
-				{this.props.data.status === 5 && <Text style={styles.status}>向账户内充值</Text>}
+			{/* {this.props.data.ethAddress.replace(this.props.data.ethAddress.slice('8', '32'), '......')} */}
+				{this.props.data.opCode === 0 && <Text style={styles.status}>来自系统的每日利息</Text>}
+				{this.props.data.opCode === 1 && <Text style={styles.status}>系统奖励，获得</Text>}
+				{this.props.data.opCode === 2 && <Text style={styles.status}>提币至 </Text>}
+				{this.props.data.opCode === 3 && <Text style={styles.status}>分解算力，至{this.props.data.ethAddress.replace(this.props.data.ethAddress.slice('8', '32'), '......')}</Text>}
+				{this.props.data.opCode === 4 && <Text style={styles.status}>提币失败，返回GOG至账户内</Text>}
+				{this.props.data.opCode === 5 && <Text style={styles.status}>接受到来自系统的空投</Text>}
 			</View>
 		);
 	}
@@ -24,16 +27,16 @@ class Recording extends Component {
 class TransactionRecordCard extends Component {
 	render() {
 		return (
-			<View style={{ paddingTop: scaleSize(32), paddingBottom: scaleSize(32), borderBottomColor: '#E7E7E7', borderBottomWidth: scaleSize(1) }}>
+			<View style={{ paddingTop: scaleSize(32), paddingBottom: scaleSize(32), marginRight: scaleSize(32), borderBottomColor: '#E7E7E7', borderBottomWidth: scaleSize(1) }}>
 				<View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
 					<Recording data={this.props.data.item} />
 					<View style={{ flexDirection: 'row', alignItems: 'flex-end'}}>
-						<Text style={styles.balance}>{show(this.props.data.item.balance)}</Text>
-						{this.props.data.item.status !==2 && <Text style={styles.gog}>GOG</Text>}
+						<Text style={styles.balance}>{show(this.props.data.item.amount)}</Text>
+						<Text style={styles.gog}>GOG</Text>
 					</View>
 					
 				</View>
-				<Text style={styles.time}>{this.props.data.item.time}</Text>
+				<Text style={styles.time}>{getTime(this.props.data.item.dateTime)}</Text>
 			</View>
 		);
 	}
@@ -44,37 +47,69 @@ class TransactionRecord extends Component {
 		super(props);
 		this.state = {
 			recordData: [
-				{ status: 1, balance: 3000, time: '2012-12-42', address: '0x34324defadfefefefe324334234343444' },
+				{ status: 1, balance: 3000, time: '2012-12-12 10:12:34', address: '0x34324defadfefefefe324334234343444' },
 				{ status: 2, balance: 3000, time: '2012-12-42', address: '0x34324324334234343444' },
 				{ status: 3, balance: 3000, time: '2012-12-42', address: '0x34324324334234343444' },
 				{ status: 4, balance: 3000, time: '2012-12-42', address: '0x34324324334234343444' },
 				{ status: 5, balance: 3000, time: '2012-12-42', address: '0x34324324334234343444' },
 				{ status: 1, balance: 3000, time: '2012-12-42', address: '0x34324324334234343444' }
-			]
+			],
+			start: 0,
+			rows: 10,
 		};
 	}
-
+	pullLoading: Function = () => {
+		if(this.state.rows <= this.state.number + 10) {
+			record(this.state.userId, this.state.start, this.state.rows).then((res) => {
+				this.setState({
+					recordData: res.data.list,
+					rows: this.state.rows + 10
+				})
+				console.log(res)
+			})
+		}
+	}
+	renderListFooter: Function = () => {
+		if (this.state.rows <= this.state.number + 10) {
+		  return (<View style={{ backgroundColor: '#ffffff', paddingTop:scaleSize(30), paddingBottom: scaleSize(30) }}>
+			<Text style={{ textAlign: 'center', fontSize: 13, color: '#323232', opacity: 0.6}}>正在加载</Text>
+		  </View>);
+		} else {
+			return (<View style={{ backgroundColor: '#ffffff', paddingTop:scaleSize(30), paddingBottom: scaleSize(30) }}>
+			<Text style={{ textAlign: 'center', fontSize: 13, color: '#323232', opacity: 0.6 }}>已经到底了</Text>
+		  </View>)
+		}
+	  }
 	componentDidMount() {
-        // ContractAddr = 'GOGContractAddr';
-        // getERC20TransactionRecord(
-        //     store.getState().walletInfo.wallet_address,
-        //     store.getState().contractAddr[ContractAddr]
-        // ).then((res) => {
-        //     this.setState(
-        //         {
-        //             ContractAddr: store.getState().contractAddr[ContractAddr],
-        //             recordData: res.data.result,
-        //             dime: 1000000
-        //         }
-        //     );
-        // });
+		storage
+		.load({
+			key: 'user'
+		}).then((user) => {
+			if(user.userId) {
+				record(user.userId, this.state.start, this.state.rows).then((res) => {
+					this.setState({
+						recordData: res.data.list,
+						userId: user.userId,
+						rows: this.state.rows + 10,
+						number: res.data.number
+					})
+					console.log(res)
+				})
+			}
+		})
+        
 	}
 
 	render() {
 		return (
 			<View style={styles.container}>
 				{this.state.recordData ? this.state.recordData.length >= 1 ? (
-					<FlatList data={this.state.recordData} renderItem={(item) => <TransactionRecordCard data={item} />} />
+					<FlatList
+						onEndReachedThreshold={0.3}
+						onEndReached={this.pullLoading}
+						data={this.state.recordData}
+						ListFooterComponent={this.renderListFooter()}
+						renderItem={(item) => <TransactionRecordCard data={item} />} />
 				) : (
 					<Text style={styles.textAlign}>~</Text>
 				) : (
@@ -92,7 +127,8 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#fff',
 		padding: scaleSize(32),
-		paddingTop: 0
+		paddingTop: 0,
+		paddingRight: 0
 	},
 	textAlign: {
 		textAlign: 'center'
