@@ -118,8 +118,8 @@ class NodeItem extends Component {
 					sum: sum,
 					device: res.data,
 					balance: res.data.balance,
-					userId: newProps.navigation.state.params.userId,
-					passwordExists: newProps.navigation.state.params.passwordExists
+					userId: newProps.wallet.userId,
+					passwordExists: true
 				})
 			}).catch((e) => {
 				console.log(e)
