@@ -57,7 +57,7 @@ export class AboutUs extends Component {
 	_checkVersion() {
 		checkUpdate('android')
 		.then((res) => {
-			if(I18n.t('my.version._version') == res.data.androidVersion){
+			if(I18n.t('my.version._number') == res.data.androidVersion){
 				Alert.alert(I18n.t('my.version.noUpdate'));
 			} else {
 				this.setState({

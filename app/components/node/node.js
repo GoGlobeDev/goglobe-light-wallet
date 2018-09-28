@@ -97,8 +97,6 @@ class NodeItem extends Component {
 	componentWillReceiveProps(newProps) {
 		getDevice(newProps.navigation.state.params.userId).then((res) => {
 			const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
-			console.log(sum);
-			console.log(res)
 			this.setState({
 				sum: sum,
 				device: res.data,
@@ -175,7 +173,7 @@ class NodeItem extends Component {
 		return (
 			<View style={styles.container}>
 				<Toast ref="toast" position="center" />
-					<ScrollView style={{ marginBottom: scaleSize(106) + 20}}>
+					<ScrollView style={{ marginBottom: scaleSize(106) + 30}}>
 						<ImageBackground style={{ width: scaleSize(750), height: scaleSize(568)}} source={require('../../assets/images/node/node-top.png')}>
 							<View style={styles.top}>
 								<Text style={styles.title}>{I18n.t('node.miner')}</Text>

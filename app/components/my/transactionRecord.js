@@ -57,7 +57,7 @@ class TransactionRecord extends Component {
 					recordData: res.data.list,
 					rows: this.state.rows + 10
 				})
-				console.log(res)
+				// console.log(res)
 			})
 		}
 	}

@@ -20,43 +20,43 @@ class moreInfo extends React.Component {
 		const info = this.props.navigation.state.params.info;
 		const friend = this.props.navigation.state.params.friend;
 		return (
-			<View style={styles.container}>
-			<View style={[styles.content, styles.shadow]}>
-				<View style={{position: 'relative'}}>
-					<Image style={styles.deviceImg} source={require('../../assets/images/node/more-top.png')} />
-					<Text style={styles.deviceName}>{this.props.navigation.state.params.title}</Text>
-				</View>
-				<View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
-					<View style={styles.sm_view}>
-						<Text style={styles.sm_content}>{info.deposit}</Text>
-						<Text style={styles.sm_title}>可用算力</Text>
+			<ScrollView style={styles.container}>
+				<View style={[styles.content, styles.shadow]}>
+					<View style={{position: 'relative'}}>
+						<Image style={styles.deviceImg} source={require('../../assets/images/node/more-top.png')} />
+						<Text style={styles.deviceName}>{this.props.navigation.state.params.title}</Text>
 					</View>
-					<View style={styles.sm_view}>
-						<Text style={styles.sm_content}>{info.extraDeposit}</Text>
-						<Text style={styles.sm_title}>初始奖励金额</Text>
-					</View>
-				</View>
-			</View>
-			<View style={[styles.shadow, styles.deposit]}>
-				<View style={styles.bg_view}>
-					<Text style={styles.bg_title}>算力来源构成</Text>
-					<View style={{ flexDirection: 'row', alignItems: 'flex-end'}}>
-						<Text style={{ color: '#EA7E25', fontSize: 14, fontWeight: 'bold', marginRight: scaleSize(12)}}>共</Text>
-						<Text style={styles.bg_content}>{info.deposit}</Text>
+					<View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
+						<View style={styles.sm_view}>
+							<Text style={styles.sm_content}>{info.deposit}</Text>
+							<Text style={styles.sm_title}>可用算力</Text>
+						</View>
+						<View style={styles.sm_view}>
+							<Text style={styles.sm_content}>{info.extraDeposit}</Text>
+							<Text style={styles.sm_title}>初始奖励金额</Text>
+						</View>
 					</View>
 				</View>
-				<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-					<View style={styles.sm_view}>
-						<Text style={styles.sm_content}>{info.deposit}</Text>
-						{friend ? <Text style={styles.sm_title}>来自好友</Text> : <Text style={styles.sm_title}>自身算力</Text>}
+				<View style={[styles.shadow, styles.deposit]}>
+					<View style={styles.bg_view}>
+						<Text style={styles.bg_title}>算力来源构成</Text>
+						<View style={{ flexDirection: 'row', alignItems: 'flex-end'}}>
+							<Text style={{ color: '#EA7E25', fontSize: 14, fontWeight: 'bold', marginRight: scaleSize(12)}}>共</Text>
+							<Text style={styles.bg_content}>{info.deposit}</Text>
+						</View>
 					</View>
-					<View style={styles.sm_view}>
-						<Text style={styles.sm_content}>0</Text>
-						<Text style={styles.sm_title}>系统奖励</Text>
+					<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+						<View style={styles.sm_view}>
+							<Text style={styles.sm_content}>{info.deposit}</Text>
+							{friend ? <Text style={styles.sm_title}>来自好友</Text> : <Text style={styles.sm_title}>自身算力</Text>}
+						</View>
+						<View style={styles.sm_view}>
+							<Text style={styles.sm_content}>0</Text>
+							<Text style={styles.sm_title}>系统奖励</Text>
+						</View>
 					</View>
 				</View>
-			</View>
-			<View style={[styles.shadow, styles.deposit]}>
+				<View style={[styles.shadow, styles.deposit]}>
 				<View style={styles.bg_view}>
 					<Text style={styles.bg_title}>每日产出构成</Text>
 					<View style={{ flexDirection: 'row', alignItems: 'flex-end'}}>
@@ -75,7 +75,7 @@ class moreInfo extends React.Component {
 					</View>
 				</View>
 			</View>
-			</View>
+			</ScrollView>
 		);
 	}
 }
@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
 		shadowColor: 'rgb(34, 34, 34)',
 		shadowOpacity: 0.18,
 		shadowRadius: scaleSize(27),
+		elevation: 4,
 	},
 	content: {
 		width: scaleSize(686),
