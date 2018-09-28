@@ -5,6 +5,8 @@ import { I18n } from '../../../language/i18n';
 import { scaleSize } from '../../utils/ScreenUtil';
 import { sendCode, bindPhone, getUser } from '../../api/bind';
 import Touch from '../public/touch';
+import { connect } from 'react-redux';
+import { updateUserId } from '../../store/reducers/wallet';
 // import { Timer } from '../../utils/Timer.js';
 
 class Timer extends Component {
@@ -111,6 +113,7 @@ class VCode extends React.Component {
                     this.props.navigation.navigate('SetPwd', { page: this.state.page, userId: res.data.id, phone: this.state.phone})
                 } else if (res.data.message === 'exists' ){
                     storage.save({ key: 'user', data: { phone: this.state.phone, userId: res.data.id }, expires: null })
+                    this.props.updateUserId(res.data.id);
                     if(this.state.page === 'node') {
                         this.props.navigation.navigate('Node', { userId: res.data.id, passwordExists: true })
                     } else {
@@ -220,7 +223,14 @@ class VCode extends React.Component {
 	}
 }
 
-export default VCode;
+export default connect(
+	state => ({
+		wallet: state.wallet
+	}),{
+        updateUserId
+	}
+)(VCode);
+// export default VCode;
 
 const styles = StyleSheet.create({
 	container: {

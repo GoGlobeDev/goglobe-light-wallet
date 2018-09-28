@@ -95,6 +95,7 @@ class NodeItem extends Component {
 		// this.navigate = this.props.navigation.navigate;
 	}
 	componentWillReceiveProps(newProps) {
+		console.log(newProps)
 		getDevice(newProps.navigation.state.params.userId).then((res) => {
 			const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
 			this.setState({
