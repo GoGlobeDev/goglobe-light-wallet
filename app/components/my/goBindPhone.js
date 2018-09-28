@@ -39,7 +39,9 @@ class GoBindPhone extends React.Component {
 			sendCode(this.state.phone).then((res) => {
 				if(res.data.status === 'success'){
 					this.props.navigation.navigate('VCode', { phone: this.state.phone, tip: this.state.tip })
-				} else {
+				} else if(!res.data.status){
+					Alert.alert(null, I18n.t('error.sendCodeWrong'));
+				} else{
 					Alert.alert(null, I18n.t('error.' + res.data.status ));
 				}
 			}).catch((e) => {

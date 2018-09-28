@@ -5,6 +5,7 @@ import { I18n } from '../../../language/i18n';
 import { scaleSize } from '../../utils/ScreenUtil';
 import { bindPwd } from '../../api/bind';
 import { checkPassword, checkTwoPwd } from '../../utils/valiServices';
+import { StackActions, NavigationActions, withNavigation } from 'react-navigation';
 export default class SetNewPwd extends React.Component {
 	constructor(){
 		super();

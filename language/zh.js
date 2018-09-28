@@ -318,6 +318,7 @@ export default {
         deviceNotExists: '设备不存在',
 		deviceCodeWrong: '设备code错误',
 		deviceBound: '您输入的设备号已被绑定',
-		codeNumberLimited: '您当前发送的短信已超过本时效限制，请稍后再试'
+		codeNumberLimited: '您当前发送的短信已超过本时效限制，请稍后再试',
+		sendCodeWrong: '手机号错误'
     }
 };

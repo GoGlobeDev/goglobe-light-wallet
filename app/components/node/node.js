@@ -100,6 +100,7 @@ class NodeItem extends Component {
 		let userId = '';
 		if(newProps.navigation.state.params && newProps.navigation.state.params.userId){
 			getDevice(newProps.navigation.state.params.userId).then((res) => {
+				console.log(res)
 				const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
 				this.setState({
 					sum: sum,
@@ -113,6 +114,7 @@ class NodeItem extends Component {
 			})
 		}else {
 			getDevice(newProps.wallet.userId).then((res) => {
+				console.log(res)
 				const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
 				this.setState({
 					sum: sum,
@@ -136,6 +138,7 @@ class NodeItem extends Component {
 		.then((user) => {
 			if(user.userId && user.passwordExists){
 				getDevice(this.props.wallet.userId || user.userId).then((res) => {
+					console.log(res)
 					const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
 					const balance = res.data.balance;
 					this.setState({
