@@ -65,9 +65,6 @@ export class AboutUs extends Component {
 					modalVisible: true
 				});
 			}
-			// console.log(res.data.androidVersion)
-            // Alert.alert(res.data.androidVersion);
-			
 		});
 	}
 

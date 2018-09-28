@@ -23,6 +23,7 @@ import abi from '../../utils/abi';
 import { I18n } from '../../../language/i18n';
 import { checkVersion } from '../../api/index';
 import { getUser } from '../../api/bind';
+import { checkUpdate } from '../../api/index';
 import Toast from 'react-native-easy-toast';
 var DeviceInfo = require('react-native-device-info');
 
@@ -39,7 +40,7 @@ class CurrencyList extends Component {
 			<TouchableHighlight
 				underlayColor={'transparent'}
 				onPress={() => this.currencyDetail(this.props.item.currency_name, this.props.item.balance)}
-			>
+				>
 				<View style={styles.currency_list}>
 					<View style={styles.currency_left}>
 						<View>
@@ -113,6 +114,15 @@ class Assets extends Component {
 		// console.log(newProps.wallet.walletName)
 	}
 	componentDidMount() {
+		checkUpdate('android')
+		.then((res) => {
+			if(I18n.t('my.version._number') !== res.data.androidVersion){
+				this.setState({
+					newVersion: res.data.androidVersion,
+					modalVisible: true
+				});
+			}
+		});
 		// BackHandler.addEventListener("hardwareBackPress", this.onBackPress)
 		storage.save({ key: 'mnemonic', data: { mnemonic: false }, expires: null})
 		const minHeight = ifIphoneX(0, 20, StatusBar.currentHeight);
@@ -230,6 +240,51 @@ class Assets extends Component {
 
 		return (
 			<View style={styles.container}>
+				<Modal
+					animationType={'slide'}
+					transparent={true}
+					visible={this.state.modalVisible}
+					onRequestClose={() => {
+						this.setState({ modalVisible: false });
+					}}
+					>
+					<View style={styles.modalCon}>
+						<View style={styles.modal}>
+							<Text style={styles.modalTitle}>
+								{I18n.t('my.version._newVersion')} {this.state.newVersion}
+								{I18n.t('my.version._version')}
+							</Text>
+							<View style={styles.modalBottomBtn}>
+								<View>
+									<Text
+										style={styles.modalBottomBtnNoText}
+										onPress={() => {
+											this.setState({
+												modalVisible: false
+											});
+										}}
+									>
+										{I18n.t('my.version.noEscalation')}
+										{/* 暂不升级 */}
+									</Text>
+								</View>
+								<View>
+									<Text
+										style={styles.modalBottomBtnYesText}
+										onPress={() => {
+											Linking.openURL('http://goglobechain.com/download').catch((err) =>
+												console.error('An error occurred', err)
+											);
+										}}
+									>
+										{I18n.t('my.version.upgradeNow')}
+										{/* 立即升级 */}
+									</Text>
+								</View>
+							</View>
+						</View>
+					</View>
+				</Modal>
 				<ImageBackground style={{ width: scaleSize(750), height: scaleSize(382), backgroundColor: '#fff', marginTop: scaleSize(120) - this.state.minHeight, padding: scaleSize(32) }} source={require('../../assets/images/asset/asset-top.png')}>
 					{/* <View style={styles.walletInfo}> */}
 						<View style={styles.walletInfo_item}>
@@ -421,26 +476,6 @@ const styles = StyleSheet.create({
 		color: '#ccc'
 	},
 	// version
-	modalCon: {
-		backgroundColor: 'rgba(0,0,0,0.5)',
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center'
-	},
-	modal: {
-		backgroundColor: 'white',
-		width: 260,
-		borderRadius: 10
-	},
-	modalTitle: {
-		fontSize: 16,
-		color: '#222',
-		lineHeight: 50,
-		height: 50,
-		textAlign: 'center',
-		paddingLeft: 15,
-		paddingRight: 15
-	},
 	versionText: {
 		paddingLeft: 15,
 		paddingRight: 15,
@@ -454,13 +489,39 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		height: 50
 	},
+	modalCon: {
+		backgroundColor: 'rgba(0,0,0,0.5)',
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	modal: {
+		backgroundColor: 'white',
+		width: 260,
+		height: 120,
+		borderRadius: 10
+	},
+	modalTitle: {
+		fontSize: 17,
+		color: '#222',
+		lineHeight: 80,
+		height: 70,
+		textAlign: 'center',
+		paddingLeft: 15,
+		paddingRight: 15
+	},
+	versionText: {
+		paddingLeft: 15,
+		paddingRight: 15,
+		paddingBottom: 20
+	},
 	modalBottomBtnNoText: {
-		color: 'rgb(0,118,255)',
+		color: '#999',
 		fontSize: 16,
 		textAlign: 'center'
 	},
 	modalBottomBtnYesText: {
-		color: 'rgb(254,56,36)',
+		color: '#EA7E25',
 		fontSize: 16,
 		textAlign: 'center'
 	}
