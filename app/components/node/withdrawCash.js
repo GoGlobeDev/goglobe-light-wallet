@@ -21,14 +21,14 @@ class WithdrawCash extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-            number: '',
-            banlance: 0,
-            gog_banlance: 0
+            number: '', //输入的金额
+            banlance: 0, //实际所需余额
+            gog_banlance: 0 //可用余额
 		}
     }
 	componentDidMount() {
         this.setState({
-            gog_banlance: this.props.navigation.state.params.gog_banlance
+            gog_banlance: this.props.navigation.state.params.gog_banlance || 0
         })
         storage.load({ key: 'user'}).then((user) => {
             this.setState({
@@ -64,7 +64,7 @@ class WithdrawCash extends React.Component {
         } else if(this.state.number.indexOf('.') > 0 && this.state.number.length - this.state.number.indexOf('.') > 5){
             Alert.alert(null, '每次提现金额不能超过四位小数，请重新输入')
         }else if(Number(this.state.gog_banlance) < 20){
-            Alert.alert(null, '每次提币,余额不能少于20GOG,您当前余额不足以提现')
+            Alert.alert(null, '每次提币,可用余额不能少于20GOG,您当前余额不足以提现')
         } else {
             Alert.alert('提示','您确定要提币吗？这样做回导致您无法获得后续利息',[
                 {text: '取消', onPress: () => console.log('Ask me later pressed'), style: 'cancel'},
@@ -102,9 +102,9 @@ class WithdrawCash extends React.Component {
                     </View>
                     <View style={[styles.rows, { justifyContent: 'space-between', marginTop: scaleSize(25)}]}>
                         <Text style={[styles.text14, { opacity: 0.5 }]}>{I18n.t('node.withdraw.availableBalance')}：{show(this.state.gog_banlance)}GOG</Text>
-                        <TouchableOpacity onPress={() => this.clickToAllWithdraw()}>
+                        {Number(this.state.gog_banlance) >= 20 && <TouchableOpacity onPress={() => this.clickToAllWithdraw()}>
                             <Text style={[styles.text14, { color: '#486495'} ]}>{I18n.t('node.withdraw.withdrawAll')}</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity>}
                     </View>
                     <Text style={styles.text17}>{I18n.t('node.withdraw.receivedAmount')}：{show(this.state.banlance)}</Text>
                     <TouchableOpacity style={[styles.button, this.state.number === '' ? { backgroundColor: '#F7C9A9' } : {  backgroundColor: '#EA7828' }]} onPress={this._clickTocomfirm}>
