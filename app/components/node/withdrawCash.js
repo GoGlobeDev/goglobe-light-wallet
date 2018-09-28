@@ -64,7 +64,7 @@ class WithdrawCash extends React.Component {
         } else if(this.state.number.indexOf('.') > 0 && this.state.number.length - this.state.number.indexOf('.') > 5){
             Alert.alert(null, '每次提现金额不能超过四位小数，请重新输入')
         }else if(Number(this.state.gog_banlance) < 20){
-            Alert.alert(null, '每次提币余额不能少于20GOG,您当前提币余额不足以提现')
+            Alert.alert(null, '每次提币,余额不能少于20GOG,您当前余额不足以提现')
         } else {
             Alert.alert('提示','您确定要提币吗？这样做回导致您无法获得后续利息',[
                 {text: '取消', onPress: () => console.log('Ask me later pressed'), style: 'cancel'},
