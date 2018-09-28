@@ -99,22 +99,33 @@ class NodeItem extends Component {
 		console.log(newProps)
 		let userId = '';
 		if(newProps.navigation.state.params && newProps.navigation.state.params.userId){
-			userId = newProps.navigation.state.params.userId
-		}else {
-			userId = newProps.wallet.userId
-		}
-		getDevice(userId).then((res) => {
-			const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
-			this.setState({
-				sum: sum,
-				device: res.data,
-				balance: res.data.balance,
-				userId: newProps.navigation.state.params.userId,
-				passwordExists: newProps.navigation.state.params.passwordExists
+			getDevice(newProps.navigation.state.params.userId).then((res) => {
+				const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
+				this.setState({
+					sum: sum,
+					device: res.data,
+					balance: res.data.balance,
+					userId: newProps.navigation.state.params.userId,
+					passwordExists: newProps.navigation.state.params.passwordExists
+				})
+			}).catch((e) => {
+				console.log(e)
 			})
-		}).catch((e) => {
-			console.log(e)
-		})
+		}else {
+			getDevice(newProps.wallet.userId).then((res) => {
+				const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
+				this.setState({
+					sum: sum,
+					device: res.data,
+					balance: res.data.balance,
+					userId: newProps.navigation.state.params.userId,
+					passwordExists: newProps.navigation.state.params.passwordExists
+				})
+			}).catch((e) => {
+				console.log(e)
+			})
+		}
+		
 	}
 	// 组件初始渲染挂载界面完成后 异步加载数据
 	componentDidMount() {
