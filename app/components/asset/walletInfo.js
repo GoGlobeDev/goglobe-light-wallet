@@ -104,7 +104,7 @@ class WalletInfo extends Component {
 		}
 	};
 	clickToWalletName = () => {
-		console.log(this.state.newWalletName);
+		// console.log(this.state.newWalletName);
 		checkWalletName(this.state.newWalletName).then(() => {
 			this.setState({
 				walletName: this.state.newWalletName

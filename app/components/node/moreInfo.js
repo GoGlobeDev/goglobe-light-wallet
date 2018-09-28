@@ -14,7 +14,7 @@ class moreInfo extends React.Component {
 	}
 	componentDidMount() {
 		const info = this.props.navigation.state.params.info;
-		console.log(info)
+		// console.log(info)
 	}
 	render() {
 		const info = this.props.navigation.state.params.info;

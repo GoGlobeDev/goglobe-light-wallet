@@ -85,7 +85,7 @@ class TransactionRecord extends Component {
 						rows: this.state.rows + 10,
 						number: res.data.number
 					})
-					console.log(res)
+					// console.log(res)
 				})
 			}else {
 				this.setState({
