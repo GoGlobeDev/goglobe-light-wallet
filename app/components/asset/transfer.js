@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, Alert, StyleSheet, Dimensions, ScrollView, TouchableHighlight } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { StackActions, NavigationActions } from 'react-navigation';
 import { Input, Slider, Button } from 'react-native-elements';
 import Modal from 'react-native-modalbox';
 import { withNavigation } from 'react-navigation';

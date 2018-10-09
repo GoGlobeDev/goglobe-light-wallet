@@ -94,12 +94,12 @@ storage
 const Web3 = require('web3');
 
 function check(host) {
-	// console.log(host)
-	// store.dispatch({
-	// 	type: 'CONTRACTADDR',
-	// 	GOGContractAddr: '0x8c191f956a287096bb306c422536cd1151fc4a3c'
-	// });
-	if (hostMode === 'ropsten') {
+	if (hostMode === 'privateNet') {
+		store.dispatch({
+			type: 'CONTRACTADDR',
+			GOGContractAddr: '0x5a429abdfcd04986a8ce60c8d6788fe22af92ebd'
+		});
+	} else if(hostMode === 'ropsten') {
 		store.dispatch({
 			type: 'CONTRACTADDR',
 			GOGContractAddr: '0x8c191f956a287096bb306c422536cd1151fc4a3c'
@@ -123,7 +123,9 @@ storage
 		check(webHost);
 	})
 	.catch((e) => {
-		if (hostMode === 'ropsten') {
+		if (hostMode === 'privateNet') {
+			check('http://52.82.4.208:8545');
+		} else if(hostMode === 'ropsten' ){
 			check('https://ropsten.infura.io:443/v3/e5a89d7eb503409c85747dfb4c863e69');
 		} else {
 			check('https://mainnet.infura.io:443/v3/e5a89d7eb503409c85747dfb4c863e69');
