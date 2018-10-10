@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-nati
 import { Button, Input } from 'react-native-elements';
 import { I18n } from '../../../language/i18n';
 import { scaleSize } from '../../utils/ScreenUtil';
-import { getUser } from '../../api/bind';
 class BindingPhone extends React.Component {
 	static navigationOptions = {
 		headerTitle: I18n.t('my.home.bindPhone._title')

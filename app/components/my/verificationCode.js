@@ -123,6 +123,8 @@ class VCode extends React.Component {
                 else {
                     Alert.alert(null, I18n.t('error.' + res.data.message)); // 提示 错误原因
                 }
+            }).catch((e) => {
+                console.log(e, 'bindPhone')
             })
         })
     }
@@ -149,6 +151,8 @@ class VCode extends React.Component {
             } else {
                 Alert.alert(null, I18n.t('error.' + res.data.status ));
             }
+        }).catch((e) => {
+            console.log(e, 'sendCode')
         })
       }
 	render() {

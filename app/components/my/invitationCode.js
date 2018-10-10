@@ -39,6 +39,8 @@ class InvitationCode extends React.Component {
 						boundMember,
                         binders
 					})
+				}).catch((err) => {
+					console.log(err, 'getRCode')
 				})
 			}
 		})

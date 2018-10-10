@@ -50,7 +50,7 @@ export default class BindInCode extends React.Component {
                     Alert.alert(null, I18n.t('my.home.invitationCode.' + res.data.message));
                 }
             }).catch((e) => {
-                alert(e)
+                alert(e, 'bindRCodeChild')
             })
         } else {
             bindRCode(this.state.userId, this.state.bindCode, this.state.password).then((res) => {
@@ -62,7 +62,7 @@ export default class BindInCode extends React.Component {
                     Alert.alert(null, I18n.t('my.home.invitationCode.' + res.data.message));
                 }
             }).catch((e) => {
-                alert(e)
+                alert(e, 'bindRCode')
             })
         }
 	}

@@ -81,29 +81,38 @@ class Assets extends Component {
 
 
 	getAllBalance() {
-		this.setState({
-			isRefreshing: true
-		});
-		web3.eth.getBalance(this.state.walletAddress).then((res) => {
-			let eth_banlance = show(web3.utils.fromWei(res, 'ether'));
-			this.setState({ eth_banlance });
-		});
-		getBalance(
-			abi,
-			this.state.walletAddress,
-			store.getState().contractAddr.GOGContractAddr,
-			(gog_banlance) => {
-				gog_banlance = show(gog_banlance);
-				this.setState({ gog_banlance });
-			}
-		);
-		this.updataWalletName();
 
-		setTimeout(() => {
+		if(web3){
+			this.setState({
+				isRefreshing: true
+			});
+			web3.eth.getBalance(this.state.walletAddress).then((res) => {
+				let eth_banlance = show(web3.utils.fromWei(res, 'ether'));
+				this.setState({ eth_banlance });
+			});
+			getBalance(
+				abi,
+				this.state.walletAddress,
+				store.getState().contractAddr.GOGContractAddr,
+				(gog_banlance) => {
+					gog_banlance = show(gog_banlance);
+					this.setState({ gog_banlance });
+				}
+			);
+			this.updataWalletName();
+	
+			setTimeout(() => {
+				this.setState({
+					isRefreshing: false
+				});
+			}, 1000);
+		} else {
 			this.setState({
 				isRefreshing: false
 			});
-		}, 1000);
+			// this.props.navigation.navigate('noNetWork')
+		}
+		
 	}
 	componentWillReceiveProps(newProps){
 		if(newProps.wallet.walletName){

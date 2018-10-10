@@ -53,6 +53,8 @@ import CurrencyRule from '../components/node/currencyRule'; //设备 -> 提现�
 import powerRule from '../components/node/powerRule';
 import QRscanner from '../components/public/QRscanner'; //转账 -> 扫描二维码
 import moreInfo from '../components/node/moreInfo'; //设备信息
+
+import noNetWork from '../components/public/noNetWork'; //没有网络
 //rely
 import Storage from 'react-native-storage';
 import Icon from '../pages/iconSets';
@@ -111,8 +113,16 @@ function check(host) {
 		});
 	}
 	global.host = host;
-	const web3 = new Web3(new Web3.providers.HttpProvider(host));
-	global.web3 = web3;
+	const webProvider = new Web3.providers.HttpProvider(host);
+	if(webProvider.connected){
+		const web3 = new Web3(webProvider);
+		global.web3 = web3;
+	} else {
+		const web3 = null;
+		global.web3 = web3;
+	}
+	// const web3 = new Web3(webProvider);
+	// global.web3 = web3;
 }
 
 storage
@@ -123,7 +133,9 @@ storage
 		check(webHost);
 	})
 	.catch((e) => {
-		if (hostMode === 'ropsten') {
+		if (hostMode === 'privateNet') {
+			check('http://52.82.4.208:8545');
+		} else if (hostMode === 'ropsten') {
 			check('https://ropsten.infura.io:443/v3/e5a89d7eb503409c85747dfb4c863e69');
 		} else {
 			check('https://mainnet.infura.io:443/v3/e5a89d7eb503409c85747dfb4c863e69');
@@ -366,6 +378,7 @@ const RootNavigator = createStackNavigator(
 		CurrencyRule,
 		powerRule,
 		moreInfo,
+		noNetWork,
 		QRscanner: {
 			screen: QRscanner,
 			navigationOptions: {
