@@ -55,7 +55,8 @@ export default {
                 notBind: '还未绑定',
                 button: '去绑定',
                 myBinders: '我推荐的用户',
-                noBinders: '还没有人使用',
+				noBinders: '还没有人使用',
+				noUser: '暂无推荐用户',
                 notUsed: '还未使用',
 				codeNotExists: '推荐码不存在',
 				circle:'您当前输入的邀请码不可用',
@@ -81,6 +82,16 @@ export default {
 				getCodeWrong: '获取验证码失败',
 				codeWrong: '验证码失败',
 				userNotExists: '用户不存在'
+			},
+			effect: {
+				_title: '我的影响力',
+		
+			},
+			effectRule: {
+				_title: '影响力规则',
+				rule1: '1、当用户绑定下一个用户的邀请码的时候，会自动将其绑定的矿机的算力计入到此用户的影响力中。用户下面的用户越多，下面用户绑定的邀请码越多，本用户的影响力越大。',
+				rule2: '2、影响力之后可以用于兑换优惠券、打折券、实体奖品等其它事务。',
+				rule3: '3、后续解释权归属自游俱乐部®所有。',
 			},
             bindingCode: {
                 _title: '绑定邀请码',

@@ -4,7 +4,16 @@ axios.defaults.baseURL = serverUrl;
 
 //获取eth交易记录
 const getTransactionRecord = (walletAddress, contractaddress) => {
-	if (hostMode === 'ropsten') {
+	if (hostMode === 'privateNet') {
+		return axios.get(
+			'https://api-ropsten.etherscan.io/api?module=account&action=tokentx&contractaddress=' +
+				contractaddress +
+				'&address=' +
+				walletAddress +
+				'&sort=desc&apikey=' +
+                etherscanApiKey
+		);
+	}else if (hostMode === 'ropsten') {
 		return axios.get(
 			'http://api-ropsten.etherscan.io/api?module=account&action=txlist&address=' +
 				walletAddress +
@@ -23,7 +32,16 @@ const getTransactionRecord = (walletAddress, contractaddress) => {
 
 //获取ERC20交易记录
 const getERC20TransactionRecord = (walletAddress, contractaddress) => {
-	if (hostMode === 'ropsten') {
+	if (hostMode === 'privateNet') {
+		return axios.get(
+			'https://api-ropsten.etherscan.io/api?module=account&action=tokentx&contractaddress=' +
+				contractaddress +
+				'&address=' +
+				walletAddress +
+				'&sort=desc&apikey=' +
+                etherscanApiKey
+		);
+	}else if (hostMode === 'ropsten') {
 		return axios.get(
 			'https://api-ropsten.etherscan.io/api?module=account&action=tokentx&contractaddress=' +
 				contractaddress +
