@@ -124,6 +124,13 @@ const decompose = async (userId, password, deposit, devicedId) => {
 	})
 }
 
+//获取影响力
+const getEffect = async (userId) => {
+	return axios.post('/wallet/sub/referralcode', {
+		userId,
+	})
+}
+
 //获取操作记录
 const record = async (userId, start, rows) => {
 	return axios.post('/wallet/record', {
@@ -146,5 +153,6 @@ export {
 	withdraw,
 	decompose,
 	bindRCodeChild,
-	record
+	record,
+	getEffect
 }

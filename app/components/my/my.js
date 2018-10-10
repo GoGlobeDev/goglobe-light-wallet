@@ -113,8 +113,25 @@ class My extends Component {
 								<View style={styles.myColsConPartRowLf}>
 								<Image style={styles.icon36} source={require('../../assets/images/my/icon_pwd.png')} />
 								</View>
-								<View style={[ styles.myColsConPartRowRi, styles.noSplitLine ]}>
+								<View style={[ styles.myColsConPartRowRi, styles.bottomLine ]}>
 									<Text>{I18n.t('my.home.changePwd._title')}</Text>
+									<View style={styles.myColsConPartRowRi2R}>
+										<Icon name="icon-right" size={15} color="#000" />
+									</View>
+								</View>
+							</View>
+						</TouchableHighlight>
+						<TouchableHighlight
+							onPress={() => this.props.navigation.navigate('effect')}
+							underlayColor={'#ddd'}
+							activeOpacity={0.5}
+							>
+							<View style={styles.myColsConPartRow}>
+								<View style={styles.myColsConPartRowLf}>
+								<Image style={styles.icon36} source={require('../../assets/images/my/icon_effect.png')} />
+								</View>
+								<View style={[ styles.myColsConPartRowRi, styles.noSplitLine ]}>
+									<Text>{I18n.t('my.home.effect._title')}</Text>
 									<View style={styles.myColsConPartRowRi2R}>
 										<Icon name="icon-right" size={15} color="#000" />
 									</View>

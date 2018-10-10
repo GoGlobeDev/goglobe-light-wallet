@@ -186,7 +186,7 @@ class NodeItem extends Component {
 		// this.props.navigation.navigate('SetPwd', { page: 'node', userId: this.state.userId, phone: this.state.phone})
 	}
 	render() {
-		const { device } = this.state
+		const { device } = this.state;
 		return (
 			<View style={styles.container}>
 				<Toast ref="toast" position="center" />
