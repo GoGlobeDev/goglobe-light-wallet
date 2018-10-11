@@ -441,6 +441,8 @@ class App extends Component {
 			this.lastBackPressed = Date.now();
 			return true
 			// return false;
+		} else if(state.routes[state.index].routeName === 'noNetWork') {
+			return true
 		}
 		dispatch(NavigationActions.back());
 		return true;

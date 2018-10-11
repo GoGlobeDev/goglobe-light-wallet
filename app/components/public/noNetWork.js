@@ -5,10 +5,12 @@ import {
     Image,
     StyleSheet,
     TouchableOpacity,
-    NetInfo
+    NetInfo,
+    Alert
 } from 'react-native';
 import { scaleSize } from '../../utils/ScreenUtil';
 import { I18n } from '../../../language/i18n';
+import { checkUpdate } from '../../api/index';
 
 export default class noNetWork extends Component {
     static navigationOptions = {
@@ -17,7 +19,14 @@ export default class noNetWork extends Component {
     _clickToRetry= () => {
         NetInfo.isConnected.fetch().then(isConnected => {
 			if(isConnected){
-               this.props.navigation.goBack();
+                checkUpdate('android')
+                .then(() => {
+                    this.props.navigation.goBack();
+                }).catch((e) => {
+                    // Alert.alert('请重试')
+                    console.log(e)
+                });
+               // this.props.navigation.goBack();
                // this.props.navigation.navigate('Splash')
             }
 		})
