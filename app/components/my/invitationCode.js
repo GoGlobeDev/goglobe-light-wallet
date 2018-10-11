@@ -4,7 +4,7 @@ import { Button, Input } from 'react-native-elements';
 import { I18n } from '../../../language/i18n';
 import Toast from 'react-native-easy-toast';
 import { scaleSize } from '../../utils/ScreenUtil';
-import { getRCode, bindRCode, getBinders } from '../../api/bind';
+import { getRCode } from '../../api/bind';
 class InvitationCode extends React.Component {
 	static navigationOptions = {
 		headerTitle: I18n.t('my.home.invitationCode._title')
@@ -40,7 +40,12 @@ class InvitationCode extends React.Component {
                         binders
 					})
 				}).catch((err) => {
-					console.log(err, 'getRCode')
+					const message = e.message;
+					if(message.indexOf('Network') !== -1){
+						this.props.navigation.navigate('noNetWork')
+					} else {
+						console.log(e.message)
+					}
 				})
 			}
 		})

@@ -82,7 +82,12 @@ class WithdrawCash extends React.Component {
                 Alert.alert(null, I18n.t('error.' + res.data.message))
             }
         }).catch((e) => {
-            console.log(e)
+            const message = e.message;
+            if(message.indexOf('Network') !== -1){
+                this.props.navigation.navigate('noNetWork')
+            } else {
+                console.log(e.message)
+            }
         })
     }
 	render() {

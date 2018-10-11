@@ -9,16 +9,27 @@ import {
 } from 'react-native';
 import { scaleSize } from '../../utils/ScreenUtil';
 import { I18n } from '../../../language/i18n';
+const Web3 = require('web3');
 
-export default class noNetWork extends Component {
+export default class noMainNet extends Component {
     static navigationOptions = {
         header: null
     }
     _clickToRetry= () => {
         NetInfo.isConnected.fetch().then(isConnected => {
 			if(isConnected){
-               this.props.navigation.goBack();
-               // this.props.navigation.navigate('Splash')
+                const webProvider = new Web3.providers.HttpProvider(host);
+                const web3 = new Web3(webProvider);
+                global.web3 = web3;
+                // if(webProvider.connected){
+                //     const web3 = new Web3(webProvider);
+                //     global.web3 = web3;
+                // } else {
+                //     const web3 = new Web3(webProvider);
+                //     global.web3 = web3;
+                // }
+                // this.props.navigation.goBack();
+                this.props.navigation.navigate('Splash')
             }
 		})
     }
@@ -27,7 +38,7 @@ export default class noNetWork extends Component {
             <View style={styles.container}>
                 <Image style={styles.noNetImage} source={require('../../assets/images/common/noNet.png')} />
                 <Text style={styles.text}>
-                    当前未连接到网络
+                    当前未连接到以太坊主网
                 </Text>
                 <TouchableOpacity style={styles.button} onPress={this._clickToRetry}>
 					<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('public.noNetButton')}</Text>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, Image, StyleSheet, ScrollView, Dimensions, FlatList, ActivityIndicator } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import { getTransactionRecord, getERC20TransactionRecord } from '../../api/index';
 import { I18n } from '../../../language/i18n';
 import Icon from '../../pages/iconSets';
 import { show, scaleSize } from '../../utils/ScreenUtil';
@@ -59,7 +58,12 @@ class TransactionRecord extends Component {
 				})
 				// console.log(res)
 			}).catch((err) => {
-				console.log(err, 'record')
+				const message = e.message;
+				if(message.indexOf('Network') !== -1){
+					this.props.navigation.navigate('noNetWork')
+				} else {
+					console.log(e.message)
+				}
 			})
 		}
 	}
@@ -88,6 +92,13 @@ class TransactionRecord extends Component {
 						number: res.data.number
 					})
 					// console.log(res)
+				}).catch((err) => {
+					const message = e.message;
+					if(message.indexOf('Network') !== -1){
+						this.props.navigation.navigate('noNetWork')
+					} else {
+						console.log(e.message)
+					}
 				})
 			}else {
 				this.setState({

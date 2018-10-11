@@ -50,7 +50,12 @@ export default class BindInCode extends React.Component {
                     Alert.alert(null, I18n.t('my.home.invitationCode.' + res.data.message));
                 }
             }).catch((e) => {
-                alert(e, 'bindRCodeChild')
+                const message = e.message;
+				if(message.indexOf('Network') !== -1){
+					this.props.navigation.navigate('noNetWork')
+				} else {
+					console.log(e.message)
+				}
             })
         } else {
             bindRCode(this.state.userId, this.state.bindCode, this.state.password).then((res) => {
@@ -62,7 +67,12 @@ export default class BindInCode extends React.Component {
                     Alert.alert(null, I18n.t('my.home.invitationCode.' + res.data.message));
                 }
             }).catch((e) => {
-                alert(e, 'bindRCode')
+                const message = e.message;
+				if(message.indexOf('Network') !== -1){
+					this.props.navigation.navigate('noNetWork')
+				} else {
+					console.log(e.message)
+				}
             })
         }
 	}

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, ScrollView, Alert, TouchableOpacity } from 'rea
 import { Input } from 'native-base';
 import { I18n } from '../../../language/i18n';
 import { scaleSize } from '../../utils/ScreenUtil';
-import { sendCode, bindPhone, getUser } from '../../api/bind';
+import { sendCode, bindPhone } from '../../api/bind';
 import Touch from '../public/touch';
 import { connect } from 'react-redux';
 import { updateUserId } from '../../store/reducers/wallet';
@@ -124,7 +124,12 @@ class VCode extends React.Component {
                     Alert.alert(null, I18n.t('error.' + res.data.message)); // 提示 错误原因
                 }
             }).catch((e) => {
-                console.log(e, 'bindPhone')
+                const message = e.message;
+				if(message.indexOf('Network') !== -1){
+					this.props.navigation.navigate('noNetWork')
+				} else {
+					console.log(e.message)
+				}
             })
         })
     }
@@ -152,7 +157,12 @@ class VCode extends React.Component {
                 Alert.alert(null, I18n.t('error.' + res.data.status ));
             }
         }).catch((e) => {
-            console.log(e, 'sendCode')
+            const message = e.message;
+            if(message.indexOf('Network') !== -1){
+                this.props.navigation.navigate('noNetWork')
+            } else {
+                console.log(e.message)
+            }
         })
       }
 	render() {

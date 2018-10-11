@@ -13,7 +13,8 @@ import {
 	ImageBackground,
 	StatusBar,
 	BackHandler,
-	Alert
+	Alert,
+	NetInfo
 } from 'react-native';
 import { connect } from 'react-redux';
 import { scaleSize, ifIphoneX, show } from '../../utils/ScreenUtil';
@@ -21,7 +22,7 @@ import actions from '../../store/action/walletInfo';
 import getBalance from '../../utils/addTokens';
 import abi from '../../utils/abi';
 import { I18n } from '../../../language/i18n';
-import { checkVersion } from '../../api/index';
+// import { checkVersion } from '../../api/index';
 import { getUser } from '../../api/bind';
 import { checkUpdate } from '../../api/index';
 import Toast from 'react-native-easy-toast';
@@ -81,37 +82,39 @@ class Assets extends Component {
 
 
 	getAllBalance() {
-
-		if(web3){
-			this.setState({
-				isRefreshing: true
-			});
-			web3.eth.getBalance(this.state.walletAddress).then((res) => {
-				let eth_banlance = show(web3.utils.fromWei(res, 'ether'));
-				this.setState({ eth_banlance });
-			});
-			getBalance(
-				abi,
-				this.state.walletAddress,
-				store.getState().contractAddr.GOGContractAddr,
-				(gog_banlance) => {
-					gog_banlance = show(gog_banlance);
-					this.setState({ gog_banlance });
-				}
-			);
-			this.updataWalletName();
-	
-			setTimeout(() => {
+		NetInfo.isConnected.fetch().then(isConnected => {
+			if(isConnected){
+				this.setState({
+					isRefreshing: true
+				});
+				web3.eth.getBalance(this.state.walletAddress).then((res) => {
+					let eth_banlance = show(web3.utils.fromWei(res, 'ether'));
+					this.setState({ eth_banlance });
+				});
+				getBalance(
+					abi,
+					this.state.walletAddress,
+					store.getState().contractAddr.GOGContractAddr,
+					(gog_banlance) => {
+						gog_banlance = show(gog_banlance);
+						this.setState({ gog_banlance });
+					}
+				);
+				this.updataWalletName();
+		
+				setTimeout(() => {
+					this.setState({
+						isRefreshing: false
+					});
+				}, 1000);
+			} else {
 				this.setState({
 					isRefreshing: false
 				});
-			}, 1000);
-		} else {
-			this.setState({
-				isRefreshing: false
-			});
-			// this.props.navigation.navigate('noNetWork')
-		}
+				//this.props.navigation.navigate('noMainNet')
+			}
+		})
+		
 		
 	}
 	componentWillReceiveProps(newProps){
@@ -130,6 +133,13 @@ class Assets extends Component {
 					newVersion: res.data.androidVersion,
 					modalVisible: true
 				});
+			}
+		}).catch((e) => {
+			const message = e.message;
+			if(message.indexOf('Network') !== -1){
+				this.props.navigation.navigate('noNetWork')
+			} else {
+				console.log(e.message)
 			}
 		});
 		// BackHandler.addEventListener("hardwareBackPress", this.onBackPress)
@@ -173,7 +183,12 @@ class Assets extends Component {
 						});
 					}
 				}).catch((e) => {
-					console.log(e)
+					const message = e.message;
+					if(message.indexOf('Network') !== -1){
+						this.props.navigation.navigate('noNetWork')
+					} else {
+						console.log(e.message)
+					}
 				})
 				this.setState(
 					{

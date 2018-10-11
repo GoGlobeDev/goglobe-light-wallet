@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Alert, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Alert, ScrollView, Dimensions, NetInfo } from 'react-native';
 import { I18n } from '../../../../language/i18n';
 import lightWallet from 'eth-lightwallet';
 import { withNavigation, StackActions, NavigationActions } from 'react-navigation';
@@ -14,7 +14,7 @@ var Mnemonic = require('bitcore-mnemonic');
 import { scaleSize } from '../../../utils/ScreenUtil';
 import { connect } from 'react-redux';
 import { updateWalletAddress, updateUserId } from '../../../store/reducers/wallet';
-import { getUser } from '../../../api/bind';
+// import { getUser } from '../../../api/bind';
 class ImportWallet extends Component {
 	constructor() {
 		super();
@@ -218,15 +218,21 @@ class ImportWallet extends Component {
 	};
 
 	_navigateToHome = () => {
-		let resetAction = StackActions.reset({
-			index: 0,
-			actions: [
-				NavigationActions.navigate({
-					routeName: 'Home'
-				})
-			]
-		});
-		this.props.navigation.dispatch(resetAction);
+		NetInfo.isConnected.fetch().then(isConnected => {
+			if(isConnected){
+				let resetAction = StackActions.reset({
+					index: 0,
+					actions: [
+						NavigationActions.navigate({
+							routeName: 'Home'
+						})
+					]
+				});
+				this.props.navigation.dispatch(resetAction);
+			} else {
+				this.props.navigation.navigate('noNetWork')
+			}
+		})
 	}
 
 	_setSeed(option) {

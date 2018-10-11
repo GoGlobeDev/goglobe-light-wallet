@@ -145,10 +145,16 @@ class NodeItem extends Component {
 						sum: sum
 					})
 				}).catch((e) => {
-					this.setState({
-						userId: user.userId,
-						passwordExists: user.passwordExists
-					})
+					const message = e.message;
+					if(message.indexOf('Network') !== -1){
+						this.props.navigation.navigate('noNetWork')
+					} else {
+						this.setState({
+							userId: user.userId,
+							passwordExists: user.passwordExists
+						})
+					}
+					
 				})
 			}
 		}).catch((e) => {
@@ -173,7 +179,12 @@ class NodeItem extends Component {
 					}
 				}
 			}).catch((e) => {
-				console.log(e)
+				const message = e.message;
+				if(message.indexOf('Network') !== -1){
+					this.props.navigation.navigate('noNetWork')
+				} else {
+					console.log(e.message)
+				}
 			})
 		})
 		.catch((x) => {

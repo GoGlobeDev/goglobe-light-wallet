@@ -274,6 +274,7 @@ export default {
 		}
 	},
 	public: {
+		noNetButton: '点我重试',
 		second: '秒',
 		next: '下一步',
 		back: '返回',

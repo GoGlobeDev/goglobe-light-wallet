@@ -6,7 +6,6 @@ import { I18n } from '../../../language/i18n';
 import { scaleSize, show } from '../../utils/ScreenUtil';
 import getBalance from '../../utils/addTokens';
 import abi from '../../utils/abi';
-import { decompose } from '../../api/bind';
 import Loading from 'react-native-whc-loading';
 
 class decomposePower extends React.Component {

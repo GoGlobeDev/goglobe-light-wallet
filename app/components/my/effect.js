@@ -50,8 +50,12 @@ export default class Effect extends React.Component {
                     
                 }
             }).catch((e) => {
-                console.log(e.message);
-                console.log(e.response)
+                const message = e.message;
+				if(message.indexOf('Network') !== -1){
+					this.props.navigation.navigate('noNetWork')
+				} else {
+					console.log(e.message)
+				}
             })
 		})
     }

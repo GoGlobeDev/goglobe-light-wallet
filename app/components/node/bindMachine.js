@@ -58,7 +58,13 @@ class BindMachine extends React.Component {
 				Alert.alert(null, I18n.t('error.' + res.data.message))
 			}
 		}).catch((e) => {
-			Alert.alert(null, I18n.t('node.registerMiner.failedError'))
+			const message = e.message;
+			if(message.indexOf('Network') !== -1){
+				this.props.navigation.navigate('noNetWork')
+			} else {
+				Alert.alert(null, I18n.t('node.registerMiner.failedError'));
+			}
+			
 		})
     }
 	render() {

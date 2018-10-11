@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, StatusBar, Dimensions, TouchableHighlight, BackHandler } from 'react-native';
+import { View, ScrollView, Text, Image, StyleSheet, StatusBar, Dimensions, TouchableHighlight, BackHandler } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { I18n } from '../../../language/i18n';
 const screen = Dimensions.get('window');
@@ -32,7 +32,7 @@ class My extends Component {
     //    };
 	render() {
 		return (
-			<View style={styles.myPage}>
+			<ScrollView style={styles.myPage}>
 				<Toast ref="toast" position="center" />
 				<View style={{ backgroundColor: "#fff"}}>
 					<Text style={styles.title}>{I18n.t('my._title')}</Text>
@@ -198,7 +198,7 @@ class My extends Component {
 						</TouchableHighlight>
 					</View>
 				</View>
-			</View>
+			</ScrollView>
 		);
 	}
 }

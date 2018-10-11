@@ -65,6 +65,13 @@ export class AboutUs extends Component {
 					modalVisible: true
 				});
 			}
+		}).catch((e) => {
+			const message = e.message;
+			if(message.indexOf('Network') !== -1){
+				this.props.navigation.navigate('noNetWork')
+			} else {
+				console.log(e.message)
+			}
 		});
 	}
 

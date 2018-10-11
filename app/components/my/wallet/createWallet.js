@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../../../../shim';
-import { StyleSheet, Text, View, Alert, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Alert, Dimensions, NetInfo } from 'react-native';
 import { CheckBox, Button, Input } from 'react-native-elements';
 import lightwallet from 'eth-lightwallet';
 import Loading from 'react-native-whc-loading';
@@ -104,67 +104,73 @@ class CreateWallet extends Component {
 	};
 
 	_CreateWallet() {
-		checkWalletName(this.state.walletName).then(() => {
-			return checkPwd(this.state.pwd).then(() => {
-				return checkTwoPwd(this.state.pwd, this.state.confirmPwd).then(() => {
-					return checkisAgress(this.state.isAgree).then(() => {
-						this.refs.loading.show();
-						setTimeout(() => {
-							let randomSeed = lightwallet.keystore.generateRandomSeed();
-							lightwallet.keystore.createVault(
-								{
-									password: this.state.pwd,
-									seedPhrase: randomSeed,
-									hdPathString: "m/44'/60'/0'/0"
-								},
-								(err, ks) => {
-									ks.keyFromPassword(this.state.pwd, (err, pwDerivedKey) => {
-										ks.generateNewAddress(pwDerivedKey, 1);
-										var address = ks.getAddresses();
-										let keystoreV3 = web3.eth.accounts
-											.privateKeyToAccount('0x' + ks.exportPrivateKey(address[0], pwDerivedKey))
-											.encrypt(this.state.pwd);
-										// this.props.updateWalletAddress(address[0]);
-										storage.save({
-											key: 'walletInfo',
-											data: {
-												walletAddress: address[0],
-												keystoreV3: keystoreV3,
-												ks: ks
-											},
-											expires: null
-										});
-										storage.save({
-											key: 'walletName',
-											data: {
-												walletName: this.state.walletName
-											},
-											expires: null
-										});
-										setTimeout(() => {
-											this.refs.loading.close();
-											let resetAction = StackActions.reset({
-												index: 0,
-												actions: [
-													NavigationActions.navigate({
-														routeName: 'ExportMnemonic',
-														params: {
-															walletPassword: this.state.pwd
-														}
-													})
-												]
+		NetInfo.isConnected.fetch().then(isConnected => {
+			if(isConnected){
+				checkWalletName(this.state.walletName).then(() => {
+					return checkPwd(this.state.pwd).then(() => {
+						return checkTwoPwd(this.state.pwd, this.state.confirmPwd).then(() => {
+							return checkisAgress(this.state.isAgree).then(() => {
+								this.refs.loading.show();
+								setTimeout(() => {
+									let randomSeed = lightwallet.keystore.generateRandomSeed();
+									lightwallet.keystore.createVault(
+										{
+											password: this.state.pwd,
+											seedPhrase: randomSeed,
+											hdPathString: "m/44'/60'/0'/0"
+										},
+										(err, ks) => {
+											ks.keyFromPassword(this.state.pwd, (err, pwDerivedKey) => {
+												ks.generateNewAddress(pwDerivedKey, 1);
+												var address = ks.getAddresses();
+												let keystoreV3 = web3.eth.accounts
+													.privateKeyToAccount('0x' + ks.exportPrivateKey(address[0], pwDerivedKey))
+													.encrypt(this.state.pwd);
+												// this.props.updateWalletAddress(address[0]);
+												storage.save({
+													key: 'walletInfo',
+													data: {
+														walletAddress: address[0],
+														keystoreV3: keystoreV3,
+														ks: ks
+													},
+													expires: null
+												});
+												storage.save({
+													key: 'walletName',
+													data: {
+														walletName: this.state.walletName
+													},
+													expires: null
+												});
+												setTimeout(() => {
+													this.refs.loading.close();
+													let resetAction = StackActions.reset({
+														index: 0,
+														actions: [
+															NavigationActions.navigate({
+																routeName: 'ExportMnemonic',
+																params: {
+																	walletPassword: this.state.pwd
+																}
+															})
+														]
+													});
+													this.props.navigation.dispatch(resetAction);
+												}, 100);
 											});
-											this.props.navigation.dispatch(resetAction);
-										}, 100);
-									});
-								}
-							);
-						}, 50);
+										}
+									);
+								}, 50);
+									})
+								})
 							})
-						})
-					})
-		}).catch((e) => {
-			Alert.alert(null, e)
+				}).catch((e) => {
+					Alert.alert(null, e)
+				})
+			} else {
+				this.props.navigation.navigate('noNetWork')
+			}
 		})
 		// if (!this.state.walletName) {
 		// 	Alert.alert(null, I18n.t('wallet.createWalletTip')); // 提示 请输入钱包名称

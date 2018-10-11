@@ -58,6 +58,7 @@ import QRscanner from '../components/public/QRscanner'; //转账 -> 扫描二维
 import moreInfo from '../components/node/moreInfo'; //设备信息
 
 import noNetWork from '../components/public/noNetWork'; //没有网络
+import noMainNet from '../components/public/noMainNet'; //没有以太坊主网
 //rely
 import Storage from 'react-native-storage';
 import Icon from '../pages/iconSets';
@@ -117,15 +118,21 @@ function check(host) {
 	}
 	global.host = host;
 	const webProvider = new Web3.providers.HttpProvider(host);
-	if(webProvider.connected){
-		const web3 = new Web3(webProvider);
-		global.web3 = web3;
-	} else {
-		const web3 = null;
-		global.web3 = web3;
-	}
-	// const web3 = new Web3(webProvider);
-	// global.web3 = web3;
+	console.log(webProvider.connected)
+	// if(webProvider.connected){
+	// 	const web3 = new Web3(webProvider);
+	// 	global.web3 = web3;
+	// } else {
+	// 	const web3 = null;
+	// 	global.web3 = web3;
+	// }
+	const web3 = new Web3(webProvider);
+	console.log(web3)
+	// console.log(web3);
+	// console.log(web3.HttpProvider)
+	// console.log(web3._provider);
+	// console.log(web3._provider.connected)
+	global.web3 = web3;
 }
 
 storage
@@ -384,6 +391,7 @@ const RootNavigator = createStackNavigator(
 		powerRule,
 		moreInfo,
 		noNetWork,
+		noMainNet,
 		QRscanner: {
 			screen: QRscanner,
 			navigationOptions: {
