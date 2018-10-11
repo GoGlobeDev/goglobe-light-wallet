@@ -23,7 +23,6 @@ export class AboutUs extends Component {
 				key: 'localLanguage'
 			})
 			.then((res) => {
-				console.log(res)
 				res.localLanguage.includes('zh')
 					? this.setState({
 							service_source: {
@@ -39,7 +38,6 @@ export class AboutUs extends Component {
 						});
 			})
 			.catch((e) => {
-				console.log(e)
 				DeviceInfo.getDeviceLocale().includes('zh')
 					? this.setState({
 							service_source: {

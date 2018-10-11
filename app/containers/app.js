@@ -95,6 +95,13 @@ storage
 	})
 	.catch((e) => {
 		console.log(e, '首次获取系统语言');
+		storage.save({
+			key: 'localLanguage',
+			data: {
+				localLanguage: 'zh'
+			},
+			expires: null
+		});
 	});
 
 const Web3 = require('web3');
@@ -118,20 +125,7 @@ function check(host) {
 	}
 	global.host = host;
 	const webProvider = new Web3.providers.HttpProvider(host);
-	console.log(webProvider.connected)
-	// if(webProvider.connected){
-	// 	const web3 = new Web3(webProvider);
-	// 	global.web3 = web3;
-	// } else {
-	// 	const web3 = null;
-	// 	global.web3 = web3;
-	// }
 	const web3 = new Web3(webProvider);
-	console.log(web3)
-	// console.log(web3);
-	// console.log(web3.HttpProvider)
-	// console.log(web3._provider);
-	// console.log(web3._provider.connected)
 	global.web3 = web3;
 }
 

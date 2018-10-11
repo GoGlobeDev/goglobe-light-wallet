@@ -131,16 +131,11 @@ class WalletInfo extends Component {
 		// this.refs.changeWalletName.close();
 	}
 	verifyPwd() {
-		console.log('web3')
 		try {
-			console.log(web3)
 			web3.eth.accounts.decrypt(this.state.keystoreV3, this.state.walletPassword);
 			this.refs.codeInput.close();
 			this.navigate('ExportMnemonic');
 		} catch (e) {
-			console.log(e);
-			console.log(e.name);
-			console.log(e.message)
 			Alert.alert(null, I18n.t('wallet.wrongPwd')); //'密码错误,请重新输入');
 			this.setState({
 				walletPassword: null
@@ -267,9 +262,6 @@ class WalletInfo extends Component {
 															keystoreV3: this.state.keystoreV3
 														});
 													} catch (error) {
-														console.log(error);
-														console.log(error.message);
-														console.log(error.name)
 														this.refs.loading.close();
 														setTimeout(() => {
 															Alert.alert(null, I18n.t('public.wrongPwd'));

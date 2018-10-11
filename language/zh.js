@@ -56,8 +56,8 @@ export default {
                 button: '去绑定',
                 myBinders: '我推荐的用户',
 				noBinders: '还没有人使用',
+				notUsed: '还未使用',
 				noUser: '暂无推荐用户',
-                notUsed: '还未使用',
 				codeNotExists: '推荐码不存在',
 				circle:'您当前输入的邀请码不可用',
                 userWrong: '请确保您已经绑定设备',
@@ -85,7 +85,6 @@ export default {
 			},
 			effect: {
 				_title: '我的影响力',
-		
 			},
 			effectRule: {
 				_title: '影响力规则',

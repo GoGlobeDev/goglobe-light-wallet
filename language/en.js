@@ -47,9 +47,60 @@ export default {
 			transactionRecord: 'Transaction Record',
 			systemSetting: 'System Setting',
 			Versions: {
-				_number: '1.1.1',
 				_title: 'Version log'
 			},
+			invitationCode: {
+                _title: 'Invitation Code',
+                myInvitationCode: 'My Inviation Code',
+                myBoundCode: 'My Bound Code',
+                myBoundMember: 'My Bound Member',
+                notBind: 'Not Bound',
+                button: 'Bind',
+                noBinders: 'Not Used',
+                myBinders: 'My refered members',
+				notUsed: 'Not Used',
+				noUser: '暂无推荐用户',
+				codeNotExists: '推荐码不存在',
+				circle:'您当前输入的邀请码不可用',
+                userWrong: '请确保您已经绑定设备',
+                hasBound: '您已经绑定过推荐码',
+                passwordWrong: '交易密码错误',
+                numberLimited: '该推荐码已使用两次，您可以选择相关的推荐人：'
+			},
+			verificationCode: {
+                _title: '短信验证码'
+			},
+			bindPhone: {
+                _title: 'Bind Phone',
+                bindPhoneNumber: 'Bound Phone Number',
+                notBind: 'Not Bound',
+                button: 'Bind'
+			},
+			changePwd: {
+				_title: '修改交易密码',
+				bindPhoneNumber: '当前绑定的手机号',
+				enterPassword: '输入验证码',
+				pwdIsNull: '请输入验证码',
+				getCodeWrong: '获取验证码失败',
+				codeWrong: '验证码失败',
+				userNotExists: '用户不存在'
+			},
+			effect: {
+				_title: '我的影响力',
+			},
+			effectRule: {
+				_title: '影响力规则',
+				rule1: '1、当用户绑定下一个用户的邀请码的时候，会自动将其绑定的矿机的算力计入到此用户的影响力中。用户下面的用户越多，下面用户绑定的邀请码越多，本用户的影响力越大。',
+				rule2: '2、影响力之后可以用于兑换优惠券、打折券、实体奖品等其它事务。',
+				rule3: '3、后续解释权归属自游俱乐部®所有。',
+			},
+			bindingCode: {
+                _title: '绑定邀请码',
+                inputCode: '输入邀请码',
+                pleaseInputCode: '请输入邀请码',
+                codeUsed: '您当前输入的邀请码已被使用，请重新输入',
+                getIt: '知道了'
+            },
 			helpCenter: {
 				_title: 'Help Center',
 				mnemonic: 'What is a mnemonic?',
@@ -65,24 +116,7 @@ export default {
 				privacyPolicy: 'Privacy Policy',
 				versionLog: 'Version Log',
 				checkVersion: 'Detect new version'
-			},
-            invitationCode: {
-                _title: 'Invitation Code',
-                myInvitationCode: 'My Inviation Code',
-                myBoundCode: 'My Bound Code',
-                myBoundMember: 'My Bound Member',
-                notBind: 'Not Bound',
-                button: 'Bind',
-                noBinders: 'Not Used',
-                myBinders: 'My refered members',
-                notUsed: 'Not Used'
-            },
-            bindPhone: {
-                _title: 'Bind Phone',
-                bindPhoneNumber: 'Bound Phone Number',
-                notBind: 'Not Bound',
-                button: 'Bind'
-            }
+			}
 		},
 		sysSetting: {
 			_title: 'System Settings',
@@ -98,6 +132,7 @@ export default {
             }
 		},
 		version: {
+			_number: '1.1.1',
 			_newVersion: 'Find GoGlobe',
 			_version: 'version',
 			upgradeNow: 'Upgrade Now',
@@ -107,8 +142,11 @@ export default {
 		webHost: 'Web3 Settings'
 	},
 	assets: {
-        _title: 'My Wallet',
+		_title: 'My Wallet',
+		findNewVersion: 'FindNewVersion',
 		totalAssets: 'TotalAssets',
+		notUpdate: 'NotUpdate',
+        update: 'Update',
 		walletInfo: {
 			title: 'Account Infomation',
 			walletName: 'Wallet Name',
@@ -192,6 +230,15 @@ export default {
             emptyCodeError: 'Miner code is empty!',
             failedError: 'Failed, bind again!',
             inputTradingPwd: 'Enter your trading password'
+		},
+		powerRule: {
+            _title: '算力规则',
+            rule1: '1、算力分解后不可充值，请谨慎操作。 ',
+            rule2: '2、每次提币的手续费为1%提现数额。 ',
+            rule3: '3、请不要直接提现到ICO的众筹地址，这会导致您无法收取众筹到的数字资产。',
+            rule4: '4、提币到合约地址可能会导致交易失败，将导致转账失败，资产将退回到GOG。GOG会人工处理将币转回到原账户。 ',
+            rule5: '5、网络转账费用及时间是不固定的，取决于转账时合约执行需要消耗的算力。当前支付的Gas limit为90000，用于执行转账或合约执行。如果此次转账消耗超过90000gas，将导致转账失败，资产将退回到GOG。',
+            rule6: '6、请务必确认电脑及手机安全，防止信息被泄露或篡改。'
         },
         withdrawRule: {
             _title: '提币规则',
@@ -206,11 +253,22 @@ export default {
             _title: 'Set Trading Password',
             tip1: '1.交易密码必须有大写字母、小写字母、数字，禁止使 用符号',
             tip2: '2.交易密码限定在12位之内',
-            setPassword: 'Set Password',
+			setPassword: 'Set Password',
+			setNewPassword: 'Set New Password',
             confirmPassword: 'Confirm Password',
             placehoder1: '字母、数字组合 12位以内',
             placehoder2: 'Please repeat trading password'
-        },
+		},
+		powers: {
+			_title: '分解算力',
+			powerRule: '算力规则',
+			powerAmount: '算力数量',
+			powerFee: '收取1%手续费',
+			availableBalance: '手续费',
+			powerAll: '全部',
+			receivedAmount: '实际到账数量',
+			powerToken: '分解'
+		},
         withdraw: {
             _title: 'Withdraw',
             withdrawRule: 'Withdraw Rules',
@@ -220,9 +278,13 @@ export default {
             withdrawAll: 'Withdraw All',
             receivedAmount: 'Required Amount',
             withdrawToken: 'Withdraw'
-        }
+		},
+		moreInfo: {
+			_title: '设备信息'
+		}
 	},
 	public: {
+		noNetButton: '点我重试',
         OK: 'OK',
 		second: 'Second',
 		next: 'Next',
@@ -248,9 +310,6 @@ export default {
 		transactionFailed: 'The posting transaction failed. Please try again later!',
 		score: 'Score',
 		tickets: 'Votes',
-		signSuccess: 'Successful registration',
-		signSuccess_info: 'Congratulations on your successful registration',
-		joinTeam: 'JoinTeam',
 		enterMobile: 'Please enter phone number',
 		enterCaptcha: 'Enter image verification code',
 		enterMobileCode: 'Enter your phone verification code',
@@ -284,6 +343,9 @@ export default {
         passwordWrong: 'Wrong Password',
         codeWrong: 'Wrong Code',
         deviceNotExists: 'Miner not exists',
-        deviceCodeWrong: 'Device code wrong'
+		deviceCodeWrong: 'Device code wrong',
+		deviceBound: '您输入的设备号已被绑定',
+		codeNumberLimited: '您当前发送的短信已超过本时效限制，请稍后再试',
+		sendCodeWrong: '手机号错误'
     }
 };
