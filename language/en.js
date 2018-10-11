@@ -47,6 +47,7 @@ export default {
 			transactionRecord: 'Transaction Record',
 			systemSetting: 'System Setting',
 			Versions: {
+				_number: '1.1.1',
 				_title: 'Version log'
 			},
 			helpCenter: {

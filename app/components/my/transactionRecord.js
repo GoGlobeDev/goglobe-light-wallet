@@ -57,7 +57,7 @@ class TransactionRecord extends Component {
 					rows: this.state.rows + 10
 				})
 				// console.log(res)
-			}).catch((err) => {
+			}).catch((e) => {
 				const message = e.message;
 				if(message.indexOf('Network') !== -1){
 					this.props.navigation.navigate('noNetWork')
@@ -92,7 +92,7 @@ class TransactionRecord extends Component {
 						number: res.data.number
 					})
 					// console.log(res)
-				}).catch((err) => {
+				}).catch((e) => {
 					const message = e.message;
 					if(message.indexOf('Network') !== -1){
 						this.props.navigation.navigate('noNetWork')

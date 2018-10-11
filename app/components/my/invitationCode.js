@@ -39,7 +39,7 @@ class InvitationCode extends React.Component {
 						boundMember,
                         binders
 					})
-				}).catch((err) => {
+				}).catch((e) => {
 					const message = e.message;
 					if(message.indexOf('Network') !== -1){
 						this.props.navigation.navigate('noNetWork')
