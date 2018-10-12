@@ -94,114 +94,107 @@ class Transfer extends Component {
 			});
 		});
 		const { params } = this.props.navigation.state;
-		NetInfo.isConnected.fetch().then(isConnected => {
-			if(isConnected){
-				if (params.currencyName == 'ETH') {
-					this._sendTokens = () =>
-						sendEth(
-							this.state.fromAddr,
-							this.state.toAddress,
-							this.state.amount,
-							this.state.password,
-							this.state.keystoreV3,
-							this.state.gas.toString(),
-							web3.utils.toWei(this.state.gasPrice.toString(), 'Gwei'),
-							(err, tx) => {
-								if (err) {
-									this.refs.loading.close();
-									setTimeout(() => {
-										Alert.alert(null, I18n.t('public.transactionFailed'));
-										// Alert.alert(null, '发布交易失败，请稍后重试！');
-									}, 100);
-									console.log(err);
-								} else {
-									this.refs.loading.close();
-									setTimeout(() => {
-										// 发布交易成功！
-										Alert.alert(null, I18n.t('public.transactionSuccess'), [
-											{
-												text: 'OK',
-												onPress: () => {
-													let resetAction = StackActions.reset({
-														index: 0,
-														actions: [
-															NavigationActions.navigate({
-																routeName: 'Home'
-															})
-														]
-													});
-													this.props.navigation.dispatch(resetAction);
-													// this.props.navigation.navigate('Home');
-												}
-											}
-										]);
-									}, 100);
-									console.log(tx, '=======');
-								}
-							}
-						);
-					this.setState({
-						gas: 25200
-					});
-				} else {
-					this._sendTokens = () =>
-						sendTokens(
-							abi,
-							this.state.fromAddr,
-							this.state.toAddress,
-							this.state.amount,
-							this.state.password,
-							this.state.keystoreV3,
-							this.state.ContractAddr,
-							this.state.gas.toString(),
-							web3.utils.toWei(this.state.gasPrice.toString(), 'Gwei'),
-							(err, tx) => {
-								if (err) {
-									this.refs.loading.close();
-									setTimeout(() => {
-										Alert.alert(null, I18n.t('public.transactionFailed'));
-										// Alert.alert(null, '发布交易失败，请稍后重试！');
-									}, 100);
-									console.log(err);
-								} else {
-									this.refs.loading.close();
-									setTimeout(() => {
-										// 发布交易成功！
-										Alert.alert(null, I18n.t('public.transactionSuccess'), [
-											{
-												text: 'OK',
-												onPress: () => {
-													let resetAction = StackActions.reset({
-														index: 0,
-														actions: [
-															NavigationActions.navigate({
-																routeName: 'Home'
-															})
-														]
-													});
-													this.props.navigation.dispatch(resetAction);
-													// this.props.navigation.navigate('Home');
-												}
-											}
-										]);
-									}, 100);
-									console.log(tx, '=======');
-								}
-							}
-						);
-					this.setState({
-						gas: 80000
-					});
-					let ContractAddr = params.currencyName + 'ContractAddr';
-					this.setState({
-						ContractAddr: store.getState().contractAddr[ContractAddr]
-					});
-				}
-			} else {
-				this.props.navigation.navigate('noNetWork')
-			}
-		})
-
+		if (params.currencyName == 'ETH') {
+			this._sendTokens = () =>
+				sendEth(
+					this.state.fromAddr,
+					this.state.toAddress,
+					this.state.amount,
+					this.state.password,
+					this.state.keystoreV3,
+					this.state.gas.toString(),
+					web3.utils.toWei(this.state.gasPrice.toString(), 'Gwei'),
+					(err, tx) => {
+						if (err) {
+							this.refs.loading.close();
+							setTimeout(() => {
+								Alert.alert(null, I18n.t('public.transactionFailed'));
+								// Alert.alert(null, '发布交易失败，请稍后重试！');
+							}, 100);
+							console.log(err);
+						} else {
+							this.refs.loading.close();
+							setTimeout(() => {
+								// 发布交易成功！
+								Alert.alert(null, I18n.t('public.transactionSuccess'), [
+									{
+										text: 'OK',
+										onPress: () => {
+											let resetAction = StackActions.reset({
+												index: 0,
+												actions: [
+													NavigationActions.navigate({
+														routeName: 'Home'
+													})
+												]
+											});
+											this.props.navigation.dispatch(resetAction);
+											// this.props.navigation.navigate('Home');
+										}
+									}
+								]);
+							}, 100);
+							console.log(tx, '=======');
+						}
+					}
+				);
+			this.setState({
+				gas: 25200
+			});
+		} else {
+			this._sendTokens = () =>
+				sendTokens(
+					abi,
+					this.state.fromAddr,
+					this.state.toAddress,
+					this.state.amount,
+					this.state.password,
+					this.state.keystoreV3,
+					this.state.ContractAddr,
+					this.state.gas.toString(),
+					web3.utils.toWei(this.state.gasPrice.toString(), 'Gwei'),
+					(err, tx) => {
+						if (err) {
+							this.refs.loading.close();
+							setTimeout(() => {
+								Alert.alert(null, I18n.t('public.transactionFailed'));
+								// Alert.alert(null, '发布交易失败，请稍后重试！');
+							}, 100);
+							console.log(err);
+						} else {
+							this.refs.loading.close();
+							setTimeout(() => {
+								// 发布交易成功！
+								Alert.alert(null, I18n.t('public.transactionSuccess'), [
+									{
+										text: 'OK',
+										onPress: () => {
+											let resetAction = StackActions.reset({
+												index: 0,
+												actions: [
+													NavigationActions.navigate({
+														routeName: 'Home'
+													})
+												]
+											});
+											this.props.navigation.dispatch(resetAction);
+											// this.props.navigation.navigate('Home');
+										}
+									}
+								]);
+							}, 100);
+							console.log(tx, '=======');
+						}
+					}
+				);
+			this.setState({
+				gas: 80000
+			});
+			let ContractAddr = params.currencyName + 'ContractAddr';
+			this.setState({
+				ContractAddr: store.getState().contractAddr[ContractAddr]
+			});
+		}
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -463,10 +456,19 @@ class Transfer extends Component {
 																this.state.keystoreV3,
 																this.state.password
 															);
-															this._sendTokens();
-															this.setState({
-																password: null
-															});
+															NetInfo.isConnected.fetch().then(isConnected => {
+																if(isConnected){
+																	this._sendTokens();
+																	this.setState({
+																		password: null
+																	});
+																} else {
+																	this.props.navigation.navigate('noNetWork')
+																}
+															})
+															// this.setState({
+															// 	password: null
+															// });
 														} catch (error) {
 															this.refs.loading.close();
 															setTimeout(() => {
