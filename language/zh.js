@@ -124,7 +124,7 @@ export default {
 				changeToEnglish: 'English'
 			},
             jnb: {
-                _title: 'JNB 交易所设置',
+                _title: 'JNB 交易所账号',
                 alert: '请等待交易所上币后开启'
             }
 		},

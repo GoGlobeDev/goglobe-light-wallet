@@ -167,7 +167,8 @@ class Assets extends Component {
 								userId: res.data.userId,
 								phone: res.data.phone,
 								rcode: res.data.referralCode,
-								passwordExists: res.data.passwordExists
+								passwordExists: res.data.passwordExists,
+								jnbAccount: res.data.jnbAccount
 							},
 							expires: null
 						});
@@ -178,6 +179,7 @@ class Assets extends Component {
 								userId: '',
 								phone: '',
 								rcode: '',
+								jnbAccount: ''
 							},
 							expires: null
 						});

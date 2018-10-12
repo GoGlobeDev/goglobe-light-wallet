@@ -1,15 +1,15 @@
 import { I18n } from '../../language/i18n';
 // 验证手机号、邮箱 
 export function checkAccount(account) {
-  const phone = /^1\d{10}$/;
+  // const phone = /^1\d{10}$/;
   const email = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
   return new Promise(function(resolve, reject) {
-    if (account.length > 0 && ( phone.test(account) || email.test(account))) {
+    if (account.length > 0 && email.test(account)) {
       resolve(account);
     } else if (account.length === 0) {
-      reject('手机不能为空');
+      reject('账号不能为空');
     } else {
-      reject('手机格式错误');
+      reject('您当前输入的账号格式有误，请重新输入');
     }
   });
 }
