@@ -140,6 +140,18 @@ const record = async (userId, start, rows) => {
 	})
 }
 
+//绑定jnb账号
+const bindJnbAccout = async (userId, jnbAccount, password) => {
+	var md = forge.md.md5.create();
+	md.update(password);
+	password1 = md.digest().toHex();
+	return axios.post('/wallet/jnbaccount', {
+        userId,
+		jnbAccount,
+		password: password1,
+	});
+};
+
 export {
     getUser,
 	bindPhone,
@@ -154,5 +166,6 @@ export {
 	decompose,
 	bindRCodeChild,
 	record,
-	getEffect
+	getEffect,
+	bindJnbAccout
 }

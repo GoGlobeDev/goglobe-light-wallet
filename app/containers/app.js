@@ -44,6 +44,8 @@ import BindInCode from '../components/my/bindInCode'; //我的 -> 绑定邀请�
 
 import changePwd from '../components/my/changePwd'; //我的 -> 修改交易密码
 import setNewPwd from '../components/my/setNewPwd'; //我的 -> 修改交易密码 -> 设置新交易密码
+import JnbSetting from '../components/my/jnbSetting'; //我的 -> jnb
+import BindJnbAccount from '../components/my/bindJnbAccount'; //我的 -> jnb
 
 import effect from '../components/my/effect'; //我的 -> 影响力
 import effectRule from '../components/my/effectRule'; //影响力规则
@@ -349,6 +351,8 @@ const RootNavigator = createStackNavigator(
 		GoBindPhone,
 		changePwd,
 		setNewPwd,
+		JnbSetting,
+		BindJnbAccount,
 		effect,
 		effectRule,
 		SysSet: {

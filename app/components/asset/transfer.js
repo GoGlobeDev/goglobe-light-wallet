@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Alert, StyleSheet, Dimensions, NetInfo, TouchableHighlight } from 'react-native';
+import { View, Text, Image, Alert, StyleSheet, Dimensions, NetInfo, ScrollView, TouchableHighlight } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { Input, Slider, Button } from 'react-native-elements';

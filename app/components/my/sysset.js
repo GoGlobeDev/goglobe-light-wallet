@@ -46,7 +46,7 @@ class SysSet extends Component {
                 <ListFun
                     fun_name={I18n.t('my.sysSetting.jnb._title')}
                     onPress={() => {
-                        Alert.alert(null, I18n.t('my.sysSetting.jnb.alert'))
+                        this.navigate('JnbSetting');
                     }}
                 />
 			</View>
