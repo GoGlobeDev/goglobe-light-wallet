@@ -104,7 +104,7 @@ class CreateWallet extends Component {
 	};
 
 	_CreateWallet() {
-		NetInfo.isConnected.fetch().then(isConnected => {
+		NetInfo.getConnectionInfo().then(isConnected => {
 			if(isConnected){
 				checkWalletName(this.state.walletName).then(() => {
 					return checkPwd(this.state.pwd).then(() => {

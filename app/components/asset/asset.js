@@ -82,7 +82,7 @@ class Assets extends Component {
 
 
 	getAllBalance() {
-		NetInfo.isConnected.fetch().then(isConnected => {
+		NetInfo.getConnectionInfo().then(isConnected => {
 			if(isConnected){
 				this.setState({
 					isRefreshing: true
