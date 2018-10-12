@@ -66,7 +66,7 @@ class WithdrawCash extends React.Component {
         }else if(Number(this.state.gog_banlance) < 20){
             Alert.alert(null, '每次提币,可用余额不能少于20GOG,您当前余额不足以提现')
         } else {
-            Alert.alert('提示','您确定要提币吗？这样做回导致您无法获得后续利息',[
+            Alert.alert('提示','您确定要提币吗？这样做会导致您无法获得后续利息',[
                 {text: '取消', onPress: () => console.log('Ask me later pressed'), style: 'cancel'},
                 {text: '确定', onPress: () => this.refs.withdrawPwd.open()}
               ])
