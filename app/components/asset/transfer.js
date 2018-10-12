@@ -463,6 +463,7 @@ class Transfer extends Component {
 																		password: null
 																	});
 																} else {
+																	this.refs.loading.close();
 																	this.props.navigation.navigate('noNetWork')
 																}
 															})
