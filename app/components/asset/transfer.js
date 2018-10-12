@@ -94,7 +94,7 @@ class Transfer extends Component {
 			});
 		});
 		const { params } = this.props.navigation.state;
-		NetInfo.isConnected.fetch().then(isConnected => {
+		NetInfo.getConnectionInfo().then(isConnected => {
 			if(isConnected){
 				if (params.currencyName == 'ETH') {
 					this._sendTokens = () =>

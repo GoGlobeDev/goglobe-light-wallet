@@ -17,7 +17,7 @@ export default class noNetWork extends Component {
         header: null
     }
     _clickToRetry= () => {
-        NetInfo.isConnected.fetch().then(isConnected => {
+        NetInfo.getConnectionInfo().then(isConnected => {
 			if(isConnected){
                 checkUpdate('android')
                 .then(() => {
