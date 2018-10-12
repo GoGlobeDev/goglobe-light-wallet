@@ -218,7 +218,7 @@ class ImportWallet extends Component {
 	};
 
 	_navigateToHome = () => {
-		NetInfo.getConnectionInfo().then(isConnected => {
+		NetInfo.isConnected.fetch().then(isConnected => {
 			if(isConnected){
 				let resetAction = StackActions.reset({
 					index: 0,

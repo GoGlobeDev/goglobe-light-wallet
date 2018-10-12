@@ -16,7 +16,7 @@ export default class noMainNet extends Component {
         header: null
     }
     _clickToRetry= () => {
-        NetInfo.getConnectionInfo().then(isConnected => {
+        NetInfo.isConnected.fetch().then(isConnected => {
 			if(isConnected){
                 const webProvider = new Web3.providers.HttpProvider(host);
                 const web3 = new Web3(webProvider);

@@ -456,7 +456,7 @@ class Transfer extends Component {
 																this.state.keystoreV3,
 																this.state.password
 															);
-															NetInfo.getConnectionInfo().then(isConnected => {
+															NetInfo.isConnected.fetch().then(isConnected => {
 																if(isConnected){
 																	this._sendTokens();
 																	this.setState({
