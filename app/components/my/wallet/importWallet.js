@@ -7,14 +7,13 @@ import TextWidget from '../../public/textWidget/textWidget';
 import { CheckBox, Button, Input } from 'react-native-elements';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 import Loading from 'react-native-whc-loading';
-import '../../../../shim';
 const screen = Dimensions.get('window');
 var DeviceInfo = require('react-native-device-info');
 var Mnemonic = require('bitcore-mnemonic');
 import { scaleSize } from '../../../utils/ScreenUtil';
 import { connect } from 'react-redux';
 import { updateWalletAddress, updateUserId } from '../../../store/reducers/wallet';
-// import { getUser } from '../../../api/bind';
+import { addStatistic } from '../../../api/bind';
 class ImportWallet extends Component {
 	constructor() {
 		super();
@@ -218,8 +217,10 @@ class ImportWallet extends Component {
 	};
 
 	_navigateToHome = () => {
-		NetInfo.isConnected.fetch().then(isConnected => {
-			if(isConnected){
+		storage.load({
+			key: 'walletInfo',
+		}).then((res) => {
+			addStatistic(res.walletAddress).then((res) => {
 				let resetAction = StackActions.reset({
 					index: 0,
 					actions: [
@@ -229,10 +230,30 @@ class ImportWallet extends Component {
 					]
 				});
 				this.props.navigation.dispatch(resetAction);
-			} else {
-				this.props.navigation.navigate('noNetWork')
-			}
-		})
+			}).catch((e) => {
+				const message = e.message;
+				if(message.indexOf('Network') !== -1){
+					this.props.navigation.navigate('noNetWork')
+				} else {
+					console.log(e.message)
+				}
+			})                         
+		});
+		// NetInfo.isConnected.fetch().then(isConnected => {
+		// 	if(isConnected){
+		// 		let resetAction = StackActions.reset({
+		// 			index: 0,
+		// 			actions: [
+		// 				NavigationActions.navigate({
+		// 					routeName: 'Home'
+		// 				})
+		// 			]
+		// 		});
+		// 		this.props.navigation.dispatch(resetAction);
+		// 	} else {
+		// 		this.props.navigation.navigate('noNetWork')
+		// 	}
+		// })
 	}
 
 	_setSeed(option) {

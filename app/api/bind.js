@@ -152,6 +152,13 @@ const bindJnbAccout = async (userId, jnbAccount, password) => {
 	});
 };
 
+const addStatistic = async (ethAddress) => {
+	return axios.post('/wallet/statistic', {
+		ethAddress
+	})
+}
+
+
 export {
     getUser,
 	bindPhone,
@@ -167,5 +174,6 @@ export {
 	bindRCodeChild,
 	record,
 	getEffect,
-	bindJnbAccout
+	bindJnbAccout,
+	addStatistic
 }

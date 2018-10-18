@@ -6,6 +6,7 @@ import { StackActions, NavigationActions, withNavigation } from 'react-navigatio
 import { Polygon } from 'react-native-svg';
 import { I18n } from '../../../language/i18n';
 import { scaleSize } from '../../utils/ScreenUtil';
+import { addStatistic } from '../../api/bind';
 const screen = Dimensions.get('window');
 
 export class ExportMnemonic extends Component {
@@ -73,15 +74,28 @@ export class ExportMnemonic extends Component {
 				{
 					text: 'OK',
 					onPress: () => {
-						let resetAction = StackActions.reset({
-							index: 0,
-							actions: [
-								NavigationActions.navigate({
-									routeName: 'Home'
-								})
-							]
+						storage.load({
+							key: 'walletInfo',
+						}).then((res) => {
+							addStatistic(res.walletAddress).then((res) => {
+								let resetAction = StackActions.reset({
+									index: 0,
+									actions: [
+										NavigationActions.navigate({
+											routeName: 'Home'
+										})
+									]
+								});
+								this.props.navigation.dispatch(resetAction);
+							}).catch((e) => {
+								const message = e.message;
+								if(message.indexOf('Network') !== -1){
+									this.props.navigation.navigate('noNetWork')
+								} else {
+									console.log(e.message)
+								}
+							})                         
 						});
-						this.props.navigation.dispatch(resetAction);
 					}
 				}
 			]);
