@@ -8,7 +8,7 @@ import { StackActions, NavigationActions, withNavigation } from 'react-navigatio
 import { I18n } from '../../../../language/i18n';
 import { scaleSize } from '../../../utils/ScreenUtil';
 import { checkWalletName, checkPwd, checkTwoPwd, checkisAgress } from '../../../utils/valiServices';
-
+import { checkUpdate } from '../../../api/index';
 import { connect } from 'react-redux';
 import { updateWalletAddress } from '../../../store/reducers/wallet';
 
@@ -71,7 +71,7 @@ class CreateWallet extends Component {
 	nameInput = {
 		placeholder: I18n.t('wallet.createWalletTip'), //'请输入钱包名称',
 		inputContainerStyle: styles.textInput,
-		errorStyle: styles.errorStyle,
+		secureTextEntry: false,
 		onChangeText: (walletName) => {
 			this.setState({
 				walletName: walletName
@@ -104,8 +104,8 @@ class CreateWallet extends Component {
 	};
 
 	_CreateWallet() {
-		NetInfo.isConnected.fetch().then(isConnected => {
-			if(isConnected){
+		checkUpdate('android')
+			.then(() => {
 				checkWalletName(this.state.walletName).then(() => {
 					return checkPwd(this.state.pwd).then(() => {
 						return checkTwoPwd(this.state.pwd, this.state.confirmPwd).then(() => {
@@ -157,7 +157,7 @@ class CreateWallet extends Component {
 														]
 													});
 													this.props.navigation.dispatch(resetAction);
-												}, 100);
+												}, 0);
 											});
 										}
 									);
@@ -168,10 +168,10 @@ class CreateWallet extends Component {
 				}).catch((e) => {
 					Alert.alert(null, e)
 				})
-			} else {
+			}).catch((e) => {
 				this.props.navigation.navigate('noNetWork')
-			}
-		})
+			});
+		
 		// if (!this.state.walletName) {
 		// 	Alert.alert(null, I18n.t('wallet.createWalletTip')); // 提示 请输入钱包名称
 		// } else if (!this.state.pwd) {
@@ -205,9 +205,14 @@ class CreateWallet extends Component {
 					<View style={styles.inputbox}>
 						<Text style={styles.title_sm}>{I18n.t('public.walletName')}</Text>
 						<Input
-						{...this.nameInput}
-						// errorMessage={this.state.walletName ? ' ' : I18n.t('wallet.createWalletTip')}
-						// '请输入钱包名称'
+							{...this.nameInput}
+							// errorMessage={this.state.walletName ? ' ' : I18n.t('wallet.createWalletTip')}
+							// '请输入钱包名称'
+							/>
+						
+						<Input
+							inputContainerStyle={styles.textInputnull}
+						// 空
 						/>
 					</View>
 					<View style={styles.inputbox}>
@@ -315,6 +320,10 @@ const styles = StyleSheet.create({
 		width: screen.width - scaleSize(64),
 		borderBottomWidth: 1,
 		borderColor: '#e6e6e6'
+	},
+	textInputnull: {
+		borderBottomWidth: 1,
+		borderColor: 'transparent'
 	},
 	errorStyle: {
 		// paddingLeft: 10

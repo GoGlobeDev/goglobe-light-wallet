@@ -72,22 +72,26 @@ export function checkisAgress(isAgress) {
 //验证交易密码
 export function checkPassword(pwd) {
   return new Promise(function(resolve, reject) {
-    pwd = pwd.trim();
-    const regExp = /^(?!\s)((?=.*[a-zA-Z])(?=.*[a-z])(?=.*[A-Z])(?=.*[\d]).\S{7,})$/;
-    const noRegExp = /[~!@#$%^&*?;:,.'"/]+/;
-    if (pwd.length >= 8 && pwd.length <= 12 && regExp.test(pwd) && !noRegExp.test(pwd)) {
-      resolve(pwd);
-    } else if (pwd.length === 0) {
-      reject(I18n.t('wallet.enterPwd'));
-    } else if (pwd.length < 8) {
-      reject('密码不能小于八位,请重新输入');
-    } else if (pwd.length > 12) {
-      reject('密码不能大于十二位,请重新输入');
-    } else {
-      reject('您当前输入的交易密码不符合规则，请重新输入');
-    }
+  pwd = pwd.trim();
+  const regExp1 = /^[a-zA-Z0-9]{8,12}$/i; // 检验8-12位英文数字密码
+  const regExp2 = /[a-z]/; // 检测是否有小写英文
+  const regExp3 = /[A-Z]/; // 检测是否有大写英文
+  const regExp4 = /\d/; // 检测是否有数字
+  // const regExp = /^(?!\s)((?=.*[a-zA-Z])(?=.*[a-z])(?=.*[A-Z])(?=.*[\d]).\S{7,})$/;
+  // const noRegExp = /[~!@#$%^&*?;:,.'"-=_+{}()/]+/;
+  if (regExp1.test(pwd) && regExp2.test(pwd) && regExp3.test(pwd) && regExp4.test(pwd)) {
+  resolve(pwd);
+  } else if (pwd.length === 0) {
+  reject(I18n.t('wallet.enterPwd'));
+  } else if (pwd.length < 8) {
+  reject('密码不能小于八位,请重新输入');
+  } else if (pwd.length > 12) {
+  reject('密码不能大于十二位,请重新输入');
+  } else {
+  reject('您当前输入的交易密码不符合规则，请重新输入');
+  }
   });
-}
+  }
 
 // 验证验证码
 export function checkCode(code) {
