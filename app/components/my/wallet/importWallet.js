@@ -231,12 +231,7 @@ class ImportWallet extends Component {
 				});
 				this.props.navigation.dispatch(resetAction);
 			}).catch((e) => {
-				const message = e.message;
-				if(message.indexOf('Network') !== -1){
-					this.props.navigation.navigate('noNetWork')
-				} else {
-					console.log(e.message)
-				}
+				this.props.navigation.navigate('noNetWork')
 			})                         
 		});
 		// NetInfo.isConnected.fetch().then(isConnected => {
@@ -264,7 +259,7 @@ class ImportWallet extends Component {
 				option._this.refs.loading.close();
 				setTimeout(() => {
 					alert(I18n.t('wallet.mnemonicIsWrong')); // '助记词无效，请重新输入'
-				}, 100);
+				}, 10);
 			} else {
 				lightWallet.keystore.createVault(
 					{
@@ -300,9 +295,8 @@ class ImportWallet extends Component {
 
 							setTimeout(() => {
 								option._this.refs.loading.close();
-								
 								option._this._navigateToHome();
-							}, 100);
+							}, 10);
 						});
 					}
 				);
@@ -383,9 +377,9 @@ class ImportWallet extends Component {
 						this.refs.loading.close();
 						setTimeout(() => {
 							Alert.alert(null, I18n.t('wallet.privateKeyIsWrong')); // '提示', '私钥无效,请重新输入！'
-						}, 100);
+						}, 10);
 					}
-				}, 500);
+				}, 50);
 			}
 		);
 	}
@@ -448,15 +442,15 @@ class ImportWallet extends Component {
 					setTimeout(() => {
 						this.refs.loading.close();
 						this._navigateToHome();
-					}, 100);
+					}, 10);
 				} catch (e) {
 					this.refs.loading.close();
 					setTimeout(() => {
 						Alert.alert(null, I18n.t('wallet.wrongByKeystoreOrPwd'));
 						// '提示', '导入钱包失败, 请检查keystore或者密码是否正确');
-					}, 100);
+					}, 10);
 				}
-			}, 500);
+			}, 50);
 		}
 	}
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, Image, StyleSheet, StatusBar, Dimensions, TouchableHighlight, BackHandler } from 'react-native';
+import { View, ScrollView, Text, Image, StyleSheet, StatusBar, Dimensions, TouchableHighlight, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { I18n } from '../../../language/i18n';
 const screen = Dimensions.get('window');
@@ -12,30 +12,32 @@ class My extends Component {
 	constructor(props) {
 		super(props);
 		this.navigate = this.props.navigation.navigate;
+		this.state = {
+			phone: ''
+		}
 	}
-	// componentDidMount() {
-    //     BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
-    // }
-    // componentWillUnmount() {
-    //     BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
-    // }
-    // onBackPress = () => {
-	// 	console.log(this.props.navigation);
-	// 	const { dispatch, nav } = this.props;
-	// 	console.log(nav)
-	// 	console.log('ddd')
-	// 	if(nav.index ===0){
-	// 		return false;
-	// 	}
-	// 	dispatch(NavigationActions.back());
-	// 	return true;
-    //    };
+	componentDidMount() {
+		storage.load({ key: 'user' }).then((user) => {
+			console.log(user)
+			this.setState({
+				phone: user.phone
+			})
+		})
+    }
 	render() {
 		return (
 			<ScrollView style={styles.myPage}>
 				<Toast ref="toast" position="center" />
 				<View style={{ backgroundColor: "#fff"}}>
 					<Text style={styles.title}>{I18n.t('my._title')}</Text>
+				</View>
+				<View style={{ flexDirection: 'row', backgroundColor: '#fff', alignItems: 'center', padding: scaleSize(40), paddingBottom: 0}}>
+					<Image style={styles.headIcon} source={require('../../assets/images/asset/head_2x.png')} />
+					{!!this.state.phone? <Text style={{ fontSize: 18, color: '#0D0E15', fontWeight: 'bold' }}>{this.state.phone}</Text>
+					:<TouchableOpacity onPress={() => this.props.navigation.navigate('GoBindPhone', {page: 'my'})}><View>
+						<Text style={{ fontSize: 18, color: '#EA7428', marginBottom: scaleSize(12)}}>立即登录</Text>
+						<Text style={{ fontSize: 14, color: '#333', opacity: 0.5}}>登录后可查看更多内容</Text>
+					</View></TouchableOpacity>}
 				</View>
 				<View style={styles.myTopBan}>
 					<View style={styles.myTopBanCon}>
@@ -215,6 +217,11 @@ const styles = StyleSheet.create({
 		fontSize: 34,
 		marginTop: scaleSize(114) - minHeight,
 		marginLeft: scaleSize(32)
+	},
+	headIcon: {
+		width: scaleSize(140),
+		height: scaleSize(140),
+		marginRight: scaleSize(40)
 	},
 	myTopBan: {
 		padding: 8,

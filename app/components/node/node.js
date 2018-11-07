@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
 	View,
 	ScrollView,
+	RefreshControl,
 	Text,
 	Image,
 	Button,
@@ -90,7 +91,8 @@ class NodeItem extends Component {
 		super(props);
 		this.state = {
 			device: {},
-			sum: 0
+			sum: 0,
+			button: '12345'
 		};
 		// this.navigate = this.props.navigation.navigate;
 	}
@@ -125,14 +127,58 @@ class NodeItem extends Component {
 		}
 		
 	}
+	_onRefresh = () => {
+		this.setState({
+			refreshing: true
+		})
+		getDevice(this.state.userId).then((res) => {
+			const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
+			const balance = res.data.balance;
+			this.setState({
+				device: res.data,
+				userId: res.data.userId,
+				balance: balance,
+				phone: this.state.phone,
+				passwordExists: this.state.passwordExists,
+				sum: sum,
+				refreshing: false
+			})
+		}).catch((e) => {
+			const message = e.message;
+			if(message.indexOf('Network') !== -1){
+				this.props.navigation.navigate('noNetWork')
+			} else {
+				this.setState({
+					userId: this.state.userId,
+					passwordExists: this.state.passwordExists,
+					refreshing: false
+				})
+			}
+			
+		})
+	
+	}
 	// 组件初始渲染挂载界面完成后 异步加载数据
 	componentDidMount() {
+		storage
+		.load({
+			key: 'walletInfo'
+		})
+		.then((walletInfo) => {
+			let walletAddress = walletInfo.walletAddress;
+			this.setState({
+				walletAddress: walletAddress
+			})
+		});
 		// BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
 		// console.log(this.props.wallet)
 		storage
 		.load({ key: 'user'})
 		.then((user) => {
 			if(user.userId && user.passwordExists){
+				this.setState({
+					button: 'BindMachine'
+				})
 				getDevice(this.props.wallet.userId || user.userId).then((res) => {
 					const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
 					const balance = res.data.balance;
@@ -156,6 +202,14 @@ class NodeItem extends Component {
 					}
 					
 				})
+			} else if(user.phone){
+				this.setState({
+					button: 'SetPwd'
+				})
+			} else if(!user.phone){
+				this.setState({
+					button: 'GoBindPhone'
+				})
 			}
 		}).catch((e) => {
 			console.log(e)
@@ -168,6 +222,9 @@ class NodeItem extends Component {
 		})
 		.then((walletInfo) => {
 			let walletAddress = walletInfo.walletAddress;
+			this.setState({
+				walletAddress: walletAddress
+			})
 			getUser(walletAddress).then((res) => {
 				if(res.data){
 					if(!res.data.userId) {
@@ -197,11 +254,37 @@ class NodeItem extends Component {
 		// this.props.navigation.navigate('SetPwd', { page: 'node', userId: this.state.userId, phone: this.state.phone})
 	}
 	render() {
-		const { device } = this.state;
+		getUser(this.state.walletAddress).then((res) => {
+			if(res.data){
+				if(!res.data.userId) {
+					this.setState({
+						button: 'GoBindPhone'
+					})
+				} else if (!res.data.passwordExists) {
+					this.setState({
+						button: 'SetPwd'
+					})
+				} else {
+					this.setState({
+						button: 'BindMachine'
+					})
+				}
+			}
+		}).catch((e) => {
+			console.log(e)
+		})
+		const { device, button } = this.state;
 		return (
 			<View style={styles.container}>
 				<Toast ref="toast" position="center" />
-					<ScrollView style={{ marginBottom: scaleSize(106) + 30}}>
+					<ScrollView style={{ marginBottom: scaleSize(106) + 30}}
+						refreshControl={
+							<RefreshControl
+							  refreshing={this.state.refreshing}
+							  onRefresh={this._onRefresh}
+							/>
+						  }
+						>
 						<ImageBackground style={{ width: scaleSize(750), height: scaleSize(568)}} source={require('../../assets/images/node/node-top.png')}>
 							<View style={styles.top}>
 								<Text style={styles.title}>{I18n.t('node.miner')}</Text>
@@ -244,11 +327,9 @@ class NodeItem extends Component {
 							})}
 						</View>
 						{(!this.state.sum || device.deviceSum < 2) && <TouchableOpacity style={styles.button} onPress={this._clickToBindMachine}>
-							<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.registerMiner._title')}</Text>
+							<Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{this.state.button}</Text>
 						</TouchableOpacity>}
 					</ScrollView>
-				
-
 
 			</View>
 		);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableHighlight, TouchableOpacity } from 'react-native';
 import { I18n } from '../../language/i18n';
 import { withNavigation } from 'react-navigation';
 import { scaleSize } from '../utils/ScreenUtil';
@@ -34,6 +34,9 @@ class Guide extends Component {
 						</TouchableHighlight>
 					</View>
 				</View>
+				<TouchableOpacity onPress={() => this.props.navigation.navigate('HelperCenter')}>
+					<Text style={{ color: '#2D3C71', fontSize: 14}}>需要帮助?</Text>
+				</TouchableOpacity>
 			</View>
 		);
 	}

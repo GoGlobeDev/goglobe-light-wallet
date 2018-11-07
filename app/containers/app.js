@@ -35,6 +35,7 @@ import KnowledgePoint from '../components/my/knowledgePoint'; // 我的 -> 帮�
 import AboutUs from '../components/my/aboutus'; //我的 -> 关于我们
 import UserPolicy from '../components/my/userpolicy'; //我的 -> 关于我们 -> 用户协议
 import Versions from '../components/my/versions'; //我的 -> 关于我们 -> 版本日志
+import ContactUs from '../components/my/contactUs'; //我的 -> 关于我们 -> 联系我们
 
 import BindingPhone from '../components/my/bindingPhone'; // 我的 -> 绑定手机
 import GoBindPhone from '../components/my/goBindPhone'; //我的 -> 去绑定手机号
@@ -301,25 +302,15 @@ const RootNavigator = createStackNavigator(
 			}
 		},
 		WalletInfo,
-		// WalletInfo: {
-		// 	screen: WalletInfo,
+		ExportMnemonic,
+		// ExportMnemonic: {
+		// 	screen: ExportMnemonic,
 		// 	navigationOptions: {
-		// 		headerTitle: () => <Text>{I18n.t('assets.walletInfo.title')}</Text>
+		// 		headerTitle: () => <Text>{I18n.t('assets.walletInfo.backUpMnemonic')}</Text>
 		// 	}
 		// },
-		ExportMnemonic: {
-			screen: ExportMnemonic,
-			navigationOptions: {
-				headerTitle: () => <Text>{I18n.t('assets.walletInfo.exportMnemonic')}</Text>
-			}
-		},
 		ExportKeystore,
-		// ExportKeystore: {
-		// 	screen: ExportKeystore,
-		// 	navigationOptions: {
-		// 		headerTitle: () => <Text>{I18n.t('assets.walletInfo.exportKeystore')}</Text>
-		// 	}
-		// },
+
 		AboutUs: {
 			screen: AboutUs,
 			navigationOptions: {
@@ -336,6 +327,12 @@ const RootNavigator = createStackNavigator(
 			screen: Versions,
 			navigationOptions: {
 				headerTitle: () => <Text>{I18n.t('my.home.Versions._title')}</Text>
+			}
+		},
+		ContactUs:{
+			screen: ContactUs,
+			navigationOptions: {
+				headerTitle: () => <Text>{I18n.t('my.home.ContactUs._title')}</Text>
 			}
 		},
 		HelperCenter: {

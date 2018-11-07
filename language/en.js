@@ -49,6 +49,9 @@ export default {
 			Versions: {
 				_title: 'Version log'
 			},
+			ContactUs: {
+				_title: 'Contact Us'
+			},
 			invitationCode: {
                 _title: 'Invitation Code',
                 myInvitationCode: 'My Inviation Code',
@@ -115,7 +118,8 @@ export default {
 				useAgreement: 'Use Agreement',
 				privacyPolicy: 'Privacy Policy',
 				versionLog: 'Version Log',
-				checkVersion: 'Detect new version'
+				checkVersion: 'Detect new version',
+				contactus: 'contact us'
 			}
 		},
 		sysSetting: {
@@ -154,6 +158,8 @@ export default {
 			exportPrivateKey: 'Export PrivateKey',
 			exportKeystore: 'Export Keystore',
 			exportMnemonic: 'Export Mnemonic',
+			backUpMnemonic: 'backUp Mnemonic',
+			confirmMnemonic: 'confirm Mnemonic',
 			deleteWallet: 'Delete Wallet',
 			keystoreFile: 'Keystore File',
 			qrcode: 'QR code',
@@ -319,6 +325,7 @@ export default {
 		verificationCodeError: 'Verification code error',
 		enter_the_legal_mobile_number: 'Please enter a legal mobile number',
 		walletName: 'Wallet name',
+		setPassword: 'set Password',
 		electoralManifesto: 'electoral manifesto',
 		nickName: 'Nick name',
 		personaNickName: 'Personal Nickname',

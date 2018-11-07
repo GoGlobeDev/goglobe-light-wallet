@@ -211,7 +211,7 @@ class CreateWallet extends Component {
 						/>
 					</View>
 					<View style={styles.inputbox}>
-						<Text style={styles.title_sm}>{I18n.t('wallet.enterPwd')}</Text>
+						<Text style={styles.title_sm}>{I18n.t('public.setPassword')}</Text>
 						<Input
 						{...this.pwd}
 						// errorMessage={this.state.pwd ? ' ' : I18n.t('wallet.pwdSuggest')}

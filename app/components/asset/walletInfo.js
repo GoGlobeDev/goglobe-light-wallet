@@ -397,6 +397,7 @@ class WalletInfo extends Component {
 					ref={'codeInput'}
 					coverScreen={true}
 					swipeArea={20}
+					backButtonClose={true}
 					onClosed={() => {
 						this.setState({ deleteBtnshow: true });
 					}}
@@ -422,6 +423,7 @@ class WalletInfo extends Component {
 					coverScreen={true}
 					ref={'changeWalletName'}
 					swipeArea={20}
+					backButtonClose={true}
 					>
 					<View style={styles.InputPwd_title}>
 						<Text style={styles.modalTitle}>{this.state.modalTitle}</Text>
@@ -460,6 +462,7 @@ class WalletInfo extends Component {
 					coverScreen={true}
 					ref={'privateKey'}
 					swipeArea={20}
+					backButtonClose={true}
 					>
 					<View style={styles.privateKeyTitle}>
 						<Text style={styles.modalTitle}>{I18n.t('assets.walletInfo.exportPrivateKey')}</Text>

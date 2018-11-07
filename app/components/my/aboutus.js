@@ -219,6 +219,23 @@ export class AboutUs extends Component {
 							</View>
 						</View>
 					</TouchableHighlight>
+					<TouchableHighlight
+						underlayColor={'#ddd'}
+						activeOpacity={0.5}
+						onPress={() => this.props.navigation.navigate('ContactUs')}
+					>
+						<View style={styles.row}>
+							<View style={styles.rowLf}>
+								<Text style={styles.rowLfText}>
+									{I18n.t('my.home.aboutUs.contactus')}
+									{/*联系我们*/}
+								</Text>
+							</View>
+							<View style={styles.rowRi}>
+								<Icon name="icon-right" size={15} color="#000" />
+							</View>
+						</View>
+					</TouchableHighlight>
 				</View>
 			</View>
 		);
