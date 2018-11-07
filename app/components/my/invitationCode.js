@@ -94,13 +94,13 @@ class InvitationCode extends React.Component {
                 <View style={styles.view}>
                     <Text style={styles.title}>{I18n.t('my.home.invitationCode.myBinders')}</Text>
                     { this.state.binders && this.state.binders.length > 0
-                        ? <View style={styles.listView}>
-                            <Text style={styles.content}>{this.state.binders[0]}</Text>
-                            { this.state.binders.length > 1
-                                ? <Text style={styles.content}>{this.state.binders[1]}</Text>
-                                : <Text style={[styles.content, { color: '#CFCFD0' }]}>{I18n.t('my.home.invitationCode.notUsed')}</Text>
-                            }
-                        </View>
+						? 
+							this.state.binders.map( (item, index)=> {
+							
+							return	<Text key={item+index} style={styles.content}>{item}</Text>
+							
+						})
+						
                         : <View style={styles.lineView}>
                             <Text style={[styles.content, { color: '#CFCFD0' }]}>{I18n.t('my.home.invitationCode.noBinders')}</Text>
                         </View>

@@ -92,7 +92,7 @@ class NodeItem extends Component {
 		this.state = {
 			device: {},
 			sum: 0,
-			button: '12345'
+			button: ''
 		};
 		// this.navigate = this.props.navigation.navigate;
 	}
@@ -177,7 +177,7 @@ class NodeItem extends Component {
 		.then((user) => {
 			if(user.userId && user.passwordExists){
 				this.setState({
-					button: 'BindMachine'
+					button: '绑定设备'
 				})
 				getDevice(this.props.wallet.userId || user.userId).then((res) => {
 					const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
@@ -204,11 +204,11 @@ class NodeItem extends Component {
 				})
 			} else if(user.phone){
 				this.setState({
-					button: 'SetPwd'
+					button: '设置交易密码'
 				})
 			} else if(!user.phone){
 				this.setState({
-					button: 'GoBindPhone'
+					button: '绑定手机号'
 				})
 			}
 		}).catch((e) => {
@@ -258,15 +258,15 @@ class NodeItem extends Component {
 			if(res.data){
 				if(!res.data.userId) {
 					this.setState({
-						button: 'GoBindPhone'
+						button: '绑定手机号'
 					})
 				} else if (!res.data.passwordExists) {
 					this.setState({
-						button: 'SetPwd'
+						button: '设置交易密码'
 					})
 				} else {
 					this.setState({
-						button: 'BindMachine'
+						button: '绑定设备'
 					})
 				}
 			}
