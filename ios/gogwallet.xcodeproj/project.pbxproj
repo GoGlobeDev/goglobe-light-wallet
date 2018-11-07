@@ -42,7 +42,6 @@
 		3C7151F220F3657C00E63617 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		3C719EEF211001690088E6F3 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C719EE1211001570088E6F3 /* libRNDeviceInfo.a */; };
 		3C719EF02110018E0088E6F3 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C719EE1211001570088E6F3 /* libRNDeviceInfo.a */; };
-		3C82970220F35D9500CCE45C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		3C866A61210ABEC8005F3FD8 /* iconfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C866A60210ABEC8005F3FD8 /* iconfont.ttf */; };
 		3C8F15B620FF3BE4008A0251 /* libRCTRestart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C8F15B520FF3BCF008A0251 /* libRCTRestart.a */; };
 		3C8F15B720FF3BED008A0251 /* libRCTRestart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C8F15B520FF3BCF008A0251 /* libRCTRestart.a */; };
@@ -82,6 +81,7 @@
 		8922E7A210834D3BB2B6BB3E /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B107940C54AB46688B2C8C4B /* libRNSVG.a */; };
 		9FA84164F3AC457CB9CA95C5 /* libTcpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4049F01B8A2A4A0D8C96E4EC /* libTcpSockets.a */; };
 		A4335C4294E44A08B7E3D9FB /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9736573B3B464FFD96F3CDC4 /* libRNRandomBytes.a */; };
+		A5208F7A218AA00600818EAF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B02A6BF1522A44D88D4A5102 /* libRNI18n-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 260C4FCBE8F2454E838832F2 /* libRNI18n-tvOS.a */; };
 		C5B75C03946344158B20B259 /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7471C61BD7684E91AC1F8E1E /* libRNSVG-tvOS.a */; };
@@ -1120,7 +1120,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = SB68PS293V;
+						DevelopmentTeam = 7JD3Q4832F;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1654,6 +1654,7 @@
 				3CD5E12920F33ACF003D2686 /* Zocial.ttf in Resources */,
 				3CD5E13720F33ACF003D2686 /* EvilIcons.ttf in Resources */,
 				3CD5E12F20F33ACF003D2686 /* MaterialCommunityIcons.ttf in Resources */,
+				A5208F7A218AA00600818EAF /* Images.xcassets in Resources */,
 				3CD5E12B20F33ACF003D2686 /* Foundation.ttf in Resources */,
 				3CD5E13520F33ACF003D2686 /* Entypo.ttf in Resources */,
 				3CD5E12D20F33ACF003D2686 /* Ionicons.ttf in Resources */,
@@ -1661,7 +1662,6 @@
 				3CD5E13320F33ACF003D2686 /* FontAwesome.ttf in Resources */,
 				3CD5E13120F33ACF003D2686 /* SimpleLineIcons.ttf in Resources */,
 				3C7151F220F3657C00E63617 /* LaunchScreen.xib in Resources */,
-				3C82970220F35D9500CCE45C /* Images.xcassets in Resources */,
 				3CD5E12720F33ACF003D2686 /* Octicons.ttf in Resources */,
 				3CD5E12320F33ACF003D2686 /* Feather.ttf in Resources */,
 			);
@@ -1910,7 +1910,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = SB68PS293V;
+				DEVELOPMENT_TEAM = 7JD3Q4832F;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
@@ -1955,7 +1955,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = SB68PS293V;
+				DEVELOPMENT_TEAM = 7JD3Q4832F;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",

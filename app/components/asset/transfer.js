@@ -11,7 +11,7 @@ import abi from '../../utils/trueabi';
 import { I18n } from '../../../language/i18n';
 import Loading from 'react-native-whc-loading';
 import { scaleSize } from '../../utils/ScreenUtil';
-
+import { checkUpdate } from '../../api/index';
 const screen = Dimensions.get('window');
 
 class Detail extends Component {
@@ -456,20 +456,27 @@ class Transfer extends Component {
 																this.state.keystoreV3,
 																this.state.password
 															);
-															NetInfo.isConnected.fetch().then(isConnected => {
-																if(isConnected){
-																	this._sendTokens();
+															checkUpdate('android')
+															.then(() => {
+																this._sendTokens();
 																	this.setState({
 																		password: null
 																	});
-																} else {
-																	this.refs.loading.close();
+															}).catch((e) => {
+																this.refs.loading.close();
 																	this.props.navigation.navigate('noNetWork')
-																}
-															})
-															// this.setState({
-															// 	password: null
-															// });
+															});
+															// NetInfo.isConnected.fetch().then(isConnected => {
+															// 	if(isConnected){
+															// 		this._sendTokens();
+															// 		this.setState({
+															// 			password: null
+															// 		});
+															// 	} else {
+															// 		this.refs.loading.close();
+															// 		this.props.navigation.navigate('noNetWork')
+															// 	}
+															// })
 														} catch (error) {
 															this.refs.loading.close();
 															setTimeout(() => {

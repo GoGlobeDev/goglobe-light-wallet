@@ -16,22 +16,18 @@ export default class noMainNet extends Component {
         header: null
     }
     _clickToRetry= () => {
-        NetInfo.isConnected.fetch().then(isConnected => {
-			if(isConnected){
-                const webProvider = new Web3.providers.HttpProvider(host);
-                const web3 = new Web3(webProvider);
-                global.web3 = web3;
-                // if(webProvider.connected){
-                //     const web3 = new Web3(webProvider);
-                //     global.web3 = web3;
-                // } else {
-                //     const web3 = new Web3(webProvider);
-                //     global.web3 = web3;
-                // }
-                // this.props.navigation.goBack();
-                this.props.navigation.navigate('Splash')
-            }
-		})
+        const webProvider = new Web3.providers.HttpProvider(host);
+        const web3 = new Web3(webProvider);
+        global.web3 = web3;
+        // if(webProvider.connected){
+        //     const web3 = new Web3(webProvider);
+        //     global.web3 = web3;
+        // } else {
+        //     const web3 = new Web3(webProvider);
+        //     global.web3 = web3;
+        // }
+        // this.props.navigation.goBack();
+        this.props.navigation.navigate('Splash')
     }
     render() {
         return (

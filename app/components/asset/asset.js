@@ -82,39 +82,49 @@ class Assets extends Component {
 
 
 	getAllBalance() {
-		NetInfo.isConnected.fetch().then(isConnected => {
-			if(isConnected){
-				this.setState({
-					isRefreshing: true
-				});
-				web3.eth.getBalance(this.state.walletAddress).then((res) => {
-					let eth_banlance = show(web3.utils.fromWei(res, 'ether'));
-					this.setState({ eth_banlance });
-				});
-				getBalance(
-					abi,
-					this.state.walletAddress,
-					store.getState().contractAddr.GOGContractAddr,
-					(gog_banlance) => {
-						gog_banlance = show(gog_banlance);
-						this.setState({ gog_banlance });
-					}
-				);
-				this.updataWalletName();
-		
-				setTimeout(() => {
-					this.setState({
-						isRefreshing: false
-					});
-				}, 1000);
-			} else {
+		// NetInfo.isConnected.fetch().then(isConnected => {
+		// 	if(isConnected){
+				
+		// 	} else {
+		// 		this.setState({
+		// 			isRefreshing: false
+		// 		});
+		// 		//this.props.navigation.navigate('noMainNet')
+		// 	}
+		// })
+		checkUpdate('android')
+		.then(() => {
+			this.setState({
+				isRefreshing: true
+			});
+			web3.eth.getBalance(this.state.walletAddress).then((res) => {
+				let eth_banlance = show(web3.utils.fromWei(res, 'ether'));
+				this.setState({ eth_banlance });
+			});
+			getBalance(
+				abi,
+				this.state.walletAddress,
+				store.getState().contractAddr.GOGContractAddr,
+				(gog_banlance) => {
+					gog_banlance = show(gog_banlance);
+					this.setState({ gog_banlance });
+				}
+			);
+			this.updataWalletName();
+	
+			setTimeout(() => {
 				this.setState({
 					isRefreshing: false
 				});
-				//this.props.navigation.navigate('noMainNet')
+			}, 1000);
+		}).catch((e) => {
+			const message = e.message;
+			if(message.indexOf('Network') !== -1){
+				this.props.navigation.navigate('noNetWork')
+			} else {
+				console.log(e.message)
 			}
-		})
-		
+		});
 		
 	}
 	componentWillReceiveProps(newProps){
@@ -184,6 +194,15 @@ class Assets extends Component {
 							expires: null
 						});
 					}
+					this.setState(
+						{
+							walletAddress: walletAddress
+						},
+						() => {
+							this.getAllBalance();
+	
+						}
+					);
 				}).catch((e) => {
 					const message = e.message;
 					if(message.indexOf('Network') !== -1){
@@ -192,15 +211,6 @@ class Assets extends Component {
 						console.log(e.message)
 					}
 				})
-				this.setState(
-					{
-						walletAddress: walletAddress
-					},
-					() => {
-						this.getAllBalance();
-
-					}
-				);
 			})
 			.catch((x) => {
 				console.log(x);

@@ -17,8 +17,8 @@ export default class noNetWork extends Component {
         header: null
     }
     _clickToRetry= () => {
-        NetInfo.isConnected.fetch().then(isConnected => {
-			if(isConnected){
+        // NetInfo.isConnected.fetch().then(isConnected => {
+			// if(isConnected){
                 checkUpdate('android')
                 .then(() => {
                     this.props.navigation.goBack();
@@ -28,8 +28,8 @@ export default class noNetWork extends Component {
                 });
                // this.props.navigation.goBack();
                // this.props.navigation.navigate('Splash')
-            }
-		})
+            // }
+		// })
     }
     render() {
         return (
