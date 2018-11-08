@@ -152,7 +152,7 @@ export default {
             }
 		},
 		version: {
-			_number: '1.1.1',
+			_number: '1.1.2',
 			_newVersion: '发现GoGlobe',
 			_version: '版本',
 			upgradeNow: '立即升级',

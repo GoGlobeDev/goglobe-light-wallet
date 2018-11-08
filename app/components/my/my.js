@@ -7,6 +7,7 @@ import Icon from '../../pages/iconSets';
 import { scaleSize, ifIphoneX } from '../../utils/ScreenUtil';
 import Toast from 'react-native-easy-toast';
 const minHeight = ifIphoneX(0, 20, StatusBar.currentHeight);
+import { connect } from 'react-redux';
 
 class My extends Component {
 	constructor(props) {
@@ -16,9 +17,27 @@ class My extends Component {
 			phone: ''
 		}
 	}
+	componentWillReceiveProps(newProps) {
+		// console.log(newProps)
+		// console.log(newProps.wallet.userId)
+		if(newProps.wallet.userId){
+			storage.load({ key: 'user' }).then((user) => {
+				// console.log(user)
+				this.setState({
+					phone: user.phone
+				})
+			})
+		}
+		if(newProps.navigation.state.params && newProps.navigation.state.params.phone){
+			this.setState({
+				phone: newProps.navigation.state.params.phone
+			})
+		}
+		
+	}
 	componentDidMount() {
 		storage.load({ key: 'user' }).then((user) => {
-			console.log(user)
+			// console.log(user)
 			this.setState({
 				phone: user.phone
 			})
@@ -106,7 +125,7 @@ class My extends Component {
 								</View>
 							</View>
 						</TouchableHighlight>
-						<TouchableHighlight
+						{/* <TouchableHighlight
 							onPress={() => this.props.navigation.navigate('changePwd')}
 							underlayColor={'#ddd'}
 							activeOpacity={0.5}
@@ -122,7 +141,8 @@ class My extends Component {
 									</View>
 								</View>
 							</View>
-						</TouchableHighlight>
+						</TouchableHighlight> */}
+						{/* 我的影响力 */}
 						{/* <TouchableHighlight
 							onPress={() => this.props.navigation.navigate('effect')}
 							underlayColor={'#ddd'}
@@ -205,7 +225,11 @@ class My extends Component {
 	}
 }
 
-export default withNavigation(My);
+export default connect(
+	state => ({
+		wallet: state.wallet
+	}),
+)(My);
 
 const styles = StyleSheet.create({
 	myPage: {

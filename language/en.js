@@ -136,7 +136,7 @@ export default {
             }
 		},
 		version: {
-			_number: '1.1.1',
+			_number: '1.1.2',
 			_newVersion: 'Find GoGlobe',
 			_version: 'version',
 			upgradeNow: 'Upgrade Now',

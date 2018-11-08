@@ -157,11 +157,11 @@ class CreateWallet extends Component {
 														]
 													});
 													this.props.navigation.dispatch(resetAction);
-												}, 0);
+												}, 100);
 											});
 										}
 									);
-								}, 50);
+								}, 1830);
 									})
 								})
 							})

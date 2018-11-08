@@ -92,7 +92,8 @@ class NodeItem extends Component {
 		this.state = {
 			device: {},
 			sum: 0,
-			button: ''
+			button: '',
+			refreshing: false
 		};
 		// this.navigate = this.props.navigation.navigate;
 	}
@@ -128,10 +129,13 @@ class NodeItem extends Component {
 		
 	}
 	_onRefresh = () => {
+		console.log('dddd')
 		this.setState({
 			refreshing: true
 		})
 		getDevice(this.state.userId).then((res) => {
+			console.log('node')
+			console.log(res)
 			const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
 			const balance = res.data.balance;
 			this.setState({
@@ -144,6 +148,9 @@ class NodeItem extends Component {
 				refreshing: false
 			})
 		}).catch((e) => {
+			this.setState({
+				refreshing: false
+			})
 			const message = e.message;
 			if(message.indexOf('Network') !== -1){
 				this.props.navigation.navigate('noNetWork')
@@ -254,25 +261,27 @@ class NodeItem extends Component {
 		// this.props.navigation.navigate('SetPwd', { page: 'node', userId: this.state.userId, phone: this.state.phone})
 	}
 	render() {
-		getUser(this.state.walletAddress).then((res) => {
-			if(res.data){
-				if(!res.data.userId) {
-					this.setState({
-						button: '绑定手机号'
-					})
-				} else if (!res.data.passwordExists) {
-					this.setState({
-						button: '设置交易密码'
-					})
-				} else {
-					this.setState({
-						button: '绑定设备'
-					})
+		if(this.state.walletAddress) {
+			getUser(this.state.walletAddress).then((res) => {
+				if(res.data){
+					if(!res.data.userId) {
+						this.setState({
+							button: '绑定手机号'
+						})
+					} else if (!res.data.passwordExists) {
+						this.setState({
+							button: '设置交易密码'
+						})
+					} else {
+						this.setState({
+							button: '绑定设备'
+						})
+					}
 				}
-			}
-		}).catch((e) => {
-			console.log(e)
-		})
+			}).catch((e) => {
+				console.log(e)
+			})
+		}
 		const { device, button } = this.state;
 		return (
 			<View style={styles.container}>

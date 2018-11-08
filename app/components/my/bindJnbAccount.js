@@ -18,7 +18,7 @@ class BindJnbAccount extends React.Component {
     }
     
 	componentDidMount() {
-        console.log(this.props.navigation.state.params.userId)
+        // console.log(this.props.navigation.state.params.userId)
 		// if(this.props.navigation.state.params.page === 'node'){
 		// 	this.setState({
 		// 		tip: true
@@ -31,7 +31,7 @@ class BindJnbAccount extends React.Component {
 		})
     }
     _clickToBindJnb = () => {
-        console.log(this.state.password)
+        // console.log(this.state.password)
         bindJnbAccout(this.props.navigation.state.params.userId, this.state.email, this.state.password).then((res) => {
             if(res.data.status === 'success') {
                 // storage.save({ key: 'user', data: { jnbAccount: this.state.email}, expires: null })

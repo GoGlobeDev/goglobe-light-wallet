@@ -26,7 +26,7 @@ class BindingPhone extends React.Component {
 		})
 	}
 	_setBindingPhone = () => {
-		this.props.navigation.navigate('GoBindPhone', {page: 'my'});
+		this.props.navigation.navigate('GoBindPhone', {page: 'bindPhone'});
 	}
 	render() {
 		const { params } = this.props.navigation.state;
