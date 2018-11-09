@@ -235,7 +235,8 @@ export default {
         status: '状态',
         active: '激活',
         inactive: '未激活',
-        dailyProduct: '日产出',
+		dailyProduct: '日产出',
+		dailyRate: '日利率',
         address: '地点',
         registerMiner: {
             _title: '绑定设备',

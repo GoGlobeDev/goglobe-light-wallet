@@ -129,13 +129,10 @@ class NodeItem extends Component {
 		
 	}
 	_onRefresh = () => {
-		console.log('dddd')
 		this.setState({
 			refreshing: true
 		})
-		getDevice(this.state.userId).then((res) => {
-			console.log('node')
-			console.log(res)
+		getDevice(this.state.userId || this.props.wallet.userId).then((res) => {
 			const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
 			const balance = res.data.balance;
 			this.setState({
@@ -184,7 +181,7 @@ class NodeItem extends Component {
 		.then((user) => {
 			if(user.userId && user.passwordExists){
 				this.setState({
-					button: '绑定设备'
+					button: I18n.t('node.registerMiner._title')
 				})
 				getDevice(this.props.wallet.userId || user.userId).then((res) => {
 					const sum = Number(res.data.bindDeviceList.length) + res.data.deviceSum
@@ -211,11 +208,11 @@ class NodeItem extends Component {
 				})
 			} else if(user.phone){
 				this.setState({
-					button: '设置交易密码'
+					button: I18n.t('node.setPassword._title')
 				})
 			} else if(!user.phone){
 				this.setState({
-					button: '绑定手机号'
+					button: I18n.t('my.home.bindPhone._title')
 				})
 			}
 		}).catch((e) => {
@@ -266,15 +263,15 @@ class NodeItem extends Component {
 				if(res.data){
 					if(!res.data.userId) {
 						this.setState({
-							button: '绑定手机号'
+							button: I18n.t('my.home.bindPhone._title')
 						})
 					} else if (!res.data.passwordExists) {
 						this.setState({
-							button: '设置交易密码'
+							button: I18n.t('node.setPassword._title')
 						})
 					} else {
 						this.setState({
-							button: '绑定设备'
+							button: I18n.t('node.registerMiner._title')
 						})
 					}
 				}
@@ -307,7 +304,7 @@ class NodeItem extends Component {
 									</TouchableOpacity>
 								</View>
 								<View style={{ flexDirection: 'row', alignItems: 'center', marginTop: scaleSize(10)}}>
-									<Text style={{ fontSize: 13, fontFamily: 'PingFangSC-Regular', color: 'rgba(255,255,255,1)' }}>日利率</Text><Text style={{ color: '#FF8018', fontSize: 12, marginLeft: scaleSize(4) }}>+{show(device.dailyInterest)}</Text>
+									<Text style={{ fontSize: 13, fontFamily: 'PingFangSC-Regular', color: 'rgba(255,255,255,1)' }}>{I18n.t('node.dailyRate')}</Text><Text style={{ color: '#FF8018', fontSize: 12, marginLeft: scaleSize(4) }}>+{show(device.dailyInterest)}</Text>
 								</View>
 								<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 									<View>
