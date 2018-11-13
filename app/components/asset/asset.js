@@ -14,7 +14,8 @@ import {
 	StatusBar,
 	BackHandler,
 	Alert,
-	NetInfo
+	NetInfo,
+	Platform
 } from 'react-native';
 import { connect } from 'react-redux';
 import { scaleSize, ifIphoneX, show } from '../../utils/ScreenUtil';
@@ -92,6 +93,7 @@ class Assets extends Component {
 		// 		//this.props.navigation.navigate('noMainNet')
 		// 	}
 		// })
+		
 		checkUpdate('android')
 		.then(() => {
 			this.setState({
@@ -126,6 +128,7 @@ class Assets extends Component {
 			}
 		});
 		
+		
 	}
 	componentWillReceiveProps(newProps){
 		if(newProps.wallet.walletName){
@@ -136,22 +139,24 @@ class Assets extends Component {
 		// console.log(newProps.wallet.walletName)
 	}
 	componentDidMount() {
-		checkUpdate('android')
-		.then((res) => {
-			if(I18n.t('my.version._number') !== res.data.androidVersion){
-				this.setState({
-					newVersion: res.data.androidVersion,
-					modalVisible: true
-				});
-			}
-		}).catch((e) => {
-			const message = e.message;
-			if(message.indexOf('Network') !== -1){
-				this.props.navigation.navigate('noNetWork')
-			} else {
-				console.log(e.message)
-			}
-		});
+		if(Platform.OS != 'ios'){
+			checkUpdate('android')
+			.then((res) => {
+				if(I18n.t('my.version._number') !== res.data.androidVersion){
+					this.setState({
+						newVersion: res.data.androidVersion,
+						modalVisible: true
+					});
+				}
+			}).catch((e) => {
+				const message = e.message;
+				if(message.indexOf('Network') !== -1){
+					this.props.navigation.navigate('noNetWork')
+				} else {
+					console.log(e.message)
+				}
+			});
+		}
 		// BackHandler.addEventListener("hardwareBackPress", this.onBackPress)
 		storage.save({ key: 'mnemonic', data: { mnemonic: false }, expires: null})
 		const minHeight = ifIphoneX(0, 20, StatusBar.currentHeight);

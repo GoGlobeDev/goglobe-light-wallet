@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Alert, Text, StyleSheet, TouchableHighlight, Dimensions } from 'react-native';
+import { View, Alert, Text, StyleSheet, TouchableHighlight, Dimensions, ScrollView } from 'react-native';
 import { Button } from 'react-native-elements';
 import lightwallet from 'eth-lightwallet';
 import { StackActions, NavigationActions, withNavigation } from 'react-navigation';
@@ -167,7 +167,7 @@ export class ExportMnemonic extends Component {
 		}
 		if (this.state.step == 'confirm') {
 			currentStep = (
-				<View style={styles.container}>
+				<ScrollView >
 					<View style={styles.warning}>
 						<Text style={styles.warning_item}>
 							·{I18n.t('assets.mnemonic.confirmMnemonic')}
@@ -189,7 +189,7 @@ export class ExportMnemonic extends Component {
 						buttonStyle={styles.backupBtn}
 						onPress={this.confirmWords}
 					/>
-				</View>
+				</ScrollView>
 			);
 		}
 

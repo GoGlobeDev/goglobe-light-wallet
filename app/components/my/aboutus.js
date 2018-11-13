@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, StyleSheet, TouchableHighlight, Modal, Alert, Linking } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableHighlight, Modal, Alert, Linking, Platform } from 'react-native';
 import { I18n } from '../../../language/i18n';
 import { withNavigation } from 'react-navigation';
 import Icon from '../../pages/iconSets';
@@ -55,24 +55,28 @@ export class AboutUs extends Component {
 	}
 
 	_checkVersion() {
-		checkUpdate('android')
-		.then((res) => {
-			if(I18n.t('my.version._number') == res.data.androidVersion){
-				Alert.alert(I18n.t('my.version.noUpdate'));
-			} else {
-				this.setState({
-					newVersion: res.data.androidVersion,
-					modalVisible: true
-				});
-			}
-		}).catch((e) => {
-			const message = e.message;
-			if(message.indexOf('Network') !== -1){
-				this.props.navigation.navigate('noNetWork')
-			} else {
-				console.log(e.message)
-			}
-		});
+		if(Platform.OS != 'ios'){
+			checkUpdate('android')
+			.then((res) => {
+				if(I18n.t('my.version._number') == res.data.androidVersion){
+					Alert.alert(I18n.t('my.version.noUpdate'));
+				} else {
+					this.setState({
+						newVersion: res.data.androidVersion,
+						modalVisible: true
+					});
+				}
+			}).catch((e) => {
+				const message = e.message;
+				if(message.indexOf('Network') !== -1){
+					this.props.navigation.navigate('noNetWork')
+				} else {
+					console.log(e.message)
+				}
+			});
+		} else {
+			Alert.alert(I18n.t('my.version.noUpdate'));
+		}
 	}
 
 	render() {

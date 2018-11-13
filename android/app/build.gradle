@@ -151,6 +151,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-fast-crypto')
     implementation project(':react-native-device-info')
     implementation project(':react-native-pdf')
     implementation project(':rn-fetch-blob')

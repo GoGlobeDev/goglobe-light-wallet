@@ -10,6 +10,7 @@
     "bundle-ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ./ios/bundle/index.ios.jsbundle --assets-dest ./ios/bundle"
   },
   "dependencies": {
+    "@stablelib/scrypt": "^0.10.1",
     "@tradle/react-native-http": "^2.0.1",
     "axios": "^0.18.0",
     "browserify-zlib": "^0.1.4",
@@ -33,6 +34,7 @@
     "react-native-device-info": "^0.22.2",
     "react-native-easy-toast": "^1.1.0",
     "react-native-elements": "^1.0.0-beta5",
+    "react-native-fast-crypto": "^1.6.0",
     "react-native-gesture-password": "^0.3.4",
     "react-native-i18n": "^2.0.12",
     "react-native-level-fs": "^3.0.1",

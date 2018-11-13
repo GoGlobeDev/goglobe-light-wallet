@@ -112,7 +112,10 @@ class CreateWallet extends Component {
 							return checkisAgress(this.state.isAgree).then(() => {
 								this.refs.loading.show();
 								setTimeout(() => {
+									// const now = new Date();
+									// Alert.alert('1:', new Date());
 									let randomSeed = lightwallet.keystore.generateRandomSeed();
+									// Alert.alert('2:', new Date());
 									lightwallet.keystore.createVault(
 										{
 											password: this.state.pwd,
@@ -121,7 +124,9 @@ class CreateWallet extends Component {
 										},
 										(err, ks) => {
 											ks.keyFromPassword(this.state.pwd, (err, pwDerivedKey) => {
+												// Alert.alert('4:', new Date());
 												ks.generateNewAddress(pwDerivedKey, 1);
+												// Alert.alert('5:', new Date());
 												var address = ks.getAddresses();
 												let keystoreV3 = web3.eth.accounts
 													.privateKeyToAccount('0x' + ks.exportPrivateKey(address[0], pwDerivedKey))
@@ -143,6 +148,7 @@ class CreateWallet extends Component {
 													},
 													expires: null
 												});
+												// Alert.alert('6:', new Date());
 												setTimeout(() => {
 													this.refs.loading.close();
 													let resetAction = StackActions.reset({
@@ -157,10 +163,11 @@ class CreateWallet extends Component {
 														]
 													});
 													this.props.navigation.dispatch(resetAction);
-												}, 0);
+												}, 100);
 											});
 										}
 									);
+									// Alert.alert('3:', new Date());
 								}, 50);
 									})
 								})
