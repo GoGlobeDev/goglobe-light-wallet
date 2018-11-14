@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Alert, Text, StyleSheet, TouchableHighlight, Dimensions, ScrollView } from 'react-native';
+import { View, Alert, Text, StyleSheet, TouchableHighlight, Dimensions, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-elements';
 import lightwallet from 'eth-lightwallet';
 import { StackActions, NavigationActions, withNavigation } from 'react-navigation';
@@ -8,7 +8,6 @@ import { I18n } from '../../../language/i18n';
 import { scaleSize } from '../../utils/ScreenUtil';
 import { addStatistic } from '../../api/bind';
 const screen = Dimensions.get('window');
-
 export class ExportMnemonic extends Component {
 	constructor(props) {
 		super(props);
@@ -31,6 +30,11 @@ export class ExportMnemonic extends Component {
 		this.renderWord = this.renderWord.bind(this);
 		this.clickWord = this.clickWord.bind(this);
 	}
+
+	static navigationOptions = ({ navigation }) => ({
+		// headerTitle: navigation.state.params.title
+		header: null
+	});
 
 	componentDidMount() {
 		const { params } = this.props.navigation.state;
@@ -139,6 +143,9 @@ export class ExportMnemonic extends Component {
 		if (this.state.step == 'backup') {
 			currentStep = (
 				<View style={styles.container}>
+					<View style={styles.header}>
+						<Text>{I18n.t('assets.walletInfo.backUpMnemonic')}</Text>
+					</View>
 					<View style={styles.warning}>
 						<Text style={styles.warning_item}>
 							·{I18n.t('assets.mnemonic.copyYourMnemonic')}
@@ -146,6 +153,10 @@ export class ExportMnemonic extends Component {
 						</Text>
 						<Text style={styles.color_999}>
 							{I18n.t('assets.mnemonic.mnemonicWring')}
+							{/* 助记词用于恢复钱包或重置钱包密码，将它准确的抄写到纸上，并存放在只有你知道的安全地方。 */}
+						</Text>
+						<Text style={styles.color_999}>
+							{I18n.t('assets.mnemonic.mnemonicWring1')}
 							{/* 助记词用于恢复钱包或重置钱包密码，将它准确的抄写到纸上，并存放在只有你知道的安全地方。 */}
 						</Text>
 					</View>
@@ -167,7 +178,10 @@ export class ExportMnemonic extends Component {
 		}
 		if (this.state.step == 'confirm') {
 			currentStep = (
-				<ScrollView >
+				<View style={styles.container}>
+					<View style={styles.header}>
+						<Text>{I18n.t('assets.walletInfo.confirmMnemonic')}</Text>
+					</View>
 					<View style={styles.warning}>
 						<Text style={styles.warning_item}>
 							·{I18n.t('assets.mnemonic.confirmMnemonic')}
@@ -189,7 +203,20 @@ export class ExportMnemonic extends Component {
 						buttonStyle={styles.backupBtn}
 						onPress={this.confirmWords}
 					/>
-				</ScrollView>
+					<TouchableOpacity style={{ marginTop: scaleSize(88)}} onPress={() =>{
+						let resetAction = StackActions.reset({
+							index: 0,
+							actions: [
+								NavigationActions.navigate({
+									routeName: 'Guide'
+								})
+							]
+						});
+						this.props.navigation.dispatch(resetAction);
+					}}>
+						<Text style={{ color: '#2D3C71', fontSize: 14}}>没备份助记词?点击重新开始</Text>
+					</TouchableOpacity>
+				</View>
 			);
 		}
 
@@ -211,6 +238,17 @@ const styles = StyleSheet.create({
 		// padding: scaleSize(32),
 		backgroundColor: '#fff',
 		alignItems: 'center'
+	},
+	header: {
+		height: scaleSize(98),
+		width: scaleSize(750),
+		justifyContent: 'center',
+		backgroundColor: '#fff',
+		shadowOffset: { width: 0, height: 0 },
+		shadowColor: 'rgb(34, 34, 34)',
+		shadowOpacity: 0.18,
+		shadowRadius: scaleSize(27),
+		elevation: 4,
 	},
 	warning: {
 		width: scaleSize(686),

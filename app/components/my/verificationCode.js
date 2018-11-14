@@ -47,17 +47,21 @@ class VCode extends React.Component {
 		}
 	}
 	componentDidMount() {
-        if(this.props.navigation.state.params.tip){
-            this.setState({
-                page: 'node',
-                phone: this.props.navigation.state.params.phone
-            })
-        } else {
-            this.setState({
-                page: 'phone',
-                phone: this.props.navigation.state.params.phone
-            })
-        }
+        this.setState({
+            page: this.props.navigation.state.params.page,
+            phone: this.props.navigation.state.params.phone
+        })
+        // if(this.props.navigation.state.params.tip){
+        //     this.setState({
+        //         page: 'node',
+        //         phone: this.props.navigation.state.params.phone
+        //     })
+        // } else {
+        //     this.setState({
+        //         page: 'phone',
+        //         phone: this.props.navigation.state.params.phone
+        //     })
+        // }
 		storage
 			.load({
 				key: 'walletInfo'
@@ -108,7 +112,9 @@ class VCode extends React.Component {
         },() => {
             bindPhone(this.state.phone, this.state.code, this.state.walletAddress).then((res) => {
                 // console.log(res)
+                // console.log(this.state.my)
                 if(res.data.status === 'success' && res.data.message !== 'exists') {
+                    this.props.updateUserId(res.data.id);
                     storage.save({ key: 'user', data: { phone: this.state.phone, userId: res.data.id }, expires: null })
                     this.props.navigation.navigate('SetPwd', { page: this.state.page, userId: res.data.id, phone: this.state.phone})
                 } else if (res.data.message === 'exists' ){
@@ -116,6 +122,8 @@ class VCode extends React.Component {
                     this.props.updateUserId(res.data.id);
                     if(this.state.page === 'node') {
                         this.props.navigation.navigate('Node', { userId: res.data.id, passwordExists: true })
+                    } else if(this.state.page === 'my'){
+                        this.props.navigation.navigate('My', {phone: this.state.phone})
                     } else {
                         this.props.navigation.navigate('BindingPhone', {phone: this.state.phone})
                     }

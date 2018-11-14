@@ -17,6 +17,9 @@ class GoBindPhone extends React.Component {
 		}
 	}
 	componentDidMount() {
+		this.setState({
+			page: this.props.navigation.state.params.page
+		})
 		if(this.props.navigation.state.params.page === 'node'){
 			this.setState({
 				tip: true
@@ -38,7 +41,7 @@ class GoBindPhone extends React.Component {
 		} else {
 			sendCode(this.state.phone).then((res) => {
 				if(res.data.status === 'success'){
-					this.props.navigation.navigate('VCode', { phone: this.state.phone, tip: this.state.tip })
+					this.props.navigation.navigate('VCode', { phone: this.state.phone, page: this.state.page })
 				} else if(!res.data.status){
 					Alert.alert(null, I18n.t('error.sendCodeWrong'));
 				} else{

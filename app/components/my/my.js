@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, Image, StyleSheet, StatusBar, Dimensions, TouchableHighlight, BackHandler } from 'react-native';
+import { View, ScrollView, Text, Image, StyleSheet, StatusBar, Dimensions, TouchableHighlight, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { I18n } from '../../../language/i18n';
 const screen = Dimensions.get('window');
@@ -7,35 +7,56 @@ import Icon from '../../pages/iconSets';
 import { scaleSize, ifIphoneX } from '../../utils/ScreenUtil';
 import Toast from 'react-native-easy-toast';
 const minHeight = ifIphoneX(0, 20, StatusBar.currentHeight);
+import { connect } from 'react-redux';
 
 class My extends Component {
 	constructor(props) {
 		super(props);
 		this.navigate = this.props.navigation.navigate;
+		this.state = {
+			phone: ''
+		}
 	}
-	// componentDidMount() {
-    //     BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
-    // }
-    // componentWillUnmount() {
-    //     BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
-    // }
-    // onBackPress = () => {
-	// 	console.log(this.props.navigation);
-	// 	const { dispatch, nav } = this.props;
-	// 	console.log(nav)
-	// 	console.log('ddd')
-	// 	if(nav.index ===0){
-	// 		return false;
-	// 	}
-	// 	dispatch(NavigationActions.back());
-	// 	return true;
-    //    };
+	componentWillReceiveProps(newProps) {
+		// console.log(newProps)
+		// console.log(newProps.wallet.userId)
+		if(newProps.wallet.userId){
+			storage.load({ key: 'user' }).then((user) => {
+				// console.log(user)
+				this.setState({
+					phone: user.phone
+				})
+			})
+		}
+		if(newProps.navigation.state.params && newProps.navigation.state.params.phone){
+			this.setState({
+				phone: newProps.navigation.state.params.phone
+			})
+		}
+		
+	}
+	componentDidMount() {
+		storage.load({ key: 'user' }).then((user) => {
+			// console.log(user)
+			this.setState({
+				phone: user.phone
+			})
+		})
+    }
 	render() {
 		return (
 			<ScrollView style={styles.myPage}>
 				<Toast ref="toast" position="center" />
 				<View style={{ backgroundColor: "#fff"}}>
 					<Text style={styles.title}>{I18n.t('my._title')}</Text>
+				</View>
+				<View style={{ flexDirection: 'row', backgroundColor: '#fff', alignItems: 'center', padding: scaleSize(40), paddingBottom: 0}}>
+					<Image style={styles.headIcon} source={require('../../assets/images/asset/head_2x.png')} />
+					{!!this.state.phone? <Text style={{ fontSize: 18, color: '#0D0E15', fontWeight: 'bold' }}>{this.state.phone}</Text>
+					:<TouchableOpacity onPress={() => this.props.navigation.navigate('GoBindPhone', {page: 'my'})}><View>
+						<Text style={{ fontSize: 18, color: '#EA7428', marginBottom: scaleSize(12)}}>立即登录</Text>
+						<Text style={{ fontSize: 14, color: '#333', opacity: 0.5}}>登录后可查看更多内容</Text>
+					</View></TouchableOpacity>}
 				</View>
 				<View style={styles.myTopBan}>
 					<View style={styles.myTopBanCon}>
@@ -104,7 +125,7 @@ class My extends Component {
 								</View>
 							</View>
 						</TouchableHighlight>
-						<TouchableHighlight
+						{/* <TouchableHighlight
 							onPress={() => this.props.navigation.navigate('changePwd')}
 							underlayColor={'#ddd'}
 							activeOpacity={0.5}
@@ -120,7 +141,8 @@ class My extends Component {
 									</View>
 								</View>
 							</View>
-						</TouchableHighlight>
+						</TouchableHighlight> */}
+						{/* 我的影响力 */}
 						{/* <TouchableHighlight
 							onPress={() => this.props.navigation.navigate('effect')}
 							underlayColor={'#ddd'}
@@ -203,7 +225,11 @@ class My extends Component {
 	}
 }
 
-export default withNavigation(My);
+export default connect(
+	state => ({
+		wallet: state.wallet
+	}),
+)(My);
 
 const styles = StyleSheet.create({
 	myPage: {
@@ -215,6 +241,11 @@ const styles = StyleSheet.create({
 		fontSize: 34,
 		marginTop: scaleSize(114) - minHeight,
 		marginLeft: scaleSize(32)
+	},
+	headIcon: {
+		width: scaleSize(140),
+		height: scaleSize(140),
+		marginRight: scaleSize(40)
 	},
 	myTopBan: {
 		padding: 8,

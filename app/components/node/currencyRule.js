@@ -23,7 +23,7 @@ class CurrencyRule extends React.Component {
                 <Text style={styles.txt}>{I18n.t('node.withdrawRule.rule3')}</Text>
                 <Text style={styles.txt}>{I18n.t('node.withdrawRule.rule4')}</Text>
                 <Text style={styles.txt}>{I18n.t('node.withdrawRule.rule5')}</Text>
-                <Text style={styles.txt}>{I18n.t('node.withdrawRule.rule6')}</Text>
+                {/* <Text style={styles.txt}>{I18n.t('node.withdrawRule.rule6')}</Text> */}
 			</View>
 		);
 	}

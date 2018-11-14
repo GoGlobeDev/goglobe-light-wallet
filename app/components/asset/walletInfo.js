@@ -169,7 +169,7 @@ class WalletInfo extends Component {
 					</View>
 				</View>
 				<ListFun
-					fun_name={I18n.t('assets.walletInfo.walletName')}
+					fun_name={I18n.t('public.walletName')}
 					onPress={() => {
 						this.setState(
 							{

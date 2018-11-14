@@ -15,7 +15,7 @@ class JnbSetting extends React.Component {
 		}
 	}
 	componentWillReceiveProps(newProps) {
-		console.log(newProps)
+		// console.log(newProps)
 		this.setState({
 			jnbAccount: newProps.navigation.state.params.jnbAccount
 		})
@@ -23,7 +23,7 @@ class JnbSetting extends React.Component {
 	_getUser = () => {
 		storage.load({ key: 'walletInfo' }).then((walletInfo) => {
 			getUser(walletInfo.walletAddress).then((res) => {
-				console.log(res)
+				// console.log(res)
 				if(res.data && res.data.userId){
 					storage.save({
 						key: 'user',
