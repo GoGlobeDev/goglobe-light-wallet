@@ -42,6 +42,8 @@ import GoBindPhone from '../components/my/goBindPhone'; //我的 -> 去绑定手
 import VCode from '../components/my/verificationCode'; //我的 -> 验证码
 import InvitationCode from '../components/my/invitationCode'; //我的 -> 邀请码
 import BindInCode from '../components/my/bindInCode'; //我的 -> 绑定邀请码
+import ExchangeCode from '../components/my/exchangeCode'; // 我的 -> 兑换码
+import ExchangeRecord from '../components/my/exchangeRecord'; //我的 -> 兑换记录
 
 import changePwd from '../components/my/changePwd'; //我的 -> 修改交易密码
 import setNewPwd from '../components/my/setNewPwd'; //我的 -> 修改交易密码 -> 设置新交易密码
@@ -343,6 +345,8 @@ const RootNavigator = createStackNavigator(
 		},
 		InvitationCode,
 		BindInCode,
+		ExchangeCode,
+		ExchangeRecord,
 		BindingPhone,
 		VCode,
 		GoBindPhone,
