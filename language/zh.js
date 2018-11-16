@@ -68,6 +68,19 @@ export default {
                 passwordWrong: '交易密码错误',
                 numberLimited: '该推荐码已使用两次，您可以选择相关的推荐人：'
 			},
+			//兑换码
+			exchangeCode: {
+				_title: '兑换码',
+				inputCode: '输入兑换码',
+				pleaseInputCode: '请输入兑换码',
+				record: '兑换记录',
+				notExists: '兑换码不存在',
+				paramWrong: '参数错误',
+				binded: '兑换码已被兑换过，请重新输入',
+				passwordWrong: '交易密码错误,请重新输入',
+				message0: '兑换成功！请注意查收。若24小时内未到账，请联系我们',
+				message1: '兑换成功！兑换的GOG将每个月分次发至您的账户内，请注意查收'
+			},
             verificationCode: {
                 _title: '短信验证码'
             },

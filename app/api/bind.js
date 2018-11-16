@@ -158,6 +158,24 @@ const addStatistic = async (ethAddress) => {
 	})
 }
 
+//绑定兑换码
+const bindExCode = async (userId, exchangeCode, password) => {
+	var md = forge.md.md5.create();
+	md.update(password);
+	password1 = md.digest().toHex();
+	return axios.post('/wallet/exchangecode', {
+        userId,
+		exchangeCode,
+		password: password1
+	});
+};
+
+//查询兑换码
+const exchangeList = async (userId) => {
+	return axios.post('/wallet/exchangecode/select', {
+		userId,
+	})
+}
 
 export {
     getUser,
@@ -175,5 +193,7 @@ export {
 	record,
 	getEffect,
 	bindJnbAccout,
-	addStatistic
+	addStatistic,
+	bindExCode,
+	exchangeList
 }

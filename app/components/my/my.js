@@ -89,7 +89,7 @@ class My extends Component {
 					</View>
 				</View>
 				<View style={styles.myColsCon}>
-					{/* 邀请码和绑定手机 */}
+					{/* 邀请码和绑定手机和兑换码 */}
 					<View style={styles.myColsConPart}>
 						<TouchableHighlight
 							onPress={() => this.props.navigation.navigate('InvitationCode')}
@@ -119,6 +119,24 @@ class My extends Component {
 								</View>
 								<View style={[ styles.myColsConPartRowRi, styles.bottomLine ]}>
 									<Text>{I18n.t('my.home.bindPhone._title')}</Text>
+									<View style={styles.myColsConPartRowRi2R}>
+										<Icon name="icon-right" size={15} color="#000" />
+									</View>
+								</View>
+							</View>
+						</TouchableHighlight>
+						{/* 兑换码 */}
+						<TouchableHighlight
+							onPress={() => this.props.navigation.navigate('ExchangeCode')}
+							underlayColor={'#ddd'}
+							activeOpacity={0.5}
+							>
+							<View style={styles.myColsConPartRow}>
+								<View style={styles.myColsConPartRowLf}>
+								<Image style={styles.icon36} source={require('../../assets/images/my/icon_exchange.png')} />
+								</View>
+								<View style={[ styles.myColsConPartRowRi, styles.bottomLine ]}>
+									<Text>{I18n.t('my.home.exchangeCode._title')}</Text>
 									<View style={styles.myColsConPartRowRi2R}>
 										<Icon name="icon-right" size={15} color="#000" />
 									</View>
