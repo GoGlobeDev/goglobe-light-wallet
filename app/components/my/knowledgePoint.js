@@ -16,7 +16,7 @@ class KnowledgePoint extends React.Component {
 					}
 					{ !!params.content.content2 && <Text style={{ letterSpacing: 2 }}>{params.content.content2}</Text>}
 					{ params.content.down && <TouchableOpacity onPress={() => {
-											Linking.openURL('http://goglobechain.com/download').catch((err) =>
+											Linking.openURL('https://www.goglobe.io/download').catch((err) =>
 												console.error('An error occurred', err)
 											);
 										}}><Text style={{ letterSpacing: 2, color: 'blue' }}>goglobechain.io/download</Text></TouchableOpacity> }

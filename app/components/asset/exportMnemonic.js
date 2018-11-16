@@ -5,8 +5,9 @@ import lightwallet from 'eth-lightwallet';
 import { StackActions, NavigationActions, withNavigation } from 'react-navigation';
 import { Polygon } from 'react-native-svg';
 import { I18n } from '../../../language/i18n';
-import { scaleSize } from '../../utils/ScreenUtil';
+import { scaleSize, ifIphoneX } from '../../utils/ScreenUtil';
 import { addStatistic } from '../../api/bind';
+const minHeight = ifIphoneX(44, 20, 0);
 const screen = Dimensions.get('window');
 export class ExportMnemonic extends Component {
 	constructor(props) {
@@ -240,8 +241,10 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	header: {
-		height: scaleSize(98),
+		paddingTop: minHeight,
+		height: scaleSize(98) + minHeight,
 		width: scaleSize(750),
+		alignItems: 'center',
 		justifyContent: 'center',
 		backgroundColor: '#fff',
 		shadowOffset: { width: 0, height: 0 },

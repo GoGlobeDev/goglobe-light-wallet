@@ -114,7 +114,7 @@ class SysSet extends Component {
 									<Text
 										style={styles.modalBottomBtnYesText}
 										onPress={() => {
-											Linking.openURL('http://goglobechain.com/download').catch((err) =>
+											Linking.openURL('https://www.goglobe.io/download').catch((err) =>
 												console.error('An error occurred', err)
 											);
 										}}
