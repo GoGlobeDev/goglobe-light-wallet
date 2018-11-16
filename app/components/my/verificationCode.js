@@ -124,6 +124,16 @@ class VCode extends React.Component {
                         this.props.navigation.navigate('Node', { userId: res.data.id, passwordExists: true })
                     } else if(this.state.page === 'my'){
                         this.props.navigation.navigate('My', {phone: this.state.phone})
+                    } else if(this.state.page === 'ExchangeCode'){
+                        let resetAction = StackActions.reset({
+                            index: 0,
+                            actions: [
+                                NavigationActions.navigate({
+                                    routeName: 'ExchangeCode'
+                                })
+                            ]
+                        });
+                        this.props.navigation.dispatch(resetAction);
                     } else {
                         this.props.navigation.navigate('BindingPhone', {phone: this.state.phone})
                     }

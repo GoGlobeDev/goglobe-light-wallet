@@ -53,11 +53,11 @@ class ExchangeRecord extends Component {
 
 	render() {
 		return (
-			<View style={styles.container}>
+			<ScrollView style={styles.container}>
 				{/* <Text>aaa</Text> */}
 				{this.state.recordData ? this.state.recordData.length >= 1 ? (
 					 this.state.recordData.map((res) => {
-						 return <ScrollView key={res.id} style={{ paddingTop: scaleSize(32), paddingBottom: scaleSize(32), marginRight: scaleSize(32), borderBottomColor: '#E7E7E7', borderBottomWidth: scaleSize(1) }}>
+						 return <View key={res.id} style={{ paddingTop: scaleSize(32), paddingBottom: scaleSize(32), marginRight: scaleSize(32), borderBottomColor: '#E7E7E7', borderBottomWidth: scaleSize(1) }}>
 						 <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
 							 <Text>使用兑换码</Text>
 							 <Text style={styles.time}>{getTime(res.createTime/1000)}</Text>
@@ -68,14 +68,14 @@ class ExchangeRecord extends Component {
 								 <Text style={styles.gog}></Text>
 							 </View>
 						 
-					 </ScrollView>
+					 </View>
 					 })
 				) : (
 					<Text style={styles.textAlign}>~</Text>
 				) : (
 					<ActivityIndicator />
 				)}
-			</View>
+			</ScrollView>
 		);
 	}
 }

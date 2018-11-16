@@ -127,7 +127,13 @@ class My extends Component {
 						</TouchableHighlight>
 						{/* 兑换码 */}
 						<TouchableHighlight
-							onPress={() => this.props.navigation.navigate('ExchangeCode')}
+							onPress={() => {
+								if(this.state.phone){
+									this.props.navigation.navigate('ExchangeCode')
+								} else {
+									this.props.navigation.navigate('GoBindPhone', {page: 'ExchangeCode'})
+								}
+							}}
 							underlayColor={'#ddd'}
 							activeOpacity={0.5}
 							>

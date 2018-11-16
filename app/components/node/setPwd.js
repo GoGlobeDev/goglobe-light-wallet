@@ -50,6 +50,16 @@ export default class SetPwd extends React.Component {
 							this.props.navigation.navigate('Node', { userId: this.props.navigation.state.params.userId, passwordExists: true})
 						} else if(this.props.navigation.state.params.page === 'my') {
 							this.props.navigation.navigate('My', {phone: this.props.navigation.state.params.phone})
+						} else if(this.state.page === 'ExchangeCode'){
+							let resetAction = StackActions.reset({
+								index: 0,
+								actions: [
+									NavigationActions.navigate({
+										routeName: 'ExchangeCode'
+									})
+								]
+							});
+							this.props.navigation.dispatch(resetAction);
 						} else {
 							this.props.navigation.navigate('BindingPhone', {phone: this.props.navigation.state.params.phone})
 						}
