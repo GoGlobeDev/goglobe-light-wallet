@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, Alert, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, Alert, Image, TouchableHighlight } from 'react-native';
 import { Input } from 'react-native-elements';
 import Modal from 'react-native-modalbox';
 import { I18n } from '../../../language/i18n';
@@ -16,6 +16,9 @@ export default class ExchangeCode extends React.Component {
 		}
     }
     static navigationOptions = ({navigation}) => ({
+        headerLeft: <TouchableOpacity onPress={() => navigation.state.params.goMy()}>
+		<Image style={{ width: scaleSize(44), height: scaleSize(44), marginLeft: scaleSize(32)}} source={require('../../assets/images/common/back.png')} />
+		</TouchableOpacity>,
         headerTitle: <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center', width: scaleSize(523), paddingLeft: 0 }}>
           <Text style={{ fontSize: scaleSize(34), color: 'rgba(50, 50, 50, 1)', marginLeft: 0 }}>{I18n.t('my.home.exchangeCode.inputCode')}</Text>
         </View>,
@@ -32,6 +35,9 @@ export default class ExchangeCode extends React.Component {
         this.props.navigation.setParams({
             exchangeRecord: () => {
                 this.props.navigation.navigate('ExchangeRecord')
+            },
+            goMy: () => {
+                this.props.navigation.navigate('My')
             }
         })
 	}
