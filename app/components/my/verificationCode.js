@@ -125,15 +125,7 @@ class VCode extends React.Component {
                     } else if(this.state.page === 'my'){
                         this.props.navigation.navigate('My', {phone: this.state.phone})
                     } else if(this.state.page === 'ExchangeCode'){
-                        let resetAction = StackActions.reset({
-                            index: 0,
-                            actions: [
-                                NavigationActions.navigate({
-                                    routeName: 'ExchangeCode'
-                                })
-                            ]
-                        });
-                        this.props.navigation.dispatch(resetAction);
+                        this.props.navigation.navigate('ExchangeCode')
                     } else {
                         this.props.navigation.navigate('BindingPhone', {phone: this.state.phone})
                     }

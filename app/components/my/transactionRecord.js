@@ -52,6 +52,7 @@ class TransactionRecord extends Component {
 	pullLoading: Function = () => {
 		if(this.state.rows <= this.state.number + 10) {
 			record(this.state.userId, this.state.start, this.state.rows).then((res) => {
+				console.log(res)
 				this.setState({
 					recordData: res.data.list,
 					rows: this.state.rows + 10
@@ -114,6 +115,7 @@ class TransactionRecord extends Component {
 			<View style={styles.container}>
 				{this.state.recordData ? this.state.recordData.length >= 1 ? (
 					<FlatList
+						keyExtractor={(item) => item.recordId}
 						onEndReachedThreshold={0.3}
 						onEndReached={this.pullLoading}
 						data={this.state.recordData}

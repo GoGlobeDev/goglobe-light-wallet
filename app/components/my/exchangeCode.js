@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, BackHandler, TouchableOpacity, Alert, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, BackHandler, TouchableOpacity, Alert, Image, TouchableHighlight } from 'react-native';
 import { Input } from 'react-native-elements';
 import Modal from 'react-native-modalbox';
+import { connect } from 'react-redux';
 import { I18n } from '../../../language/i18n';
 import { scaleSize } from '../../utils/ScreenUtil';
 import { bindExCode } from '../../api/bind';
 
-export default class ExchangeCode extends React.Component {
+class ExchangeCode extends React.Component {
 	constructor(){
 		super();
 		this.state = {
@@ -16,6 +17,9 @@ export default class ExchangeCode extends React.Component {
 		}
     }
     static navigationOptions = ({navigation}) => ({
+        headerLeft: <TouchableOpacity onPress={() => navigation.state.params.goMy()}>
+		<Image style={{ width: scaleSize(44), height: scaleSize(44), marginLeft: scaleSize(32)}} source={require('../../assets/images/common/back.png')} />
+		</TouchableOpacity>,
         headerTitle: <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center', width: scaleSize(523), paddingLeft: 0 }}>
           <Text style={{ fontSize: scaleSize(34), color: 'rgba(50, 50, 50, 1)', marginLeft: 0 }}>{I18n.t('my.home.exchangeCode.inputCode')}</Text>
         </View>,
@@ -33,6 +37,9 @@ export default class ExchangeCode extends React.Component {
         this.props.navigation.setParams({
             exchangeRecord: () => {
                 this.props.navigation.navigate('ExchangeRecord')
+            },
+            goMy: () => {
+                this.props.navigation.navigate('My')
             }
         })
     }
@@ -40,7 +47,11 @@ export default class ExchangeCode extends React.Component {
         BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
     }
     onBackPress = () => {
-		this.props.navigation.navigate('My')
+        const state = this.props.state;
+        if(state.routes[state.routes.length -1].routeName === 'ExchangeCode'){
+            this.props.navigation.navigate('My')
+        }
+		
        };
 	_changeText = (text) => {
 		this.setState({
@@ -56,7 +67,6 @@ export default class ExchangeCode extends React.Component {
 	}
 	_clickToBindCode = () => {
         bindExCode(this.state.userId, this.state.exchangeCode, this.state.password).then((res) => {
-            console.log(res)
             if(res.data.status === 'success') {
                 this.refs.tip.open();
                 this.setState({
@@ -168,7 +178,7 @@ export default class ExchangeCode extends React.Component {
                         </View>
                     </View>
                 </Modal>
-                <Modal style={[styles.modal, this.state.line ? { height: scaleSize(312)} : { height: scaleSize(282)}]}
+                <Modal style={[styles.modal, this.state.line ? { height: scaleSize(312), width: scaleSize(540)} : { height: scaleSize(282), width: scaleSize(540)}]}
                     coverScreen={true}
                     position={'center'}
                     ref={'tip'}
@@ -181,7 +191,7 @@ export default class ExchangeCode extends React.Component {
                         <View style={{ marginTop: 0, alignItems: 'center', marginBottom: scaleSize(40), paddingLeft: scaleSize(40), paddingRight: scaleSize(40) }}>
                             <Text style={styles.modal_text}>{this.state.modalTip}</Text>
                         </View>
-                        <TouchableOpacity style={{ width: scaleSize(686), height: scaleSize(90), justifyContent: 'center', alignItems: 'center', borderTopColor: '#DFDFDF', borderTopWidth: scaleSize(2)}} onPress={() => {
+                        <TouchableOpacity style={{ width: scaleSize(540), height: scaleSize(90), justifyContent: 'center', alignItems: 'center', borderTopColor: '#DFDFDF', borderTopWidth: scaleSize(2)}} onPress={() => {
                             this.setState({
                                 exchangeCode: ''
                             })
@@ -195,7 +205,11 @@ export default class ExchangeCode extends React.Component {
 		);
 	}
 }
-
+export default connect(
+	state => ({
+		state: state.nav
+	}),
+)(ExchangeCode);
 
 const styles = StyleSheet.create({
 	container: {

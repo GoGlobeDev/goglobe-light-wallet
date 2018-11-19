@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, StyleSheet, ScrollView, Dimensions, FlatList, ActivityIndicator } from 'react-native';
+import { Text, View, Image, StyleSheet, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { I18n } from '../../../language/i18n';
 import Icon from '../../pages/iconSets';
@@ -27,7 +27,6 @@ class ExchangeRecord extends Component {
 		}).then((user) => {
 			if(user.userId) {
 				exchangeList(user.userId).then((res) => {
-					console.log(res)
 					this.setState({
 						recordData: res.data.list,
 						userId: user.userId,
@@ -50,7 +49,6 @@ class ExchangeRecord extends Component {
 		})
         
 	}
-
 	render() {
 		return (
 			<ScrollView style={styles.container}>
