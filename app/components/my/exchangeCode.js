@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, Alert, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, BackHandler, TouchableOpacity, Alert, TouchableHighlight } from 'react-native';
 import { Input } from 'react-native-elements';
 import Modal from 'react-native-modalbox';
 import { I18n } from '../../../language/i18n';
@@ -24,6 +24,7 @@ export default class ExchangeCode extends React.Component {
         </TouchableOpacity>,
       })
 	componentDidMount() {
+        BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
 		storage.load({ key: 'user' }).then((user) => {
 			this.setState({
 				userId: user.userId,
@@ -34,7 +35,13 @@ export default class ExchangeCode extends React.Component {
                 this.props.navigation.navigate('ExchangeRecord')
             }
         })
-	}
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+    }
+    onBackPress = () => {
+		this.props.navigation.navigate('My')
+       };
 	_changeText = (text) => {
 		this.setState({
 			exchangeCode: text
