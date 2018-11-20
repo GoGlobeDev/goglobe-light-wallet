@@ -126,7 +126,7 @@ class My extends Component {
 							</View>
 						</TouchableHighlight>
 						{/* 兑换码 */}
-						<TouchableHighlight
+						{/* <TouchableHighlight
 							onPress={() => {
 								if(this.state.phone){
 									this.props.navigation.navigate('ExchangeCode')
@@ -148,7 +148,7 @@ class My extends Component {
 									</View>
 								</View>
 							</View>
-						</TouchableHighlight>
+						</TouchableHighlight> */}
 						{/* <TouchableHighlight
 							onPress={() => this.props.navigation.navigate('changePwd')}
 							underlayColor={'#ddd'}
