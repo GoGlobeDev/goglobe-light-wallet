@@ -126,7 +126,7 @@ class WithdrawCash extends React.Component {
                 </View>
                 <TouchableOpacity style={styles.address} onPress={() => {this.props.navigation.navigate('EthAddress')}}>
                     <Text style={{ color: '#486495', fontSize: 15}}>
-                        链接到其他地址
+                        {I18n.t('node.ethAddress.link')}
                     </Text>
                 </TouchableOpacity>
                 <Loading ref="loading" />

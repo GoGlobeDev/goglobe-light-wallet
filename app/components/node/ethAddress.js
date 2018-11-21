@@ -7,7 +7,7 @@ import { sendCode } from '../../api/bind';
 import Touch from '../public/touch';
 class EthAddress extends React.Component {
 	static navigationOptions = {
-		headerTitle: '输入地址'
+		headerTitle: I18n.t('node.ethAddress._title')
 	};
 	constructor(props) {
 		super(props);
@@ -41,44 +41,20 @@ class EthAddress extends React.Component {
 			this.props.navigation.goBack();
 			storage.save({ key: 'ethAddress', data: this.state.address, expires: null})
 		}
-		// this.props.navigation.navigate('VCode')
-		// if(!this.state.address){
-		// 	Alert.alert(null, '请输入手机号'); // 提示 请输入手机号
-		// } else if(!address.test(this.state.address)){
-		// 	Alert.alert(null, '请输入正确的手机号'); // 提示 请输入正确的手机号
-		// } else {
-		// 	sendCode(this.state.address).then((res) => {
-		// 		if(res.data.status === 'success'){
-		// 			this.props.navigation.navigate('VCode', { address: this.state.address, page: this.state.page })
-		// 		} else if(!res.data.status){
-		// 			Alert.alert(null, I18n.t('error.sendCodeWrong'));
-		// 		} else{
-		// 			Alert.alert(null, I18n.t('error.' + res.data.status ));
-		// 		}
-		// 	}).catch((e) => {
-		// 		const message = e.message;
-		// 		if(message.indexOf('Network') !== -1){
-		// 			this.props.navigation.navigate('noNetWork')
-		// 		} else {
-		// 			console.log(e.message)
-		// 		}
-		// 	})
-		// }
-
 	}
 	render() {
 		const { params } = this.props.navigation.state;
 		return (
 			<View style={styles.container}>
 				<View style={styles.tipbox}>
-					<Text style={styles.tip}>注意:当输入其他地址的时候，请再三确认地址是否正确。若输入地址有误，交易无法回滚，自游俱乐部也无法为您找回数字资产，请务必确认地址正确。</Text>
+					<Text style={styles.tip}>{I18n.t('node.ethAddress.tip')}</Text>
 				</View>
 				<View style={styles.inputbox}>
-					<Text style={styles.inputTitle}>地址</Text>
+					<Text style={styles.inputTitle}>{I18n.t('node.ethAddress.title')}</Text>
 					<TextInput
 						underlineColorAndroid="transparent"
 						style={styles.inputText}
-						placeholder="请输入其他提币地址"
+						placeholder={I18n.t('node.ethAddress.pleaseInputAddress')}
 						value={this.state.address}
 						onChangeText={(address) => this._changeText(address)}
 					/>

@@ -86,9 +86,14 @@ export default {
             },
 			bindPhone: {
 				_title: '绑定手机',
+				title: '手机号',
                 bindPhoneNumber: '绑定的手机号',
                 notBind: '还未绑定',
-				button: '去绑定'
+				button: '去绑定',
+				enterMobile: '请输入正确的手机号',
+				pleaseInputPhone: '请输入手机号',
+				tip1: '1.在未绑定手机号情况下，无法绑定设备',
+				tip2: '2.完成绑定手机号后，即可开始每日获取系统奖励'
 			},
 			changePwd: {
 				_title: '修改交易密码',
@@ -312,7 +317,11 @@ export default {
 		},
 		// 以太坊地址
 		ethAddress: {
-			_title: '输入地址'
+			tip: '注意:当输入其他地址的时候，请再三确认地址是否正确。若输入地址有误，交易无法回滚，自游俱乐部也无法为您找回数字资产，请务必确认地址正确。',
+			link: '提现到其他地址',
+			_title: '输入地址',
+			title: '地址',
+			pleaseInputAddress: '请输入其他提币地址',
 		}
 	},
 	public: {

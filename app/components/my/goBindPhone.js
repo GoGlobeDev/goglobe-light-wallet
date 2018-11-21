@@ -7,7 +7,7 @@ import { sendCode } from '../../api/bind';
 import Touch from '../public/touch';
 class GoBindPhone extends React.Component {
 	static navigationOptions = {
-		headerTitle: '绑定手机号'
+		headerTitle: I18n.t('my.home.bindPhone._title')
 	};
 	constructor(props) {
 		super(props);
@@ -35,9 +35,9 @@ class GoBindPhone extends React.Component {
 		const phone = /^1\d{10}$/;
 		// this.props.navigation.navigate('VCode')
 		if(!this.state.phone){
-			Alert.alert(null, '请输入手机号'); // 提示 请输入手机号
+			Alert.alert(null, I18n.t('public.enterMobile')); // 提示 请输入手机号
 		} else if(!phone.test(this.state.phone)){
-			Alert.alert(null, '请输入正确的手机号'); // 提示 请输入正确的手机号
+			Alert.alert(null, I18n.t('my.home.bindPhone.enterMobile')); // 提示 请输入正确的手机号
 		} else {
 			sendCode(this.state.phone).then((res) => {
 				if(res.data.status === 'success'){
@@ -63,15 +63,15 @@ class GoBindPhone extends React.Component {
 		return (
 			<View style={styles.container}>
 				{this.state.tip && <View style={styles.tipbox}>
-					<Text style={styles.tip}>1.在未绑定手机号情况下，无法绑定设备</Text>
-					<Text style={styles.tip}>2.完成绑定手机号后，即可开始每日获取系统奖励</Text>
+					<Text style={styles.tip}>{I18n.t('my.home.bindPhone.tip1')}</Text>
+					<Text style={styles.tip}>{I18n.t('my.home.bindPhone.tip2')}</Text>
 				</View>}
 				<View style={styles.inputbox}>
-					<Text style={styles.inputTitle}>手机号</Text>
+					<Text style={styles.inputTitle}>{I18n.t('my.home.bindPhone.title')}</Text>
 					<TextInput
 						underlineColorAndroid="transparent"
 						style={styles.inputText}
-						placeholder="请输入手机号"
+						placeholder={I18n.t('my.home.bindPhone.pleaseInputPhone')}
 						onChangeText={(phone) => this._changeText(phone)}
 					/>
 				</View>
