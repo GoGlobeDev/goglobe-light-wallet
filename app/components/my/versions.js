@@ -23,6 +23,10 @@ const versionData = [
 		version: '1.1.2',
 		con: [ '完善了全部的帮助中心的内容','优化了创建钱包的流程，提升用户体验','自游设备界面增加下拉刷新功能','重新调整了“我的”界面下的功能结构','修改bug' ]
 	},
+	{
+		version: '1.1.3',
+		con: [ '增加了提现时可以提币到其他地址的功能','优化性能，修改BUG' ]
+	},
 ];
 
 export class Versions extends Component {
