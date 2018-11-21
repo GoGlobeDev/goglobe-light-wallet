@@ -59,7 +59,9 @@ class WithdrawCash extends React.Component {
         })
     }
     _clickTocomfirm = () => {
-        if(Number(this.state.gog_banlance) < Number(this.state.banlance)){
+        if(!this.state.banlance){
+            Alert.alert(null, '请输入提现金额')
+        }else if(Number(this.state.gog_banlance) < Number(this.state.banlance)){
             Alert.alert(null, '您当前输入的数量大于最大可提的数量，请重新输入')
         } else if(this.state.number.indexOf('.') > 0 && this.state.number.length - this.state.number.indexOf('.') > 5){
             Alert.alert(null, '每次提现金额不能超过四位小数，请重新输入')
@@ -74,21 +76,27 @@ class WithdrawCash extends React.Component {
         }
     }
     _clickToWidthdraw = () => {
-        withdraw(this.state.userId, this.state.password, this.state.number).then((res) => {
-            if(res.data.status === 'success'){
-                Alert.alert(null, '提币请求已经成功提交，等待审批')
-                this.props.navigation.navigate('Node', { userId: this.state.userId, passwordExists: true})
-            } else {
-                Alert.alert(null, I18n.t('error.' + res.data.message))
-            }
-        }).catch((e) => {
-            const message = e.message;
-            if(message.indexOf('Network') !== -1){
-                this.props.navigation.navigate('noNetWork')
-            } else {
-                console.log(e.message)
-            }
-        })
+        storage
+		.load({
+			key: 'ethAddress'
+		}).then((ethAddress) => {
+			withdraw(this.state.userId, this.state.password, this.state.number, ethAddress).then((res) => {
+                if(res.data.status === 'success'){
+                    Alert.alert(null, '提币请求已经成功提交，等待审批')
+                    this.props.navigation.navigate('Node', { userId: this.state.userId, passwordExists: true})
+                } else {
+                    Alert.alert(null, I18n.t('error.' + res.data.message))
+                }
+            }).catch((e) => {
+                const message = e.message;
+                if(message.indexOf('Network') !== -1){
+                    this.props.navigation.navigate('noNetWork')
+                } else {
+                    console.log(e.message)
+                }
+            })
+		})
+        
     }
 	render() {
 		const { params } = this.props.navigation.state;
@@ -116,6 +124,11 @@ class WithdrawCash extends React.Component {
                         <Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.withdraw.withdrawToken')}</Text>
                     </TouchableOpacity>
                 </View>
+                <TouchableOpacity style={styles.address} onPress={() => {this.props.navigation.navigate('EthAddress')}}>
+                    <Text style={{ color: '#486495', fontSize: 15}}>
+                        链接到其他地址
+                    </Text>
+                </TouchableOpacity>
                 <Loading ref="loading" />
                 <Modal
                     style={[styles.modal, styles.modalPwd]}
@@ -260,5 +273,9 @@ const styles = StyleSheet.create({
 		width: scaleSize(654),
 		borderRadius: scaleSize(44),
 		backgroundColor: '#FF8725'
-	}
+    },
+    address: {
+        marginTop: scaleSize(24),
+        alignItems: 'center'
+    }
 });

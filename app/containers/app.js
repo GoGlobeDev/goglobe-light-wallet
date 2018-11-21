@@ -61,6 +61,7 @@ import CurrencyRule from '../components/node/currencyRule'; //设备 -> 提现�
 import powerRule from '../components/node/powerRule';
 import QRscanner from '../components/public/QRscanner'; //转账 -> 扫描二维码
 import moreInfo from '../components/node/moreInfo'; //设备信息
+import EthAddress from '../components/node/ethAddress'; //绑定EthAdress
 
 import noNetWork from '../components/public/noNetWork'; //没有网络
 import noMainNet from '../components/public/noMainNet'; //没有以太坊主网
@@ -385,6 +386,7 @@ const RootNavigator = createStackNavigator(
 		BindMachine,
 		SetPwd,
 		WithdrawCash,
+		EthAddress,
 		decomposePower,
 		CurrencyRule,
 		powerRule,

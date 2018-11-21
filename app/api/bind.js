@@ -100,14 +100,16 @@ const bindDevice = async (userId, deviceNo, code, password) => {
 };
 
 //提现
-const withdraw = async (userId, password, withdrawAmount) => {
+const withdraw = async (userId, password, withdrawAmount, ethAddress) => {
+	console.log(userId, password, withdrawAmount, ethAddress)
 	var md = forge.md.md5.create();
 	md.update(password);
 	password1 = md.digest().toHex();
 	return axios.post('/wallet/withdraw', {
 		userId,
 		password: password1,
-		withdrawAmount
+		withdrawAmount,
+		ethAddress
 	})
 }
 

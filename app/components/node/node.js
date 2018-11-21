@@ -254,6 +254,7 @@ class NodeItem extends Component {
 
 	}
 	_clickToWithdrawCash = () => {
+		storage.save({ key: 'ethAddress', data: '', expires: null})
 		this.props.navigation.navigate('WithdrawCash', { gog_banlance: this.state.device.balance})
 		// this.props.navigation.navigate('SetPwd', { page: 'node', userId: this.state.userId, phone: this.state.phone})
 	}

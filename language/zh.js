@@ -309,6 +309,10 @@ export default {
 		},
 		moreInfo: {
 			_title: '设备信息'
+		},
+		// 以太坊地址
+		ethAddress: {
+			_title: '输入地址'
 		}
 	},
 	public: {

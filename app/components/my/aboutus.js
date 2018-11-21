@@ -195,7 +195,8 @@ const styles = StyleSheet.create({
 		width: 90,
 		height: 90,
 		borderRadius: 45,
-		marginTop: 50
+		marginTop: 50,
+		marginBottom: 30
 	},
 	version: {
 		marginTop: 10,
