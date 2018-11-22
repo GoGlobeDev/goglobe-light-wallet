@@ -23,7 +23,8 @@ class WithdrawCash extends React.Component {
 		this.state = {
             number: '', //输入的金额
             banlance: 0, //实际所需余额
-            gog_banlance: 0 //可用余额
+            gog_banlance: 0, //可用余额
+            touch: false,
 		}
     }
 	componentDidMount() {
@@ -70,7 +71,7 @@ class WithdrawCash extends React.Component {
         } else {
             Alert.alert('提示','您确定要提币吗？这样做会导致您无法获得后续利息',[
                 {text: '取消', onPress: () => console.log('Ask me later pressed'), style: 'cancel'},
-                {text: '确定', onPress: () => this.refs.withdrawPwd.open()}
+                {text: '确定', onPress: () => {this.refs.withdrawPwd.open();this.setState({touch: true})}}
               ])
             // this.refs.tipModal.open();
         }
@@ -82,10 +83,16 @@ class WithdrawCash extends React.Component {
 		}).then((ethAddress) => {
 			withdraw(this.state.userId, this.state.password, this.state.number, ethAddress).then((res) => {
                 if(res.data.status === 'success'){
+                    this.setState({
+                        banlance: ''
+                    })
                     Alert.alert(null, '提币请求已经成功提交，等待审批')
                     this.props.navigation.navigate('Node', { userId: this.state.userId, passwordExists: true})
                 } else {
                     Alert.alert(null, I18n.t('error.' + res.data.message))
+                    this.setState({
+                        touch: false
+                    })
                 }
             }).catch((e) => {
                 const message = e.message;
@@ -120,7 +127,7 @@ class WithdrawCash extends React.Component {
                         </TouchableOpacity>}
                     </View>
                     <Text style={styles.text17}>{I18n.t('node.withdraw.receivedAmount')}：{show(this.state.banlance)}</Text>
-                    <TouchableOpacity style={[styles.button, this.state.number === '' ? { backgroundColor: '#F7C9A9' } : {  backgroundColor: '#EA7828' }]} onPress={this._clickTocomfirm}>
+                    <TouchableOpacity disabled={this.state.touch} style={[styles.button, this.state.number === '' ? { backgroundColor: '#F7C9A9' } : {  backgroundColor: '#EA7828' }]} onPress={this._clickTocomfirm}>
                         <Text style={{color: 'rgba(255,255,255,1)', fontSize: 17, textAlign: 'center'}}>{I18n.t('node.withdraw.withdrawToken')}</Text>
                     </TouchableOpacity>
                 </View>
