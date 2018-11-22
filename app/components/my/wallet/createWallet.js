@@ -219,6 +219,7 @@ class CreateWallet extends Component {
 							/>
 						
 						<Input
+							editable={false}
 							inputContainerStyle={styles.textInputnull}
 						// 空
 						/>
