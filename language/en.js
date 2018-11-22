@@ -174,7 +174,7 @@ export default {
             }
 		},
 		version: {
-			_number: '1.1.2',
+			_number: '1.1.3',
 			_newVersion: 'Find GoGlobe',
 			_version: 'version',
 			upgradeNow: 'Upgrade Now',
@@ -334,6 +334,7 @@ export default {
 			_title: '输入地址',
 			title: '地址',
 			pleaseInputAddress: '请输入其他提币地址',
+			addressError: '以太坊地址格式错误，请重新输入'
 		}
 	},
 	public: {

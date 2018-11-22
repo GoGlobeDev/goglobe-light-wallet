@@ -36,10 +36,11 @@ class EthAddress extends React.Component {
 			this.props.navigation.goBack();
 			storage.save({ key: 'ethAddress', data: this.state.address, expires: null})
 		}else if (!web3.utils.isAddress(this.state.address)) {
-			Alert.alert(null, I18n.t('assets.transfer.checkAddress'));
-			this.setState({
-				address: ''
-			})
+			Alert.alert(null, I18n.t('node.ethAddress.addressError'),[
+                {text: '确定', onPress: () => this.setState({ address: '' })}
+              ])
+			// Alert.alert(null, I18n.t('node.ethAddress.addressError'));
+			
 		} else {
 			this.props.navigation.goBack();
 			storage.save({ key: 'ethAddress', data: this.state.address, expires: null})
