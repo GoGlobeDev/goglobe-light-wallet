@@ -27,6 +27,10 @@ const versionData = [
 		version: '1.1.3',
 		con: [ '增加了提现时可以提币到其他地址的功能','优化性能，修改BUG' ]
 	},
+	{
+		version: '1.1.4',
+		con: [ '增加锁定机制' ]
+	},
 ];
 
 export class Versions extends Component {

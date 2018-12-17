@@ -75,73 +75,127 @@ class VCode extends React.Component {
 			.catch((e) => {
 				console.log(e);
 			});
-	}
+    }
+    
+    backspace0 = (e) => {
+        if(e.nativeEvent.key === "Backspace"){
+            console.log('dddd')
+        } else {
+            this.refs.code1._root.focus();
+        }
+    }
+    backspace1 = (e) => {
+        if(e.nativeEvent.key === "Backspace"){
+            this.refs.code0._root.focus();
+        } else {
+            this.refs.code2._root.focus();
+        }
+    }
+    backspace2 = (e) => {
+        if(e.nativeEvent.key === "Backspace"){
+            this.refs.code1._root.focus();
+        } else {
+            this.refs.code3._root.focus();
+        }
+    }
+    backspace3 = (e) => {
+        if(e.nativeEvent.key === "Backspace"){
+            this.refs.code2._root.focus();
+        } else {
+            this.refs.code4._root.focus();
+        }
+    }
+    backspace4 = (e) => {
+        if(e.nativeEvent.key === "Backspace"){
+            this.refs.code3._root.focus();
+        } else {
+            this.refs.code5._root.focus();
+        }
+    }
+    backspace5 = (e) => {
+        if(e.nativeEvent.key === "Backspace"){
+            this.refs.code4._root.focus();
+        }
+    }
     _changeText0 = (txt) => {
-        this.refs.code1._root.focus();
-        this.setState({
-            code0: txt
-        })
+        if(txt){
+            this.refs.code1._root.focus();
+            this.setState({
+                code0: txt
+            })
+        }
+
     }
     _changeText1 = (txt) => {
-        this.refs.code2._root.focus();
-        this.setState({
-            code1: txt
-        })
+        if(txt){
+            this.refs.code2._root.focus();
+            this.setState({
+                code1: txt
+            })
+        }
     }
     _changeText2 = (txt) => {
-        this.refs.code3._root.focus();
-        this.setState({
-            code2: txt
-        })
+        if(txt){
+            this.refs.code3._root.focus();
+            this.setState({
+                code2: txt
+            })
+        }
     }
     _changeText3 = (txt) => {
-        this.refs.code4._root.focus();
-        this.setState({
-            code3: txt
-        })
+        if(txt){
+            this.refs.code4._root.focus();
+            this.setState({
+                code3: txt
+            })
+        }
     }
     _changeText4 = (txt) => {
-        this.refs.code5._root.focus();
-        this.setState({
-            code4: txt
-        })
+        if(txt){
+            this.refs.code5._root.focus();
+            this.setState({
+                code4: txt
+            })
+        }
     }
     _changeText5 = (txt) => {
-        this.setState({
-            code: this.state.code0 + this.state.code1 + this.state.code2 + this.state.code3 + this.state.code4 + txt
-        },() => {
-            bindPhone(this.state.phone, this.state.code, this.state.walletAddress).then((res) => {
-                // console.log(res)
-                // console.log(this.state.my)
-                if(res.data.status === 'success' && res.data.message !== 'exists') {
-                    this.props.updateUserId(res.data.id);
-                    storage.save({ key: 'user', data: { phone: this.state.phone, userId: res.data.id }, expires: null })
-                    this.props.navigation.navigate('SetPwd', { page: this.state.page, userId: res.data.id, phone: this.state.phone})
-                } else if (res.data.message === 'exists' ){
-                    storage.save({ key: 'user', data: { phone: this.state.phone, userId: res.data.id }, expires: null })
-                    this.props.updateUserId(res.data.id);
-                    if(this.state.page === 'node') {
-                        this.props.navigation.navigate('Node', { userId: res.data.id, passwordExists: true })
-                    } else if(this.state.page === 'my'){
-                        this.props.navigation.navigate('My', {phone: this.state.phone})
-                    } else if(this.state.page === 'ExchangeCode'){
-                        this.props.navigation.navigate('ExchangeCode')
-                    } else {
-                        this.props.navigation.navigate('BindingPhone', {phone: this.state.phone})
+        if(txt){
+            this.setState({
+                code: this.state.code0 + this.state.code1 + this.state.code2 + this.state.code3 + this.state.code4 + txt
+            },() => {
+                bindPhone(this.state.phone, this.state.code, this.state.walletAddress).then((res) => {
+                    // console.log(res)
+                    // console.log(this.state.my)
+                    if(res.data.status === 'success' && res.data.message !== 'exists') {
+                        this.props.updateUserId(res.data.id);
+                        storage.save({ key: 'user', data: { phone: this.state.phone, userId: res.data.id }, expires: null })
+                        this.props.navigation.navigate('SetPwd', { page: this.state.page, userId: res.data.id, phone: this.state.phone})
+                    } else if (res.data.message === 'exists' ){
+                        storage.save({ key: 'user', data: { phone: this.state.phone, userId: res.data.id }, expires: null })
+                        this.props.updateUserId(res.data.id);
+                        if(this.state.page === 'node') {
+                            this.props.navigation.navigate('Node', { userId: res.data.id, passwordExists: true })
+                        } else if(this.state.page === 'my'){
+                            this.props.navigation.navigate('My', {phone: this.state.phone})
+                        } else if(this.state.page === 'ExchangeCode'){
+                            this.props.navigation.navigate('ExchangeCode')
+                        } else {
+                            this.props.navigation.navigate('BindingPhone', {phone: this.state.phone})
+                        }
                     }
-                }
-                else {
-                    Alert.alert(null, I18n.t('error.' + res.data.message)); // 提示 错误原因
-                }
-            }).catch((e) => {
-                const message = e.message;
-				if(message.indexOf('Network') !== -1){
-					this.props.navigation.navigate('noNetWork')
-				} else {
-					console.log(e.message)
-				}
+                    else {
+                        Alert.alert(null, I18n.t('error.' + res.data.message)); // 提示 错误原因
+                    }
+                }).catch((e) => {
+                    const message = e.message;
+                    if(message.indexOf('Network') !== -1){
+                        this.props.navigation.navigate('noNetWork')
+                    } else {
+                        console.log(e.message)
+                    }
+                })
             })
-        })
+        }
     }
     onTimer =() => {
         if (!this.state.state) {
@@ -195,12 +249,14 @@ class VCode extends React.Component {
                         maxLength={1}
                         keyboardType='numeric'
                         ref='code0'
+                        onKeyPress={(e) => this.backspace0(e)}
                         onChangeText={(txt) => this._changeText0(txt)}/>
                     <Input
                         style={styles.numberbox}
                         maxLength={1}
                         keyboardType='numeric'
                         ref='code1'
+                        onKeyPress={(e) => this.backspace1(e)}
                         onChangeText={(txt) => this._changeText1(txt)}
                         />
                     <Input
@@ -208,6 +264,7 @@ class VCode extends React.Component {
                         maxLength={1}
                         keyboardType='numeric'
                         ref='code2'
+                        onKeyPress={(e) => this.backspace2(e)}
                         onChangeText={(txt) => this._changeText2(txt)}
                         />
                     <Input
@@ -215,6 +272,7 @@ class VCode extends React.Component {
                         maxLength={1}
                         keyboardType='numeric'
                         ref='code3'
+                        onKeyPress={(e) => this.backspace3(e)}
                         onChangeText={(txt) => this._changeText3(txt)}
                         />
                     <Input
@@ -222,6 +280,7 @@ class VCode extends React.Component {
                         maxLength={1}
                         keyboardType='numeric'
                         ref='code4'
+                        onKeyPress={(e) => this.backspace4(e)}
                         onChangeText={(txt) => this._changeText4(txt)}
                         />
                     <Input
@@ -229,6 +288,7 @@ class VCode extends React.Component {
                         maxLength={1}
                         keyboardType='numeric'
                         ref='code5'
+                        onKeyPress={(e) => this.backspace5(e)}
                         onChangeText={(txt) => this._changeText5(txt)}
                         />
                 </View>

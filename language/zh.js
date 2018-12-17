@@ -170,7 +170,7 @@ export default {
             }
 		},
 		version: {
-			_number: '1.1.3',
+			_number: '1.1.4',
 			_newVersion: '发现GoGlobe',
 			_version: '版本',
 			upgradeNow: '立即升级',
